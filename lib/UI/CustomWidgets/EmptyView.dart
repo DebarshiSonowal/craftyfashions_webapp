@@ -8,35 +8,53 @@ class EmptyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return height != 0 && width != 0
-        ? Expanded(
+    return Expanded(
       flex: 1,
-            child: Container(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Image.asset("assets/images/error.png",height: MediaQuery.of(context).size.height/3,),
-                    Text(txt==null?'Oops Not found\nPlease Swipe down to refresh':txt,softWrap: true,textAlign: TextAlign.center,style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.red,
-                      fontWeight: FontWeight.bold
-                    ),),
-                  ],
-                ),
-              ),
-            ),
-          )
-        : Container(
-      height: MediaQuery.of(context).size.height,
-            child: Center(
-              child: Column(
-                children: [
-                  Image.asset("assets/images/error.png"),
-                  Text('No Data'),
-                ],
-              ),
-            ),
-          );
+      child: Container(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Image.asset("assets/images/error.png",height: MediaQuery.of(context).size.height/3,fit: BoxFit.fill,),
+              Text(txt==null?'Oops Not found\nPlease Swipe down to refresh':txt,softWrap: true,textAlign: TextAlign.center,style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.red,
+                  fontWeight: FontWeight.bold
+              ),),
+            ],
+          ),
+        ),
+      ),
+    );
+    // return height != 0 && width != 0
+    //     ? Expanded(
+    //   flex: 1,
+    //         child: Container(
+    //           child: Center(
+    //             child: Column(
+    //               mainAxisAlignment: MainAxisAlignment.spaceAround,
+    //               children: [
+    //                 Image.asset("assets/images/error.png",height: MediaQuery.of(context).size.height/3,fit: BoxFit.fill,),
+    //                 Text(txt==null?'Oops Not found\nPlease Swipe down to refresh':txt,softWrap: true,textAlign: TextAlign.center,style: TextStyle(
+    //                   fontSize: 20,
+    //                   color: Colors.red,
+    //                   fontWeight: FontWeight.bold
+    //                 ),),
+    //               ],
+    //             ),
+    //           ),
+    //         ),
+    //       )
+    //     : Container(
+    //   height: MediaQuery.of(context).size.height,
+    //         child: Center(
+    //           child: Column(
+    //             children: [
+    //               Image.asset("assets/images/error.png",height: MediaQuery.of(context).size.height/3,),
+    //               Text('No Data'),
+    //             ],
+    //           ),
+    //         ),
+    //       );
   }
 }
