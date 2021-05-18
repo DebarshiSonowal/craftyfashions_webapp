@@ -46,12 +46,12 @@ const RESOURCES = {
 "assets/packages/font_awesome_flutter/lib/fonts/fa-regular-400.ttf": "4b6a9b7c20913279a3ad3dd9c96e155b",
 "assets/packages/font_awesome_flutter/lib/fonts/fa-solid-900.ttf": "dffd9504fcb1894620fa41c700172994",
 "assets/packages/progress_dialog/assets/double_ring_loading_io.gif": "e5b006904226dc824fdb6b8027f7d930",
-"favicon.png": "5dcef449791fa27946b3d35ad8803796",
+"favicon.png": "2f96613817b55bf9d32e23ee1e7ab483",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
-"index.html": "458145595e82a876472bf479021126a9",
-"/": "458145595e82a876472bf479021126a9",
-"main.dart.js": "a15ddf088d56931bb952322285e14604",
+"index.html": "4c1228fce7bc8c82c45cb440bd18eb37",
+"/": "4c1228fce7bc8c82c45cb440bd18eb37",
+"main.dart.js": "6aa3f097a978b79770f1e30776002739",
 "manifest.json": "d98d6fc809b685a127b9a849fe139cf3",
 "version.json": "02dc96a89589da20d92662d973e50e11"
 };
