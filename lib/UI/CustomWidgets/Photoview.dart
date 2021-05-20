@@ -14,6 +14,7 @@ class Photoview extends StatelessWidget {
         child: Container(
           color: Colors.white,
             child: Column(
+                mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(icon: Icon(
                     FontAwesomeIcons.backspace

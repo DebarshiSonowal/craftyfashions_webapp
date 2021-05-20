@@ -460,7 +460,7 @@ class NetworkHelper {
         'Accept': 'application/json',
         'Authorization': 'Bearer ${Test.accessToken}',
       });
-      dio = Dio(options);
+      dio = Dio();
       dio.interceptors.add(
         RetryOnAccessTokenInterceptor(
           requestRetrier: DioConnectivityRequestRetrier(
@@ -471,7 +471,14 @@ class NetworkHelper {
       );
       Response response;
       try {
-        response = await dio.post(url + "payment", data: body);
+        response = await dio.post(url + "payment", data: body,options: Options(
+          contentType: 'application/json',
+          receiveTimeout: 4000,
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ${Test.accessToken}',
+          }
+        ));
       } on DioError catch (e) {
         if (e.type == DioErrorType.CONNECT_TIMEOUT) {
           response = Response(statusCode: 500);
@@ -479,10 +486,13 @@ class NetworkHelper {
       }
       if (response.statusCode == 200) {
         var data = response.data;
+        print("!%!%1");
         return data;
       } else if (response.statusCode == 500) {
+        print("!%!%2");
         return "Server Error";
       } else {
+        print("!%!%13");
         return "Failed to save";
       }
     }
@@ -558,14 +568,14 @@ class NetworkHelper {
         'trackingId': order.trackingId
       };
       var body = json.encode(data);
-      print(body);
+      print("Data s ${body}");
       BaseOptions options =
           new BaseOptions(connectTimeout: 7000, receiveTimeout: 3000, headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': 'Bearer ${Test.accessToken}',
       });
-      dio = Dio(options);
+      dio = Dio();
       dio.interceptors.add(
         RetryOnAccessTokenInterceptor(
           requestRetrier: DioConnectivityRequestRetrier(
@@ -576,16 +586,27 @@ class NetworkHelper {
       );
       Response response;
       try {
-        response = await dio.post(url + "orders", data: body);
+        response = await dio.post(url + "orders",
+            data: body,
+            options: Options(contentType: 'application/json',receiveTimeout:4000 , headers: {
+              'Accept': 'application/json',
+              'Authorization': 'Bearer ${Test.accessToken}',
+            }));
+        print("sent");
       } on DioError catch (e) {
+        print(e);
         if (e.type == DioErrorType.CONNECT_TIMEOUT) {
           response = Response(statusCode: 500);
         }
       }
-      if (response.statusCode == 200) {
-        return response.data;
-      } else {
-        return "Unable to save order";
+      if (response != null) {
+        if (response.statusCode == 200) {
+                return response.data;
+              } else {
+                return "Unable to save order";
+              }
+      }else{
+        print("Response is null");
       }
     }
   }

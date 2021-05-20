@@ -89,6 +89,9 @@ class _CartState extends State<Cart> {
       });
     });
     super.initState();
+    Provider.of<CartData>(context,listen: false).profile == null
+        ? getAddressfromInternet()
+        : null;
   }
 
   @override
@@ -582,9 +585,11 @@ class _CartState extends State<Cart> {
                       .then((value) {
                     return value.id;
                   });
+                  Provider.of<CartData>(context, listen: false).setOrderId(id);
                 } catch (e) {
                   print(e);
                 }
+
                 var size = Provider.of<CartData>(context, listen: false).Sizes;
                 var amount =
                     Provider.of<CartData>(context, listen: false).getPrice() *
@@ -605,9 +610,15 @@ class _CartState extends State<Cart> {
                     'wallets': ['paytm']
                   }
                 };
+
                 try {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => RazorPayWeb(id)));
+                  pr.hide().then((isHidden) {
+                    Test.fragNavigate.putPosit(key: 'Payment', force: true);
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => RazorPayWeb()));
+                  });
                 } catch (e) {
                   print("VVVV $e");
                 }
@@ -623,5 +634,14 @@ class _CartState extends State<Cart> {
             iconColor: Colors.white,
           ),
         ]);
+  }
+
+  getAddressfromInternet() async {
+    UsersModel usersModel3 = UsersModel();
+    var profile = await usersModel3
+        .getProf(Provider.of<CartData>(context, listen: false).user.id);
+    if (profile != "Server Error" && profile != null) {
+      Provider.of<CartData>(context, listen: false).updateProfile(profile);
+    }
   }
 }

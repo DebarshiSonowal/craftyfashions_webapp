@@ -1,26 +1,31 @@
+import 'dart:convert';
 import 'dart:html';
 import 'dart:ui' as ui;
 
 //conditional import
+import 'package:craftyfashions_webapp/Helper/DioError.dart';
+import 'package:craftyfashions_webapp/Helper/Test.dart';
+import 'package:craftyfashions_webapp/Models/Order.dart';
+import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
+import 'package:craftyfashions_webapp/Utility/Users.dart';
+import 'package:dio/dio.dart';
 import 'package:provider/provider.dart';
 import 'package:craftyfashions_webapp/Helper/CartData.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'UiFake.dart' if (dart.library.html) 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
 class RazorPayWeb extends StatelessWidget {
-  var id;
-
-  RazorPayWeb(this.id);
+  RazorPayWeb();
 
   @override
   Widget build(BuildContext context) {
-    Map<String,String> options = {
+    Map<String, String> options = {
       'key':
           Provider.of<CartData>(context, listen: false).razorpay.Id.toString(),
-      'amount': (Provider.of<CartData>(context, listen: false).getPrice() * 100).toString(),
-      'address': Provider.of<CartData>(context, listen: false)
-          .profile
-          .address,
+      'amount': (Provider.of<CartData>(context, listen: false).getPrice() * 100)
+          .toString(),
+      'address': Provider.of<CartData>(context, listen: false).profile.address,
       'phone': Provider.of<CartData>(context, listen: false)
           .profile
           .phone
@@ -31,7 +36,8 @@ class RazorPayWeb extends StatelessWidget {
           .profile
           .email
           .toString(),
-      'order_id': id.toString(),
+      'order_id':
+          Provider.of<CartData>(context, listen: false).orderId.toString(),
       'name': 'Crafty',
       'description': Provider.of<CartData>(context, listen: false).names,
     };
@@ -45,7 +51,15 @@ class RazorPayWeb extends StatelessWidget {
           Navigator.pop(context);
         } else if (element.data == 'SUCCESS') {
           print('PAYMENT SUCCESSFULL!!!!!!!${element.data} ');
+          // _handlePaymentSuccess(PaymentSuccessResponse(id:element.data));
           Navigator.pop(context);
+        } else {
+          _handlePaymentSuccess(
+              PaymentSuccessResponse(
+                  element.data['data']['v1'].toString(),
+                  element.data['data']['v2'].toString(),
+                  element.data['data']['v3'].toString()),
+              context);
         }
       });
 
@@ -55,10 +69,95 @@ class RazorPayWeb extends StatelessWidget {
       element.dataset = options;
       return element;
     });
-    return Scaffold(body: Builder(builder: (BuildContext context) {
+     return Scaffold(body: Builder(builder: (BuildContext context) {
       return Container(
-        child: HtmlElementView(viewType: 'rzp-html'),
+        child: Provider.of<CartData>(context, listen: true).orderId != null
+            ? HtmlElementView(viewType: 'rzp-html')
+            : Center(
+                child: Text(
+                  "Please try again",
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
       );
     }));
+  }
+
+  _handlePaymentSuccess(
+      PaymentSuccessResponse response, BuildContext context) async {
+    Styles.showWarningToast(Colors.green, "Successful", Colors.white, 15);
+    Map data = {
+      'orderId': response.orderId,
+      'paymentId': response.paymentId,
+      'signature': response.signature,
+    };
+    var body = json.encode(data);
+    UsersModel usersModel = UsersModel();
+    var b = await usersModel.saveOrder(body);
+    print(b["result"]);
+    if (b["result"].toString().trim() == "Successful") {
+      try {
+        UsersModel usersModel = UsersModel();
+        var a = await usersModel.saveOrderDatabase(
+            saveToDatabase(
+                response.orderId,
+                Provider.of<CartData>(context, listen: false).getPrice() * 100,
+                response.paymentId,
+                context),
+            Provider.of<CartData>(context, listen: false).name == null
+                ? Provider.of<CartData>(context, listen: false).user.name
+                : Provider.of<CartData>(context, listen: false).name);
+        if (a != null && a != "Unable to save order") {
+          print("@1");
+          // Navigator.pop(context);
+          CartData.removeALL(0, CartData.listLengths);
+          CartData.RESULT = "assets/raw/successful.json";
+          CartData.TXT = response.paymentId;
+          Test.fragNavigate.putPosit(key: 'Result');
+        } else {
+          print("@2");
+          // Navigator.pop(context);
+          Test.fragNavigate.putPosit(key: 'Result');
+          CartData.RESULT = "assets/raw/failed.json";
+          CartData.TXT = response.orderId;
+          Test.fragNavigate.putPosit(key: 'Result');
+        }
+      } on DioError catch (e) {
+        final errorMessage = DioExceptions.fromDioError(e).toString();
+        print(errorMessage);
+      }
+    } else {
+      // Navigator.pop(context);
+      print("@3");
+      CartData.RESULT = "assets/raw/failed.json";
+      CartData.TXT = "Payment ID" + response.orderId;
+      Test.fragNavigate.putPosit(key: 'Result');
+    }
+  }
+
+  _handlePaymentError(PaymentFailureResponse response) {}
+
+  Order saveToDatabase(id, double amount, String status, BuildContext context) {
+    return Order(
+        Provider.of<CartData>(context, listen: false).Colours,
+        "15-02-21",
+        Provider.of<CartData>(context, listen: false).Names,
+        Provider.of<CartData>(context, listen: false).user.email,
+        status,
+        Provider.of<CartData>(context, listen: false).ids,
+        Provider.of<CartData>(context, listen: false)
+            .Pictures
+            .split(",")[0]
+            .trim(),
+        amount,
+        Provider.of<CartData>(context, listen: false).quantity,
+        Provider.of<CartData>(context, listen: false).Sizes,
+        "Preparing",
+        id,
+        Provider.of<CartData>(context, listen: false).user.id,
+        Provider.of<CartData>(context, listen: false).getAddress.address,
+        Provider.of<CartData>(context, listen: false).getAddress.phone,
+        Provider.of<CartData>(context, listen: false).getAddress.pin,
+        "NOT AVAILABLE");
   }
 }

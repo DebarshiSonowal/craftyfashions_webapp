@@ -204,7 +204,7 @@ class _LoginState extends State<Login> {
                     children: [
                       SizedBox(
                         height: 1,
-                        width: MediaQuery.of(context).size.width / 5,
+                        width: MediaQuery.of(context).size.width / 6,
                         child: Container(
                           color: Colors.black,
                         ),
@@ -219,7 +219,7 @@ class _LoginState extends State<Login> {
                       ),
                       SizedBox(
                         height: 1,
-                        width: MediaQuery.of(context).size.width / 5,
+                        width: MediaQuery.of(context).size.width / 6,
                         child: Container(
                           color: Colors.black,
                         ),

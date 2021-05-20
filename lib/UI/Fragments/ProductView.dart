@@ -241,7 +241,7 @@ class _ProductViewState extends State<ProductView> {
                                 ),
                                 ConstrainedBox(
                                   constraints: BoxConstraints.tightFor(
-                                      width: 300, height: 50),
+                                      width: 300, height: 30),
                                   child: ElevatedButton(
                                     style: ButtonStyle(
                                       backgroundColor:

@@ -106,6 +106,7 @@ class _CartScreennState extends State<CartScreenn> {
                   });
                 },
                 child: CartItem(
+                  th: false,
                   index: index,
                   list: Provider.of<CartData>(context).list,
                   callback: () {

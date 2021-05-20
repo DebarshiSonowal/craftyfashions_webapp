@@ -31,11 +31,17 @@ class CartData extends ChangeNotifier {
   List<Products> _special =[];
   String address,name;
   Address _address;
+  String _orderId;
   Order _orderSelected;
 
 //Set
   void setAddress(Address value) {
     _address = value;
+    notifyListeners();
+  }
+
+  void setOrderId(String id){
+    _orderId = id;
     notifyListeners();
   }
 
@@ -153,6 +159,8 @@ class CartData extends ChangeNotifier {
     return _user;
   }
 
+
+  String get orderId => _orderId;
 
   Address get getAddress => _address;
 
@@ -286,6 +294,7 @@ class CartData extends ChangeNotifier {
   //Remove
   static void removeALL(int first, int second) {
     _list.removeRange(first, second);
+    print("Removed");
     saveInfo();
   }
 

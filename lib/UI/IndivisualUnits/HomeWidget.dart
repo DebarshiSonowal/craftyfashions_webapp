@@ -69,7 +69,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                   .toString()
                   .trim() ==
                   'Men') {
-                print("BEER");
                 Test.fragNavigate.putPosit(key: 'Men', force: true);
               } else {
                 Test.fragNavigate.putPosit(key: 'Women', force: true);

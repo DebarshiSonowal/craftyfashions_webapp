@@ -1,3 +1,4 @@
+import 'package:craftyfashions_webapp/UI/Activity/T&C.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:craftyfashions_webapp/Helper/Test.dart';
@@ -192,11 +193,25 @@ class _SignUpState extends State<Signup> {
                         onPressed: () {
                           _launchURL();
                         },
-                        child: Text(
-                          "Agree to our terms and conditions",
-                          style: TextStyle(
-                            color: Styles.log_sign_text,
+                        child:  ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:MaterialStateProperty.resolveWith<Color>(
+                                  (Set<MaterialState> states) {
+                                  return Colors.transparent;// Use the component's default.
+                              },
+                            ),
                           ),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HelpScreen("T&C")));
+                            },
+                            child: Text(
+                                "Agree to our terms and conditions",
+                                style: TextStyle(
+                                  color: Styles.log_sign_text,
+                                )),
                         ),
                       ),
                     ],

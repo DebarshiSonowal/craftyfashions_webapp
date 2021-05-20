@@ -133,7 +133,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   Future<bool> checkInternet() async {
     bool result;
     if (kIsWeb) {
-      print("Here");
       status = true;
       result = true;
     } else {
