@@ -9,11 +9,10 @@ import 'package:craftyfashions_webapp/Models/CartProduct.dart';
 import 'package:craftyfashions_webapp/Models/Order.dart';
 import 'package:craftyfashions_webapp/Models/Profile.dart';
 import 'package:craftyfashions_webapp/Models/ServerOrder.dart';
-import 'package:craftyfashions_webapp/UI/Activity/RazorpayWeb.dart';
-import 'package:craftyfashions_webapp/UI/CustomWidgets/AddressOption.dart';
-import 'package:craftyfashions_webapp/UI/CustomWidgets/BottomCard.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/CartScreen.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/EmptyView.dart';
+import 'package:craftyfashions_webapp/UI/CustomWidgets/WithOptionBottomSheet.dart';
+import 'package:craftyfashions_webapp/UI/CustomWidgets/WithoutOptionsBottomSheet.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
 import 'package:craftyfashions_webapp/Utility/Users.dart';
 import 'package:dio/dio.dart';
@@ -25,7 +24,6 @@ import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 BuildContext _context;
@@ -37,7 +35,6 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
-  Razorpay _razorpay;
   int item = 0;
   var products, id;
   double price = 0.00;
@@ -52,10 +49,6 @@ class _CartState extends State<Cart> {
 
   @override
   void initState() {
-    _razorpay = Razorpay();
-    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     pinT = TextEditingController();
     phT = TextEditingController();
     addT1 = TextEditingController();
@@ -84,12 +77,12 @@ class _CartState extends State<Cart> {
               color: Colors.black,
               fontSize: 19.0,
               fontWeight: FontWeight.w600));
-      setState(() {
-        emptyListWidget = Styles.EmptyError;
-      });
     });
     super.initState();
-    Provider.of<CartData>(context,listen: false).profile == null
+    setState(() {
+      emptyListWidget = Styles.EmptyError;
+    });
+    Provider.of<CartData>(context, listen: false).profile == null
         ? getAddressfromInternet()
         : null;
   }
@@ -107,7 +100,6 @@ class _CartState extends State<Cart> {
     addTtown.dispose();
     addTdis.dispose();
     addTstate.dispose();
-    _razorpay.clear();
     super.dispose();
   }
 
@@ -145,72 +137,6 @@ class _CartState extends State<Cart> {
             ),
     );
   }
-
-  _handlePaymentSuccess(PaymentSuccessResponse response) async {
-    Styles.showWarningToast(Colors.green, "Successful", Colors.white, 15);
-    Map data = {
-      'orderId': response.orderId,
-      'paymentId': response.paymentId,
-      'signature': response.signature,
-    };
-    var body = json.encode(data);
-    UsersModel usersModel = UsersModel();
-    var b = await usersModel.saveOrder(body);
-    if (b != "Failed to save" && b != "Server Error") {
-      if (b["result"].toString() == "Successful") {
-        try {
-          UsersModel usersModel = UsersModel();
-          var a = await usersModel.saveOrderDatabase(
-              saveToDatabase(
-                  response.orderId,
-                  Provider.of<CartData>(_context, listen: false).getPrice() *
-                      100,
-                  response.paymentId,
-                  _context),
-              Provider.of<CartData>(_context, listen: false).name == null
-                  ? Provider.of<CartData>(_context, listen: false).user.name
-                  : Provider.of<CartData>(_context, listen: false).name);
-          if (a != null && a != "Unable to save order") {
-            CartData.removeALL(0, CartData.listLengths);
-            CartData.RESULT = "assets/raw/successful.json";
-            CartData.TXT = response.paymentId;
-            Test.fragNavigate.putPosit(key: 'Result');
-          } else {
-            Test.fragNavigate.putPosit(key: 'Result');
-            CartData.RESULT = "assets/raw/failed.json";
-            CartData.TXT = response.orderId;
-            Test.fragNavigate.putPosit(key: 'Result');
-          }
-        } on DioError catch (e) {
-          final errorMessage = DioExceptions.fromDioError(e).toString();
-          print(errorMessage);
-        }
-        pr.hide().then((isHidden) {
-          CartData.RESULT = "assets/raw/successful.json";
-          CartData.TXT = "Payment ID" + response.paymentId;
-          Test.fragNavigate.putPosit(key: 'Result');
-        });
-      } else {
-        pr.hide().then((isHidden) {
-          CartData.RESULT = "assets/raw/failed.json";
-          CartData.TXT = "Payment ID" + response.orderId;
-          Test.fragNavigate.putPosit(key: 'Result');
-        });
-      }
-    }
-  }
-
-  _handlePaymentError(PaymentFailureResponse response) {
-    pr.hide().then((isHidden) {
-      Styles.showWarningToast(Colors.red, response.message, Colors.white, 15);
-    });
-  }
-
-  _handleExternalWallet(ExternalWalletResponse response) {
-    Styles.showWarningToast(
-        Colors.green, "Successful ${response}", Colors.white, 15);
-  }
-
   void save(String key, value) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString(key, value);
@@ -274,166 +200,11 @@ class _CartState extends State<Cart> {
         height: MediaQuery.of(context).size.height / 4,
         child: Provider.of<CartData>(context, listen: false).profile.address !=
                 null
-            ? withoption(context)
-            : withoutoption(context),
+            ? WithOptionBottomSheet(defaultAddress, getAddress, showPaymentDialog,
+            addT1, addTtown, addTdis, addTstate, phT, pinT)
+            :  WithoutOptionsBottomSheet(
+            saveDetails, addT1, addTtown, addTdis, addTstate, phT, pinT),
       ),
-    );
-  }
-
-  withoption(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Center(
-            child: Text(
-          'Please Select a address:',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        )),
-        Provider.of<CartData>(context, listen: false).user != null
-            ? GestureDetector(
-                onTap: () => defaultAddress(),
-                child: AddressOption(
-                    Provider.of<CartData>(context, listen: false).user.name,
-                    Provider.of<CartData>(context, listen: false)
-                        .profile
-                        .phone
-                        .toString(),
-                    Provider.of<CartData>(context, listen: false)
-                        .profile
-                        .address
-                        .toString(),
-                    Provider.of<CartData>(context, listen: false)
-                        .profile
-                        .pincode
-                        .toString()),
-              )
-            : Container(),
-        Center(
-            child: Text(
-          'OR',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        )),
-        ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              showModalBottomSheet(
-                  context: context,
-                  isDismissible: true,
-                  isScrollControlled: true,
-                  builder: (BuildContext context) {
-                    return BottomCard(
-                        addT1, addTtown, addTdis, addTstate, phT, pinT, () {
-                      if (addT1.text.isNotEmpty &&
-                          addTtown.text.isNotEmpty &&
-                          addTdis.text.isNotEmpty &&
-                          addTstate.text.isNotEmpty &&
-                          pinT.text.isNotEmpty &&
-                          phT.text.isNotEmpty) {
-                        if (pinT.text.length == 6) {
-                          if (phT.text.length == 10) {
-                            Provider.of<CartData>(context, listen: false)
-                                .address = getAddress();
-                            Provider.of<CartData>(context, listen: false)
-                                .setAddress(Address(getAddress(),
-                                    phT.text.toString(), pinT.text.toString()));
-                            Navigator.pop(context);
-                            showPaymentDialog();
-                          } else {
-                            Fluttertoast.showToast(
-                                msg: "Please enter valid phone no",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.CENTER,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.red,
-                                textColor: Colors.black,
-                                fontSize: 16.0);
-                          }
-                        } else {
-                          Fluttertoast.showToast(
-                              msg: "Please enter valid pincode",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.CENTER,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.red,
-                              textColor: Colors.black,
-                              fontSize: 16.0);
-                        }
-                      } else {
-                        Fluttertoast.showToast(
-                            msg: "Please enter required fields",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.CENTER,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.red,
-                            textColor: Colors.black,
-                            fontSize: 16.0);
-                      }
-                    });
-                  });
-            },
-            child: Text('Add a new Address')),
-      ],
-    );
-  }
-
-  withoutoption(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              showModalBottomSheet(
-                  context: context,
-                  isDismissible: true,
-                  isScrollControlled: true,
-                  builder: (BuildContext context) {
-                    return BottomCard(
-                        addT1, addTtown, addTdis, addTstate, phT, pinT, () {
-                      if (addT1.text.isNotEmpty &&
-                          addTtown.text.isNotEmpty &&
-                          addTdis.text.isNotEmpty &&
-                          addTstate.text.isNotEmpty &&
-                          pinT.text.isNotEmpty &&
-                          phT.text.isNotEmpty) {
-                        if (pinT.text.length == 6) {
-                          if (phT.text.length == 10) {
-                            saveDetails(context);
-                          } else {
-                            Fluttertoast.showToast(
-                                msg: "Please enter valid phone no",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.CENTER,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.red,
-                                textColor: Colors.black,
-                                fontSize: 16.0);
-                          }
-                        } else {
-                          Fluttertoast.showToast(
-                              msg: "Please enter valid pincode",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.CENTER,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.red,
-                              textColor: Colors.black,
-                              fontSize: 16.0);
-                        }
-                      } else {
-                        Fluttertoast.showToast(
-                            msg: "Please enter required fields",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.CENTER,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.red,
-                            textColor: Colors.black,
-                            fontSize: 16.0);
-                      }
-                    });
-                  });
-            },
-            child: Text('Add a new Address')),
-      ],
     );
   }
 
@@ -589,28 +360,8 @@ class _CartState extends State<Cart> {
                 } catch (e) {
                   print(e);
                 }
-
-                var size = Provider.of<CartData>(context, listen: false).Sizes;
-                var amount =
-                    Provider.of<CartData>(context, listen: false).getPrice() *
-                        100;
-                var items = Provider.of<CartData>(context, listen: false).names;
                 Test.currentCartItems =
                     Provider.of<CartData>(context, listen: false).list;
-                var options = {
-                  'key': Provider.of<CartData>(context, listen: false)
-                      .razorpay
-                      .Id
-                      .toString(),
-                  'amount': amount,
-                  'order_id': '$id',
-                  'name': 'Crafty',
-                  'description': items,
-                  'external': {
-                    'wallets': ['paytm']
-                  }
-                };
-
                 try {
                   pr.hide().then((isHidden) {
                     Test.fragNavigate.putPosit(key: 'Payment', force: true);

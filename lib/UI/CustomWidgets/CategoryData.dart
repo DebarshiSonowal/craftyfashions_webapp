@@ -1,18 +1,25 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:craftyfashions_webapp/Helper/CartData.dart';
+import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
+
 
 import 'CategoryItemView.dart';
 
-class CategoryData extends StatelessWidget {
+class CategoryData extends StatefulWidget{
   Function showIndex;
   Function onTap;
 
   CategoryData(this.showIndex,this.onTap(T));
 
+  @override
+  _CategoryDataState createState() => _CategoryDataState();
+}
+
+class _CategoryDataState extends State<CategoryData> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -31,7 +38,7 @@ class CategoryData extends StatelessWidget {
               return CategoryItemView(
                 list: Provider.of<CartData>(context, listen: true).getCateg(),
                 index: index,
-                OnTap: () => onTap(index),
+                OnTap: () => widget.onTap(index),
               );
             },
           ),
@@ -54,7 +61,7 @@ class CategoryData extends StatelessWidget {
             return Builder(
               builder: (BuildContext context) {
                 return GestureDetector(
-                  onTap: () => showIndex(
+                  onTap: () => widget.showIndex(
                       Provider.of<CartData>(context, listen: false)
                           .getAdImage()
                           .indexOf(i)),
@@ -68,20 +75,11 @@ class CategoryData extends StatelessWidget {
                           (context, url, downloadProgress) => SizedBox(
                         width: 50.0,
                         height: 50.0,
-                        child: Shimmer.fromColors(
-                          baseColor: Colors.red,
-                          highlightColor: Colors.yellow,
-                          child: Center(
-                            child: Text(
-                              'Please Wait',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
+                        child:SpinKitFadingCube(
+                          color: Styles.Log_sign,
+                          size: 50.0,
+                          controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 1200)),
+                        )
                       ),
                       errorWidget: (context, url, error) => Icon(Icons.error),
                     ),
@@ -94,10 +92,4 @@ class CategoryData extends StatelessWidget {
       ],
     );
   }
-
-  // Widget categoryData(
-  //     BuildContext context, ) {
-  //   return
-  // }
-
 }

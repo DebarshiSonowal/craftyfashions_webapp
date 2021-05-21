@@ -73,6 +73,7 @@ class HostState extends State<Host> {
       //   getEverything(context);
       // }
     });
+    getEverything(context);
     super.initState();
   }
 
@@ -125,90 +126,88 @@ class HostState extends State<Host> {
           });
         }
       },
-      child: StreamBuilder<FullPosit>(
-          stream: _fragNav.outStreamFragment,
-          builder: (con, s) {
-            if (s.data != null) {
-              return Scaffold(
-                key: _fragNav.drawerKey,
-                appBar: AppBar(
-                  title: Text(s.data.title),
-                  actions: [
-                    IconButton(
-                      icon: Icon(Icons.search),
-                      onPressed: () {
-                        showSearch(
-                            context: context, delegate: DataSearch(_fragNav));
-                      },
-                    )
-                  ],
-                  bottom: s.data.bottom.child,
-                ),
-                drawer: NavDrawer(_fragNav),
-                bottomNavigationBar: !checkifMobile()
-                    ? null
-                    : BottomNavigationBar(
-                  items: const <BottomNavigationBarItem>[
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.home),
-                      label: 'Home',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.verified_user),
-                      label: 'Profile',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.add_shopping_cart),
-                      label: 'Cart',
-                    ),
-                  ],
-                  currentIndex: _fragNav.screenList.keys
-                      .toList()
-                      .indexOf(_fragNav.currentKey) >
-                      2
-                      ? 0
-                      : _fragNav.screenList.keys
-                      .toList()
-                      .indexOf(_fragNav.currentKey),
-                  selectedItemColor: Colors.black,
-                  backgroundColor: Colors.white70,
-                  onTap: (index) {
-                    setState(() {
-                      bottom = index;
-                      var b = _fragNav.screenList.keys.toList();
-                      var c = _fragNav.actionsList;
-                      if (c != null) {
-                        _fragNav.putPosit(key: b[index]);
-                      } else {
-                        initialize();
-                        try {
+      child: Scaffold(
+        body: StreamBuilder<FullPosit>(
+            stream: _fragNav.outStreamFragment,
+            builder: (con, s) {
+              if (s.data != null) {
+                return Scaffold(
+                  key: _fragNav.drawerKey,
+                  appBar: AppBar(
+                    title: Text(s.data.title),
+                    actions: [
+                      IconButton(
+                        icon: Icon(Icons.search),
+                        onPressed: () {
+                          showSearch(
+                              context: context, delegate: DataSearch(_fragNav));
+                        },
+                      )
+                    ],
+                    bottom: s.data.bottom.child,
+                  ),
+                  drawer: NavDrawer(_fragNav),
+                  bottomNavigationBar: !checkifMobile()
+                      ? null
+                      : BottomNavigationBar(
+                    items: const <BottomNavigationBarItem>[
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.home),
+                        label: 'Home',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.verified_user),
+                        label: 'Profile',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.add_shopping_cart),
+                        label: 'Cart',
+                      ),
+                    ],
+                    currentIndex: _fragNav.screenList.keys
+                        .toList()
+                        .indexOf(_fragNav.currentKey) >
+                        2
+                        ? 0
+                        : _fragNav.screenList.keys
+                        .toList()
+                        .indexOf(_fragNav.currentKey),
+                    selectedItemColor: Colors.black,
+                    backgroundColor: Colors.white70,
+                    onTap: (index) {
+                      setState(() {
+                        bottom = index;
+                        var b = _fragNav.screenList.keys.toList();
+                        var c = _fragNav.actionsList;
+                        if (c != null) {
                           _fragNav.putPosit(key: b[index]);
-                        } catch (e) {
-                          print("GGOt $e");
+                        } else {
+                          initialize();
+                          try {
+                            _fragNav.putPosit(key: b[index]);
+                          } catch (e) {
+                            print("GGOt $e");
+                          }
                         }
-                      }
-                    });
-                  },
-                ),
-                body: DefaultTabController(
-                  length: s.data.bottom.length,
-                  child: ScreenNavigate(child: s.data.fragment, bloc: _fragNav),
-                ),
-              );
-            }
+                      });
+                    },
+                  ),
+                  body: DefaultTabController(
+                    length: s.data.bottom.length,
+                    child: ScreenNavigate(child: s.data.fragment, bloc: _fragNav),
+                  ),
+                );
+              }
 
-            return Container();
-          }),
+              return Container();
+            }),
+      ),
     );
   }
 
   void getEverything(BuildContext context) async {
-    if (Provider
-        .of<CartData>(context, listen: false)
-        .allproducts == null || Provider
-        .of<CartData>(context, listen: false)
-        .allproducts
-        .length == 0) {
+    if (Provider.of<CartData>(context, listen: false).allproducts == null ||
+        Provider.of<CartData>(context, listen: false).allproducts.length == 0) {
       UsersModel usersModel = UsersModel();
       var Data = await usersModel.getAll();
       List<Products> data = [];
@@ -240,8 +239,7 @@ class HostState extends State<Host> {
   }
 
   getList() {
-    return <Posit
-    >[
+    return <Posit>[
     Posit(
     key: 'Home',
     title: 'Home',
@@ -329,6 +327,7 @@ class HostState extends State<Host> {
     );
     Test.fragNavigate = _fragNav;
     _fragNav.setDrawerContext = context;
+    super.initState();
   }
 
   checkifMobile() {

@@ -53,6 +53,7 @@ class CartData extends ChangeNotifier {
 
   void setCategory(List<Categories> list) {
     _categ = list;
+    print("Category set");
     notifyListeners();
   }
   void setSpecial(List<Products>list){
@@ -75,6 +76,7 @@ class CartData extends ChangeNotifier {
 
   void setAds(List<Ads> ads) {
     _ads = ads;
+    print("Ads set");
     notifyListeners();
   }
 

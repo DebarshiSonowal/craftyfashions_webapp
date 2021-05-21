@@ -7,6 +7,7 @@ import 'package:craftyfashions_webapp/UI/CustomWidgets/LoadingAnimation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({Key key}) : super(key: key);
@@ -18,63 +19,62 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    print("Home page loading build");
+    return kIsWeb?SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Provider.of<CartData>(context, listen: true).getCateg().length ==
-              0
+          Provider.of<CartData>(context, listen: true).getCateg().length == 0
               ? LoadingAnimation(
-              Provider.of<CartData>(context, listen: true)
-                  .getCateg()
-                  .length,
-              6,
-              MediaQuery.of(context).size.height / 3)
-          // ignore: missing_return
+                  Provider.of<CartData>(context, listen: true)
+                      .getCateg()
+                      .length,
+                  6,
+                  MediaQuery.of(context).size.height / 3)
+              // ignore: missing_return
               : CategoryData(showIndex, (index) {
-            if (Provider.of<CartData>(context, listen: false)
-                .getCateg()[index]
-                .name
-                .toString()
-                .trim() !=
-                'Men' &&
-                Provider.of<CartData>(context, listen: false)
-                    .getCateg()[index]
-                    .name
-                    .toString()
-                    .trim() !=
-                    'Women') {
-              List<Products> list = [];
-              for (var i
-              in Provider.of<CartData>(context, listen: false)
-                  .allproducts) {
-                if (i.Gender.toString().trim().toUpperCase() ==
+                  if (Provider.of<CartData>(context, listen: false)
+                              .getCateg()[index]
+                              .name
+                              .toString()
+                              .trim() !=
+                          'Men' &&
+                      Provider.of<CartData>(context, listen: false)
+                              .getCateg()[index]
+                              .name
+                              .toString()
+                              .trim() !=
+                          'Women') {
+                    List<Products> list = [];
+                    for (var i in Provider.of<CartData>(context, listen: false)
+                        .allproducts) {
+                      if (i.Gender.toString().trim().toUpperCase() ==
+                          Provider.of<CartData>(context, listen: false)
+                              .getCateg()[index]
+                              .name
+                              .toString()
+                              .trim()
+                              .toUpperCase()) {
+                        list.add(i);
+                      }
+                    }
                     Provider.of<CartData>(context, listen: false)
-                        .getCateg()[index]
-                        .name
-                        .toString()
-                        .trim()
-                        .toUpperCase()) {
-                  list.add(i);
-                }
-              }
-              Provider.of<CartData>(context, listen: false)
-                  .setCouple(list);
-              Test.fragNavigate.putPosit(key: 'Couple', force: true);
-            } else {
-              if (Provider.of<CartData>(context, listen: false)
-                  .getCateg()[index]
-                  .name
-                  .toString()
-                  .trim() ==
-                  'Men') {
-                Test.fragNavigate.putPosit(key: 'Men', force: true);
-              } else {
-                Test.fragNavigate.putPosit(key: 'Women', force: true);
-              }
-            }
-          }),
+                        .setCouple(list);
+                    Test.fragNavigate.putPosit(key: 'Couple', force: true);
+                  } else {
+                    if (Provider.of<CartData>(context, listen: false)
+                            .getCateg()[index]
+                            .name
+                            .toString()
+                            .trim() ==
+                        'Men') {
+                      Test.fragNavigate.putPosit(key: 'Men', force: true);
+                    } else {
+                      Test.fragNavigate.putPosit(key: 'Women', force: true);
+                    }
+                  }
+                }),
           SizedBox(
             height: 15,
           ),
@@ -96,13 +96,13 @@ class _HomeWidgetState extends State<HomeWidget> {
                         height: 100, width: 120),
                     Flexible(
                         child: Text(
-                          'Stay Home\n\nStay Safe\n\nAnd order on Crafty 😉',
-                          softWrap: true,
-                          style: TextStyle(
-                              fontFamily: "BEYOND",
-                              fontSize: 22,
-                              color: Colors.red),
-                        ))
+                      'Stay Home\n\nStay Safe\n\nAnd order on Crafty 😉',
+                      softWrap: true,
+                      style: TextStyle(
+                          fontFamily: "BEYOND",
+                          fontSize: 22,
+                          color: Colors.red),
+                    ))
                   ],
                 ),
               ),
@@ -132,14 +132,13 @@ class _HomeWidgetState extends State<HomeWidget> {
               ],
             ),
           ),
-          Provider.of<CartData>(context, listen: true).allproducts.length ==
-              0
+          Provider.of<CartData>(context, listen: true).allproducts.length == 0
               ? LoadingAnimation(
-              Provider.of<CartData>(context, listen: false)
-                  .allproducts
-                  .length,
-              5,
-              MediaQuery.of(context).size.height / 4)
+                  Provider.of<CartData>(context, listen: false)
+                      .allproducts
+                      .length,
+                  5,
+                  MediaQuery.of(context).size.height / 4)
               : AllProducts(),
           SizedBox(
             height: 15,
@@ -170,14 +169,14 @@ class _HomeWidgetState extends State<HomeWidget> {
                         height: 100, width: 120),
                     Flexible(
                         child: Text(
-                          'Craft your own look\n with \nCrafty',
-                          softWrap: true,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontFamily: "EBGaramond",
-                              fontSize: 24,
-                              color: Colors.black),
-                        ))
+                      'Craft your own look\n with \nCrafty',
+                      softWrap: true,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontFamily: "EBGaramond",
+                          fontSize: 24,
+                          color: Colors.black),
+                    ))
                   ],
                 ),
               ),
@@ -192,29 +191,31 @@ class _HomeWidgetState extends State<HomeWidget> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Lottie.asset('assets/raw/like.json',
-                      height: 100, width: 120),
+                  Lottie.asset('assets/raw/like.json', height: 100, width: 120),
                   Flexible(
                       child: Text(
-                        'Enjoyed shopping with us?\nRate us on playstore',
-                        softWrap: true,
-                        style: TextStyle(
-                            fontFamily: "Somana",
-                            fontSize: 18,
-                            color: Colors.black),
-                      ))
+                    'Enjoyed shopping with us?\nRate us on playstore',
+                    softWrap: true,
+                    style: TextStyle(
+                        fontFamily: "Somana",
+                        fontSize: 18,
+                        color: Colors.black),
+                  ))
                 ],
               ),
             ),
           ),
         ],
       ),
+    ):Container(
+      child: Text("No"),
     );
   }
+
   showIndex(int i) {
     List<Products> list = [];
     var tag = Provider.of<CartData>(context, listen: false).getAds()[i].tag;
-    Test.specialTag=tag;
+    Test.specialTag = tag;
     Provider.of<CartData>(context, listen: false).setSpecialTag(tag);
     var all = Provider.of<CartData>(context, listen: false).allproducts;
     for (var i in all) {
@@ -259,6 +260,4 @@ class _HomeWidgetState extends State<HomeWidget> {
       print("empty");
     }
   }
-
-
 }

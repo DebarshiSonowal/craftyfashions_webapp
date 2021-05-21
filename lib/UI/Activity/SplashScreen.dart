@@ -24,18 +24,13 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   bool status;
   String access, refresh;
   @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    throw UnimplementedError();
-  }
-  @override
   void initState() {
     checkInternet();
     // getLoginData();
     super.initState();
     // checkPrev();
     getEverything(context);
-    Timer(Duration(seconds: 3), () => checkPrev());
+    Timer(Duration(seconds: 5), () => checkPrev());
     animationController = new AnimationController(
       vsync: this,
       duration: new Duration(seconds: 4),
