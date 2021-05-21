@@ -74,13 +74,16 @@ flutter:
     - assets/images/404.png
     - assets/images/crafty.png
     - assets/images/settings.png
-    - assets/images/error.png
-    - assets/images/warning.png
+    - assets/images/error.webp
+    - assets/images/warning.webp
     - assets/images/men.jpg
     - assets/images/logo.png
     - assets/images/women.jpg
     - assets/images/user.png
     - assets/images/kk.jpg
+    - assets/images/mask.webp
+    - assets/images/shopping-cart.webp
+    - assets/images/favourite.webp
     - assets/images/nointernet.png
     - assets/raw/safe.json
     - assets/raw/shoppingcart.json

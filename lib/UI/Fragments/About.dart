@@ -79,6 +79,11 @@ class About extends StatelessWidget {
                           "Abby Ambrogi at Lottiefiles.com",
                           style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
                         )),
+                    Center(
+                        child: Text(
+                          "Smashicons at Flaticon.com",
+                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                        )),
                   ],
                 ),
               ),

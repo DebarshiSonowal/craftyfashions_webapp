@@ -1,6 +1,7 @@
 import 'package:craftyfashions_webapp/Helper/CartData.dart';
 import 'package:craftyfashions_webapp/Helper/Test.dart';
 import 'package:craftyfashions_webapp/UI/Fragments/ProductView.dart';
+import 'package:craftyfashions_webapp/UI/Styling/Breakpoints.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,10 +13,11 @@ class AllProducts extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.transparent,
-      height: 220,
+      height: getSize(context),
       child: ListView.builder(
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
+
         itemCount: Provider.of<CartData>(context, listen: true)
             .allproducts
             .sublist(
@@ -56,5 +58,17 @@ class AllProducts extends StatelessWidget {
         },
       ),
     );
+  }
+
+  getSize(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    if(width>1024){
+      return 200;
+    }else if(width<=kMobileBreakpoint){
+      return 180;
+    }else{
+      return 300;
+    }
+
   }
 }

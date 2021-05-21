@@ -13,7 +13,7 @@ class EmptyView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Image.asset("assets/images/error.png",height: MediaQuery.of(context).size.height/3,fit: BoxFit.fill,),
+            Image.asset("assets/images/error.webp",height: MediaQuery.of(context).size.height/3,fit: BoxFit.fill,),
             Text(txt==null?'Oops Not found\nPlease Swipe down to refresh':txt,softWrap: true,textAlign: TextAlign.center,style: TextStyle(
                 fontSize: 20,
                 color: Colors.red,

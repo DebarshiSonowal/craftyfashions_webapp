@@ -4,6 +4,7 @@ import 'package:craftyfashions_webapp/Models/Products.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/AllProducts.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/CategoryData.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/LoadingAnimation.dart';
+import 'package:craftyfashions_webapp/UI/Styling/Breakpoints.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -92,8 +93,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Lottie.asset('assets/raw/safe.json',
-                        height: 100, width: 120),
+                    getAsset(),
                     Flexible(
                         child: Text(
                       'Stay Home\n\nStay Safe\n\nAnd order on Crafty 😉',
@@ -165,8 +165,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Lottie.asset('assets/raw/shoppingcart.json',
-                        height: 100, width: 120),
+                    getAsset2(),
                     Flexible(
                         child: Text(
                       'Craft your own look\n with \nCrafty',
@@ -191,7 +190,7 @@ class _HomeWidgetState extends State<HomeWidget> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Lottie.asset('assets/raw/like.json', height: 100, width: 120),
+                  getAsset3(),
                   Flexible(
                       child: Text(
                     'Enjoyed shopping with us?\nRate us on playstore',
@@ -258,6 +257,33 @@ class _HomeWidgetState extends State<HomeWidget> {
       });
     } else {
       print("empty");
+    }
+  }
+
+  getAsset() {
+    var width = MediaQuery.of(context).size.width;
+    if(width<kTabletBreakpoint){
+      return Image.asset("assets/images/mask.webp",height: 100,width: 120,);
+    }else{
+      return Lottie.asset('assets/raw/safe.json',
+          height: 100, width: 120);
+    }
+  }
+  getAsset2() {
+    var width = MediaQuery.of(context).size.width;
+    if(width<kTabletBreakpoint){
+      return Image.asset("assets/images/shopping-cart.webp",height: 100,width: 120,);
+    }else{
+      return Lottie.asset('assets/raw/shoppingcart.json',
+          height: 100, width: 120);
+    }
+  }
+  getAsset3() {
+    var width = MediaQuery.of(context).size.width;
+    if(width<kTabletBreakpoint){
+      return Image.asset("assets/images/favourite.webp",height: 100,width: 120,);
+    }else{
+      return Lottie.asset('assets/raw/like.json', height: 100, width: 120);
     }
   }
 }

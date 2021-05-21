@@ -3,6 +3,7 @@ import 'package:craftyfashions_webapp/Helper/CartData.dart';
 import 'package:craftyfashions_webapp/Helper/Test.dart';
 import 'package:craftyfashions_webapp/Models/Profile.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/Gender.dart';
+import 'package:craftyfashions_webapp/UI/Styling/Breakpoints.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
 import 'package:craftyfashions_webapp/Utility/Users.dart';
 import 'package:flutter/cupertino.dart';
@@ -162,390 +163,357 @@ class _ProfilePageState extends State<ProfilePage> {
         onRefresh: _onRefresh,
         onLoading: _onLoading,
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Center(
-                    child: new Container(
-                        width: 190.0,
-                        height: 190.0,
-                        decoration: new BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: new DecorationImage(
-                                fit: BoxFit.fill,
-                                image: Image.asset("assets/images/user.png")
-                                    .image))),
-                  ),
-                  Column(
-                    children: [
-                      SizedBox(
-                        height: 10,
-                      ),
-                      new Text(
-                        nm == null ? "Name" : nm,
-                        textAlign: TextAlign.center,
-                        textScaleFactor: 1.5,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        email == null ? "" : email,
-                        textAlign: TextAlign.center,
-                        textScaleFactor: 1.5,
-                      ),
-                    ],
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: TextField(
-                  controller: nT,
-                  onChanged: (text) {
-                    setState(() {
-                      enabled = checknull(
-                          Provider.of<CartData>(context, listen: false)
-                              .profile);
-                    });
-                    name = text;
-                  },
-                  keyboardType: TextInputType.text,
-                  style: TextStyle(color: Styles.log_sign_text),
-                  decoration: InputDecoration(
-                    labelStyle: TextStyle(color: Styles.log_sign_text),
-                    labelText: "Fullname",
-                    filled: true,
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.circular(10),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Center(
+                      child: new Container(
+                          width: 150.0,
+                          height: 150.0,
+                          decoration: new BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: new DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image: Image.asset("assets/images/user.png")
+                                      .image))),
                     ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
+                    Column(
+                      children: [
+                        SizedBox(
+                          height: 5,
+                        ),
+                        new Text(
+                          nm == null ? "Name" : nm,
+                          textAlign: TextAlign.center,
+                          textScaleFactor: 1.5,
+                        ),
+                      ],
+                    )
+                  ],
                 ),
-              ),
-              // Padding(
-              //   padding: const EdgeInsets.all(10.0),
-              //   child: TextField(
-              //     controller: addT,
-              //     keyboardType: TextInputType.text,
-              //     style: TextStyle(color: Colors.black),
-              //     onChanged: (txt) {
-              //       setState(() {
-              //         enabled = checknull(Provider.of<CartData>(context, listen: false).profile);
-              //       });
-              //       address = txt;
-              //     },
-              //     decoration: InputDecoration(
-              //       labelStyle: TextStyle(color: Styles.log_sign_text),
-              //       labelText: "Address",
-              //       filled: true,
-              //       fillColor: Colors.white,
-              //       focusedBorder: OutlineInputBorder(
-              //         borderSide: BorderSide(color: Colors.white),
-              //         borderRadius: BorderRadius.circular(10),
-              //       ),
-              //       enabledBorder: UnderlineInputBorder(
-              //         borderSide: BorderSide(color: Colors.white),
-              //         borderRadius: BorderRadius.circular(10),
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: TextField(
-                  controller: addT1,
-                  keyboardType: TextInputType.text,
-                  style: TextStyle(color: Colors.black),
-                  onChanged: (txt) {
-                    setState(() {
-                      enabled = checknull(
-                          Provider.of<CartData>(context, listen: false)
-                              .profile);
-                    });
-                    addressline1 = txt;
-                  },
-                  decoration: InputDecoration(
-                    labelStyle: TextStyle(color: Styles.log_sign_text),
-                    labelText: "Address(House no, Building, Street, Area)",
-                    filled: true,
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
+                SizedBox(
+                  height: 5,
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: TextField(
-                  controller: addTtown,
-                  keyboardType: TextInputType.text,
-                  style: TextStyle(color: Colors.black),
-                  onChanged: (txt) {
-                    setState(() {
-                      enabled = checknull(
-                          Provider.of<CartData>(context, listen: false)
-                              .profile);
-                    });
-                    town_village = txt;
-                  },
-                  decoration: InputDecoration(
-                    labelStyle: TextStyle(color: Styles.log_sign_text),
-                    labelText: "Town/Village",
-                    filled: true,
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: TextField(
-                  controller: addTdis,
-                  keyboardType: TextInputType.text,
-                  style: TextStyle(color: Colors.black),
-                  onChanged: (txt) {
-                    setState(() {
-                      enabled = checknull(
-                          Provider.of<CartData>(context, listen: false)
-                              .profile);
-                    });
-                    district = txt;
-                  },
-                  decoration: InputDecoration(
-                    labelStyle: TextStyle(color: Styles.log_sign_text),
-                    labelText: "District",
-                    filled: true,
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: TextField(
-                  controller: addTstate,
-                  keyboardType: TextInputType.text,
-                  style: TextStyle(color: Colors.black),
-                  onChanged: (txt) {
-                    setState(() {
-                      enabled = checknull(
-                          Provider.of<CartData>(context, listen: false)
-                              .profile);
-                    });
-                    state = txt;
-                  },
-                  decoration: InputDecoration(
-                    labelStyle: TextStyle(color: Styles.log_sign_text),
-                    labelText: "State",
-                    filled: true,
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: TextField(
-                  maxLength: 10,
-                  controller: phT,
-                  keyboardType: TextInputType.phone,
-                  style: TextStyle(color: Colors.black),
-                  onChanged: (txt) {
-                    setState(() {
-                      enabled = checknull(
-                          Provider.of<CartData>(context, listen: false)
-                              .profile);
-                    });
-                    phone = txt;
-                  },
-                  decoration: InputDecoration(
-                    labelStyle: TextStyle(color: Styles.log_sign_text),
-                    labelText: "Phone",
-                    filled: true,
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding:
-                const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
-                child: TextField(
-                  controller: pinT,
-                  keyboardType: TextInputType.number,
-                  maxLength: 6,
-                  style: TextStyle(color: Colors.black),
-                  onChanged: (txt) {
-                    setState(() {
-                      enabled = checknull(
-                          Provider.of<CartData>(context, listen: false)
-                              .profile);
-                    });
-                    pin = txt;
-                  },
-                  decoration: InputDecoration(
-                    labelStyle: TextStyle(color: Styles.log_sign_text),
-                    labelText: "Pincode",
-                    filled: true,
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  "Forgot Password",
-                  style: TextStyle(color: Styles.log_sign_text),
-                ),
-              ),
-              Padding(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: GenderField(
-                    genderList: ['Male', 'Female'],
-                    def: def,
-                    callback: (value) {
-                      _gender = value;
-                      print(value);
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: TextField(
+                    controller: nT,
+                    onChanged: (text) {
+                      setState(() {
+                        enabled = checknull(
+                            Provider.of<CartData>(context, listen: false)
+                                .profile);
+                      });
+                      name = text;
                     },
-                  )),
-              enabled
-                  ? Container()
-                  : Padding(
-                padding: const EdgeInsets.only(
-                    left: 5.0, right: 5.0, bottom: 10.0, top: 5.0),
-                child: FlatButton(
-                  height: MediaQuery.of(context).size.width / 7,
-                  minWidth: MediaQuery.of(context).size.width,
-                  splashColor: Colors.white,
-                  disabledColor: Styles.bg_color,
-                  shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(6.0)),
-                  padding: EdgeInsets.all(8),
-                  color: Styles.button_color,
-                  onPressed: () {
-                    print(checknull(
-                        Provider.of<CartData>(context, listen: false)
-                            .profile));
-                    if (nT.text.isNotEmpty &&
-                        email != null &&
-                        phT.text.isNotEmpty &&
-                        pinT.text.isNotEmpty &&
-                        addT1.text.isNotEmpty &&
-                        addTtown.text.isNotEmpty &&
-                        addTdis.text.isNotEmpty &&
-                        addTstate.text.isNotEmpty) {
-                      if (phT.text.length == 10) {
-                        if (pinT.text.length == 6) {
-                          if (_gender != null) {
-                            if (Test.accessToken != null &&
-                                Test.refreshToken != null) {
-                              saveProfile(context);
-                            } else {
-                              Styles.showSnackBar(
-                                  context,
-                                  Styles.Log_sign,
-                                  Duration(seconds: 5),
-                                  'Please Login first',
-                                  Colors.black, () {
-                                setState(() {
-                                  Test.fragNavigate
-                                      .putPosit(key: 'Login');
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(color: Styles.log_sign_text),
+                    decoration: InputDecoration(
+                      labelStyle: TextStyle(color: Styles.log_sign_text),
+                      labelText: "Fullname",
+                      filled: true,
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: TextField(
+                    controller: addT1,
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(color: Colors.black),
+                    onChanged: (txt) {
+                      setState(() {
+                        enabled = checknull(
+                            Provider.of<CartData>(context, listen: false)
+                                .profile);
+                      });
+                      addressline1 = txt;
+                    },
+                    decoration: InputDecoration(
+                      labelStyle: TextStyle(color: Styles.log_sign_text),
+                      labelText: "Address(House no, Building, Street, Area)",
+                      filled: true,
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: TextField(
+                    controller: addTtown,
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(color: Colors.black),
+                    onChanged: (txt) {
+                      setState(() {
+                        enabled = checknull(
+                            Provider.of<CartData>(context, listen: false)
+                                .profile);
+                      });
+                      town_village = txt;
+                    },
+                    decoration: InputDecoration(
+                      labelStyle: TextStyle(color: Styles.log_sign_text),
+                      labelText: "Town/Village",
+                      filled: true,
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: TextField(
+                    controller: addTdis,
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(color: Colors.black),
+                    onChanged: (txt) {
+                      setState(() {
+                        enabled = checknull(
+                            Provider.of<CartData>(context, listen: false)
+                                .profile);
+                      });
+                      district = txt;
+                    },
+                    decoration: InputDecoration(
+                      labelStyle: TextStyle(color: Styles.log_sign_text),
+                      labelText: "District",
+                      filled: true,
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: TextField(
+                    controller: addTstate,
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(color: Colors.black),
+                    onChanged: (txt) {
+                      setState(() {
+                        enabled = checknull(
+                            Provider.of<CartData>(context, listen: false)
+                                .profile);
+                      });
+                      state = txt;
+                    },
+                    decoration: InputDecoration(
+                      labelStyle: TextStyle(color: Styles.log_sign_text),
+                      labelText: "State",
+                      filled: true,
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: TextField(
+                    maxLength: 10,
+                    controller: phT,
+                    keyboardType: TextInputType.phone,
+                    style: TextStyle(color: Colors.black),
+                    onChanged: (txt) {
+                      setState(() {
+                        enabled = checknull(
+                            Provider.of<CartData>(context, listen: false)
+                                .profile);
+                      });
+                      phone = txt;
+                    },
+                    decoration: InputDecoration(
+                      labelStyle: TextStyle(color: Styles.log_sign_text),
+                      labelText: "Phone",
+                      filled: true,
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding:
+                  const EdgeInsets.only(left: 10.0, right: 10.0, top: 5.0),
+                  child: TextField(
+                    controller: pinT,
+                    keyboardType: TextInputType.number,
+                    maxLength: 6,
+                    style: TextStyle(color: Colors.black),
+                    onChanged: (txt) {
+                      setState(() {
+                        enabled = checknull(
+                            Provider.of<CartData>(context, listen: false)
+                                .profile);
+                      });
+                      pin = txt;
+                    },
+                    decoration: InputDecoration(
+                      labelStyle: TextStyle(color: Styles.log_sign_text),
+                      labelText: "Pincode",
+                      filled: true,
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    "Forgot Password",
+                    style: TextStyle(color: Styles.log_sign_text),
+                  ),
+                ),
+                Padding(
+                    padding: EdgeInsets.only(bottom: 5),
+                    child: GenderField(
+                      genderList: ['Male', 'Female'],
+                      def: def,
+                      callback: (value) {
+                        _gender = value;
+                        print(value);
+                      },
+                    )),
+                enabled
+                    ? Container()
+                    : Padding(
+                  padding: const EdgeInsets.only(
+                      left: 5.0, right: 5.0, bottom: 10.0, top: 5.0),
+                  child: FlatButton(
+                    height: getHeight(),
+                    minWidth: MediaQuery.of(context).size.width,
+                    splashColor: Colors.white,
+                    disabledColor: Styles.bg_color,
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(6.0)),
+                    padding: EdgeInsets.all(8),
+                    color: Styles.button_color,
+                    onPressed: () {
+                      print(checknull(
+                          Provider.of<CartData>(context, listen: false)
+                              .profile));
+                      if (nT.text.isNotEmpty &&
+                          email != null &&
+                          phT.text.isNotEmpty &&
+                          pinT.text.isNotEmpty &&
+                          addT1.text.isNotEmpty &&
+                          addTtown.text.isNotEmpty &&
+                          addTdis.text.isNotEmpty &&
+                          addTstate.text.isNotEmpty) {
+                        if (phT.text.length == 10) {
+                          if (pinT.text.length == 6) {
+                            if (_gender != null) {
+                              if (Test.accessToken != null &&
+                                  Test.refreshToken != null) {
+                                saveProfile(context);
+                              } else {
+                                Styles.showSnackBar(
+                                    context,
+                                    Styles.Log_sign,
+                                    Duration(seconds: 5),
+                                    'Please Login first',
+                                    Colors.black, () {
+                                  setState(() {
+                                    Test.fragNavigate
+                                        .putPosit(key: 'Login');
+                                  });
                                 });
-                              });
+                              }
+                            } else {
+                              Styles.showWarningToast(
+                                  Colors.yellow,
+                                  "Please select a gender",
+                                  Colors.black,
+                                  15);
                             }
                           } else {
                             Styles.showWarningToast(
                                 Colors.yellow,
-                                "Please select a gender",
+                                "Please enter a valid pincode",
                                 Colors.black,
                                 15);
                           }
                         } else {
-                          Styles.showWarningToast(
-                              Colors.yellow,
-                              "Please enter a valid pincode",
-                              Colors.black,
-                              15);
+                          Styles.showWarningToast(Colors.yellow,
+                              "Enter a valid phone no", Colors.black, 15);
                         }
                       } else {
-                        Styles.showWarningToast(Colors.yellow,
-                            "Enter a valid phone no", Colors.black, 15);
+                        Styles.showWarningToast(
+                            Colors.yellow,
+                            "Please enter required fields",
+                            Colors.black,
+                            15);
                       }
-                    } else {
-                      Styles.showWarningToast(
-                          Colors.yellow,
-                          "Please enter required fields",
-                          Colors.black,
-                          15);
-                    }
-                  },
-                  child: Text(
-                    "Save",
-                    style: TextStyle(
-                      color: Styles.button_text_color,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                    },
+                    child: Text(
+                      "Save",
+                      style: TextStyle(
+                        color: Styles.button_text_color,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -681,5 +649,14 @@ class _ProfilePageState extends State<ProfilePage> {
       addTstate.text = s == "" ? "" : s.split(",")[3];
     });
 
+  }
+
+  getHeight() {
+    var width = MediaQuery.of(context).size.width;
+    if(width>kTabletBreakpoint){
+      return 80;
+    }else{
+      return MediaQuery.of(context).size.width/8;
+    }
   }
 }

@@ -84,7 +84,7 @@ class ProductItemVIew extends StatelessWidget {
       return MediaQuery.of(context).size.height / 60;
     }
     else if(type == "Tablet"){
-      return MediaQuery.of(context).size.height / 50;
+      return MediaQuery.of(context).size.height / 70;
     }else{
       return 10;
     }
@@ -103,13 +103,13 @@ class ProductItemVIew extends StatelessWidget {
 
   getDeviceType(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    if (width > kTabletBreakpoint) {
+    if (width > 1025) {
       return "Desktop";
     }else if(width > 412 && width < kTabletBreakpoint){
       print("Mini");
       return "Mini";
     }
-    else if (width > kMobileBreakpoint) {
+    else if (width > kMobileBreakpoint && width <1025) {
       return "Tablet";
     } else {
       return "Mobile";

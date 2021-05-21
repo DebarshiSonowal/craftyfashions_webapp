@@ -89,6 +89,8 @@ class _HomePageState extends State<HomePage> {
       Provider.of<CartData>(customcontext, listen: false).setAds(ads);
       Provider.of<CartData>(customcontext, listen: false)
           .setRazorpay(Razorpay.fromJson(data3));
+    }else{
+      _refreshController.refreshCompleted();
     }
   }
 
