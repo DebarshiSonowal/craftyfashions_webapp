@@ -5,6 +5,7 @@ import 'package:craftyfashions_webapp/UI/Styling/Breakpoints.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'HomePageProducts.dart';
 import 'ProductItemView.dart';
 class AllProducts extends StatelessWidget {
   const AllProducts({Key key}) : super(key: key);
@@ -28,7 +29,7 @@ class AllProducts extends StatelessWidget {
                 3)
             .length,
         itemBuilder: (BuildContext ctxt, int index) {
-          return ProductItemVIew(
+          return HomePageProducts(
             buttonSize: buttonSize,
             list: Provider.of<CartData>(context, listen: true)
                 .allproducts

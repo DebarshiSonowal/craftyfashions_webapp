@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:craftyfashions_webapp/Models/Products.dart';
+import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/scheduler/ticker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -19,7 +20,7 @@ class CarouselWithIndicatorDemo<T> extends StatefulWidget {
   }
 }
 
-class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> with SingleTickerProviderStateMixin {
+class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> with TickerProviderStateMixin {
   int _current = 0;
 
   int get current => _current;
@@ -50,8 +51,8 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> with 
                                 SizedBox(
                                   width: 50.0,
                                   height: 50.0,
-                                  child: SpinKitSquareCircle(
-                                    color: Colors.white,
+                                  child: SpinKitCubeGrid(
+                                    color: Styles.Log_sign,
                                     size: 50.0,
                                     controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 1200)),
                                   ),

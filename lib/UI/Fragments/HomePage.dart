@@ -52,7 +52,6 @@ class _HomePageState extends State<HomePage> {
 
   void _onRefresh() async {
     UsersModel usersModel1 = UsersModel();
-    if (Provider.of<CartData>(context, listen: false).allproducts.length==0) {
       var Data = await usersModel1.getAll();
       if (Data.toString() != "Server Error" ||
           Data.toString() != "Products not found") {
@@ -67,14 +66,11 @@ class _HomePageState extends State<HomePage> {
             _refreshController.refreshCompleted();
           });
         } else {
-          print("nkn");
           _refreshController.refreshFailed();
         }
       } else {
         _refreshController.refreshFailed();
       }
-    }
-    if(Provider.of<CartData>(context, listen: false).getCateg().length == 0){
       var data = await usersModel1.getRequired();
 
       var data1 = data['require'] as List;
@@ -89,9 +85,6 @@ class _HomePageState extends State<HomePage> {
       Provider.of<CartData>(customcontext, listen: false).setAds(ads);
       Provider.of<CartData>(customcontext, listen: false)
           .setRazorpay(Razorpay.fromJson(data3));
-    }else{
-      _refreshController.refreshCompleted();
-    }
   }
 
   void _onLoading() async {

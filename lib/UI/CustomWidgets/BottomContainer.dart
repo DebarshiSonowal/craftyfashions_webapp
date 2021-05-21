@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:craftyfashions_webapp/UI/Styling/Breakpoints.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
 import 'package:custom_radio_grouped_button/CustomButtons/ButtonTextStyle.dart';
 import 'package:custom_radio_grouped_button/CustomButtons/CustomRadioButton.dart';
@@ -21,7 +22,7 @@ class BottomContainer extends StatefulWidget{
   _BottomContainerState createState() => _BottomContainerState();
 }
 
-class _BottomContainerState extends State<BottomContainer> with SingleTickerProviderStateMixin {
+class _BottomContainerState extends State<BottomContainer> with TickerProviderStateMixin {
 
 
   @override
@@ -61,8 +62,8 @@ class _BottomContainerState extends State<BottomContainer> with SingleTickerProv
                         SizedBox(
                           width: 50.0,
                           height: 50.0,
-                          child: SpinKitSquareCircle(
-                            color: Colors.white,
+                          child: SpinKitCubeGrid(
+                            color: Styles.Log_sign,
                             size: 50.0,
                             controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 1200)),
                           )
@@ -117,7 +118,7 @@ class _BottomContainerState extends State<BottomContainer> with SingleTickerProv
                       flex: 2,
                       child: Container(
                         child: Padding(
-                          padding: EdgeInsets.only(left: (MediaQuery.of(context).size.width - MediaQuery.of(context).size.height)/2),
+                          padding: EdgeInsets.only(left: 50,),
                           child: CustomRadioButton(
                             width: 65,
                             elevation: 5,
@@ -216,8 +217,8 @@ class _BottomContainerState extends State<BottomContainer> with SingleTickerProv
                     Flexible(
                       flex: 2,
                       child: Container(
-                        width: MediaQuery.of(context).size.width / (3),
-                        height: MediaQuery.of(context).size.width / 5,
+                        // width: ,
+                        height: getSize(context),
                         child: ElevatedButton(
                           onPressed: () {
                             if (widget.selectedColor != null && widget.selectedSize != null) {
@@ -250,5 +251,17 @@ class _BottomContainerState extends State<BottomContainer> with SingleTickerProv
         ),
       ),
     );
+  }
+
+  getSize(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    if(width>1024){
+      return MediaQuery.of(context).size.width / (5);
+    }else if(width<=kTabletBreakpoint){
+      return MediaQuery.of(context).size.width / (6);
+    }
+    else{
+      return MediaQuery.of(context).size.width / (3);
+    }
   }
 }

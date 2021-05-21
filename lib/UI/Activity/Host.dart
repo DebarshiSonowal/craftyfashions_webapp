@@ -174,23 +174,7 @@ class HostState extends State<Host> {
                         .indexOf(_fragNav.currentKey),
                     selectedItemColor: Colors.black,
                     backgroundColor: Colors.white70,
-                    onTap: (index) {
-                      setState(() {
-                        bottom = index;
-                        var b = _fragNav.screenList.keys.toList();
-                        var c = _fragNav.actionsList;
-                        if (c != null) {
-                          _fragNav.putPosit(key: b[index]);
-                        } else {
-                          initialize();
-                          try {
-                            _fragNav.putPosit(key: b[index]);
-                          } catch (e) {
-                            print("GGOt $e");
-                          }
-                        }
-                      });
-                    },
+                    onTap: (index)=>changeFragment(index),
                   ),
                   body: DefaultTabController(
                     length: s.data.bottom.length,
@@ -327,7 +311,6 @@ class HostState extends State<Host> {
     );
     Test.fragNavigate = _fragNav;
     _fragNav.setDrawerContext = context;
-    super.initState();
   }
 
   checkifMobile() {
@@ -378,5 +361,23 @@ class HostState extends State<Host> {
             iconColor: Colors.white,
           ),
         ]);
+  }
+
+  changeFragment(int index) {
+    setState(() {
+      bottom = index;
+      var b = _fragNav.screenList.keys.toList();
+      var c = _fragNav.actionsList;
+      if (c != null) {
+        _fragNav.putPosit(key: b[index]);
+      } else {
+        initialize();
+        try {
+          _fragNav.putPosit(key: b[index]);
+        } catch (e) {
+          print("GGOt $e");
+        }
+      }
+    });
   }
 }

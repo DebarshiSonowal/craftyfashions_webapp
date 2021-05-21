@@ -1,4 +1,5 @@
 import 'package:craftyfashions_webapp/UI/Activity/PhotoviewAsset.dart';
+import 'package:craftyfashions_webapp/UI/Styling/Breakpoints.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
 import 'package:custom_radio_grouped_button/CustomButtons/ButtonTextStyle.dart';
 import 'package:flutter/material.dart';
@@ -110,36 +111,39 @@ class _ProductviewBottomSheetState extends State<ProductviewBottomSheet> {
                     Flexible(
                       flex: 3,
                       child: Center(
-                        child: GroupButton(
-                          width: 85,
-                          spacing: MediaQuery.of(context).size.height,
-                          elevation: 5,
-                          customShape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(20)),
+                        child: Padding(
+                          padding: EdgeInsets.only(left: getPadding(context)),
+                          child: GroupButton(
+                            width: 85,
+                            spacing: MediaQuery.of(context).size.height,
+                            elevation: 5,
+                            customShape: RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(20)),
+                            ),
+                            absoluteZeroSpacing: true,
+                            unSelectedColor:
+                            Theme.of(context).canvasColor,
+                            buttonLables:
+                            widget.product.Color.split(","),
+                            buttonValues:
+                            widget.product.Color.split(","),
+                            buttonTextStyle: ButtonTextStyle(
+                                selectedColor: Colors.black,
+                                unSelectedColor: Colors.black,
+                                textStyle: TextStyle(fontSize: 12)),
+                            radioButtonValue: (value) {
+                              setState(() {
+                                widget.selectedColor = value;
+                                print("selected ${widget.selectedColor} $value");
+                                // selectedSize = null;
+                              });
+                              print("selected ${widget.selectedColor}");
+                            },
+                            selectedColor: Styles.Log_sign,
+                            defaultSelected:
+                            widget.product.Color.split(",")[widget.currentIndex],
                           ),
-                          absoluteZeroSpacing: true,
-                          unSelectedColor:
-                          Theme.of(context).canvasColor,
-                          buttonLables:
-                          widget.product.Color.split(","),
-                          buttonValues:
-                          widget.product.Color.split(","),
-                          buttonTextStyle: ButtonTextStyle(
-                              selectedColor: Colors.black,
-                              unSelectedColor: Colors.black,
-                              textStyle: TextStyle(fontSize: 12)),
-                          radioButtonValue: (value) {
-                            setState(() {
-                              widget.selectedColor = value;
-                              print("selected ${widget.selectedColor} $value");
-                              // selectedSize = null;
-                            });
-                            print("selected ${widget.selectedColor}");
-                          },
-                          selectedColor: Styles.Log_sign,
-                          defaultSelected:
-                          widget.product.Color.split(",")[widget.currentIndex],
                         ),
                       ),
                     ),
@@ -207,4 +211,15 @@ class _ProductviewBottomSheetState extends State<ProductviewBottomSheet> {
     print(widget.product.Gender.toString());
     return widget.product.Gender.toString().trim() == "MALE";
   }
+
+  getPadding(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    if(width<=kTabletBreakpoint){
+    return 1;
+    }else if(width>1024){
+      return MediaQuery.of(context).size.width/4;
+    }else{
+      return MediaQuery.of(context).size.width/5;
+    }
+}
 }

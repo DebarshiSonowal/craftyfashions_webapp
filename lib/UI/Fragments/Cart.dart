@@ -127,7 +127,7 @@ class _CartState extends State<Cart> {
                       });
                 } else {
                   Styles.showSnackBar(context, Colors.yellow,
-                      Duration(seconds: 3), 'Next', Colors.white, () {
+                      Duration(seconds: 3), 'Log in', Colors.white, () {
                     setState(() {
                       Test.fragNavigate.putPosit(key: 'Login');
                     });
@@ -388,11 +388,13 @@ class _CartState extends State<Cart> {
   }
 
   getAddressfromInternet() async {
-    UsersModel usersModel3 = UsersModel();
-    var profile = await usersModel3
-        .getProf(Provider.of<CartData>(context, listen: false).user.id);
-    if (profile != "Server Error" && profile != null) {
-      Provider.of<CartData>(context, listen: false).updateProfile(profile);
+    if (Provider.of<CartData>(context, listen: false).user!=null) {
+      UsersModel usersModel3 = UsersModel();
+      var profile = await usersModel3
+          .getProf(Provider.of<CartData>(context, listen: false).user.id);
+      if (profile != "Server Error" && profile != null) {
+        Provider.of<CartData>(context, listen: false).updateProfile(profile);
+      }
     }
   }
 }
