@@ -151,7 +151,7 @@ class AllProductsFragmentProductItemView extends StatelessWidget {
                       fontFamily: "Halyard",
                       color: Colors.black54,
                       fontWeight: FontWeight.w400,
-                      fontSize: getPriceSize(context)),
+                      fontSize: Styles.getPriceSize(context)),
                 ),
               ),
             ),
@@ -181,7 +181,7 @@ class AllProductsFragmentProductItemView extends StatelessWidget {
                 child: Text(
                   "₹ ${list1[Index].Price}",
                   style: TextStyle(
-                      fontSize: getPriceSize(context),
+                      fontSize: Styles.getPriceSize(context),
                       color: Styles.price_color,
                     fontWeight: FontWeight.w400,),
                 ),
@@ -231,12 +231,5 @@ class AllProductsFragmentProductItemView extends StatelessWidget {
     }
   }
 
-  getPriceSize(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    if (width >= 717) {
-      return MediaQuery.of(context).size.height / 45;
-    } else {
-      return MediaQuery.of(context).size.height / 60;
-    }
-  }
+
 }

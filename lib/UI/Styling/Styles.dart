@@ -14,6 +14,15 @@ class Styles {
   static const hyperlink = Colors.black;
   static const url = "https://officialcraftybackend.herokuapp.com/users/";
 
+  static getPriceSize(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    if (width >= 717) {
+      return MediaQuery.of(context).size.height / 45;
+    } else {
+      return MediaQuery.of(context).size.height / 60;
+    }
+  }
+
 // static const url = "http://10.0.2.2:3000/users/";
 //static const url = "http://localhost:3000/users/";
   static void showWarningToast(

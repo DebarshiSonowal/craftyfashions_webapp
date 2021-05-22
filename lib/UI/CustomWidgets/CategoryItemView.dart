@@ -17,31 +17,36 @@ class CategoryItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: OnTap,
-      child: Card(
-        margin: EdgeInsets.all(9),
-        color: Colors.transparent,
-        elevation: 3,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          height: 130,
-          width: 150,
-          padding: EdgeInsets.all(5),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Flexible(
-                flex: 4,
-                child: Image.network(
-                  list[index].image,
-                ),
+      child: Container(
+
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        height: 200,
+        width: MediaQuery.of(context).size.width/2,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Flexible(
+              fit: FlexFit.tight,
+              flex: 10,
+              child: Image.network(
+                list[index].image,
+                fit: BoxFit.fill,
               ),
-              Flexible(flex: 1, child: Text(list[index].name))
-            ],
-          ),
+            ),
+            Flexible(
+                flex: 2,
+                fit: FlexFit.tight,
+                child: Text(list[index].name,
+                    style: TextStyle(
+                      fontFamily: "Halyard",
+                      color: Colors.black54,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 22,
+                    ))),
+          ],
         ),
       ),
     );

@@ -23,37 +23,18 @@ class _CategoryDataState extends State<CategoryData> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          color: Colors.transparent,
-          height: 150,
-          child: ListView.builder(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            itemCount:
-            Provider.of<CartData>(context, listen: true).getCateg().length,
-            itemBuilder: (BuildContext ctxt, int index) {
-              return CategoryItemView(
-                list: Provider.of<CartData>(context, listen: true).getCateg(),
-                index: index,
-                OnTap: () => widget.onTap(index),
-              );
-            },
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
         CarouselSlider(
           options: CarouselOptions(
-            height: 300.0,
             autoPlay: true,
+            aspectRatio: 16/10,
             autoPlayInterval: Duration(seconds: 3),
             autoPlayAnimationDuration: Duration(milliseconds: 800),
-            autoPlayCurve: Curves.fastOutSlowIn,
+            autoPlayCurve: Curves.easeIn,
             enableInfiniteScroll: true,
+            viewportFraction: 1,
             reverse: false,
           ),
           items:
@@ -66,10 +47,10 @@ class _CategoryDataState extends State<CategoryData> with TickerProviderStateMix
                           .getAdImage()
                           .indexOf(i)),
                   child: Container(
-                    width: MediaQuery.of(context).size.width,
                     margin: EdgeInsets.symmetric(horizontal: 5.0),
                     decoration: BoxDecoration(color: Colors.transparent),
                     child: CachedNetworkImage(
+                      fit: BoxFit.fill,
                       imageUrl: i,
                       progressIndicatorBuilder:
                           (context, url, downloadProgress) => SizedBox(
@@ -88,6 +69,24 @@ class _CategoryDataState extends State<CategoryData> with TickerProviderStateMix
               },
             );
           }).toList(),
+        ),
+        SizedBox(height: 10,),
+        Container(
+          height: 320,
+          width: MediaQuery.of(context).size.width,
+          child: ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemCount:
+            Provider.of<CartData>(context, listen: true).getCateg().length,
+            itemBuilder: (BuildContext ctxt, int index) {
+              return CategoryItemView(
+                list: Provider.of<CartData>(context, listen: true).getCateg(),
+                index: index,
+                OnTap: () => widget.onTap(index),
+              );
+            },
+          ),
         ),
       ],
     );

@@ -23,7 +23,7 @@ class _HomeWidgetState extends State<HomeWidget> {
     print("Home page loading build");
     return kIsWeb?SingleChildScrollView(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Provider.of<CartData>(context, listen: true).getCateg().length == 0
@@ -80,7 +80,7 @@ class _HomeWidgetState extends State<HomeWidget> {
             height: 15,
           ),
           Padding(
-            padding: EdgeInsets.all(3.0),
+            padding: const EdgeInsets.all(10.0),
             child: Card(
               elevation: 2,
               color: Colors.white,
@@ -93,21 +93,23 @@ class _HomeWidgetState extends State<HomeWidget> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    getAsset(),
+                    getAsset2(),
                     Flexible(
                         child: Text(
-                      'Stay Home\n\nStay Safe\n\nAnd order on Crafty 😉',
-                      softWrap: true,
-                      style: TextStyle(
-                          fontFamily: "BEYOND",
-                          fontSize: 22,
-                          color: Colors.red),
-                    ))
+                          'Craft your own look\n with \nCrafty',
+                          softWrap: true,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontFamily: "Halyard",
+                              fontSize: 24,
+                              color: Colors.black),
+                        ))
                   ],
                 ),
               ),
             ),
           ),
+
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -115,7 +117,7 @@ class _HomeWidgetState extends State<HomeWidget> {
               children: [
                 Text(
                   "All Products:",
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: 20),
                 ),
                 TextButton(
                     onPressed: () {
@@ -127,7 +129,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                     },
                     child: Text(
                       "Show All",
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(fontSize: 20),
                     ))
               ],
             ),
@@ -152,7 +154,7 @@ class _HomeWidgetState extends State<HomeWidget> {
             height: 15,
           ),
           Padding(
-            padding: const EdgeInsets.all(3.0),
+            padding: EdgeInsets.all(3.0),
             child: Card(
               elevation: 2,
               color: Colors.white,
@@ -165,17 +167,16 @@ class _HomeWidgetState extends State<HomeWidget> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    getAsset2(),
+                    getAsset(),
                     Flexible(
                         child: Text(
-                      'Craft your own look\n with \nCrafty',
-                      softWrap: true,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: "EBGaramond",
-                          fontSize: 24,
-                          color: Colors.black),
-                    ))
+                          'Stay Home\n\nStay Safe\n\nAnd order on Crafty 😉',
+                          softWrap: true,
+                          style: TextStyle(
+                              fontFamily: "BEYOND",
+                              fontSize: 22,
+                              color: Colors.red),
+                        ))
                   ],
                 ),
               ),
