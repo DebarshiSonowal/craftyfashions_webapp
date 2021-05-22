@@ -2,6 +2,7 @@ import 'package:craftyfashions_webapp/Helper/CartData.dart';
 import 'package:craftyfashions_webapp/Helper/Test.dart';
 import 'package:craftyfashions_webapp/Models/CartProduct.dart';
 import 'package:craftyfashions_webapp/Models/Products.dart';
+import 'package:craftyfashions_webapp/UI/CustomWidgets/BottomContainer.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/ImageSlider.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/Photoview.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/ProductviewBottomSheet.dart';
@@ -17,8 +18,6 @@ class ProductView extends StatefulWidget {
 
   ProductView({this.product, this.fragNav});
 
-  int quantity = 1;
-
   final Products product;
 
   @override
@@ -31,6 +30,7 @@ class _ProductViewState extends State<ProductView> {
   var selectedSize;
   var snackBar;
   var currentIndex = 0;
+  int quantity = 1;
   int currentPhoto = 0;
   List<int> lst = [1, 22, 3];
   int Index;
@@ -46,20 +46,18 @@ class _ProductViewState extends State<ProductView> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          color: Styles.bg_color,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                flex: 1,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Card(
-                      color: Colors.white70,
-                      child: IconButton(
+            color: Color(0xffe3e3e6),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  color: Colors.white,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
                         splashColor: Colors.white,
                         icon: Icon(
                           Icons.arrow_back,
@@ -68,10 +66,7 @@ class _ProductViewState extends State<ProductView> {
                           Navigator.of(context).pop();
                         },
                       ),
-                    ),
-                    Card(
-                      color: Colors.white70,
-                      child: LikeButton(
+                      LikeButton(
                         size: buttonSize,
                         circleColor: CircleColor(
                             start: Color(0xff00ddff), end: Color(0xff0099cc)),
@@ -86,33 +81,83 @@ class _ProductViewState extends State<ProductView> {
                             size: buttonSize,
                           );
                         },
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              Flexible(
-                flex: 13,
-                child: CarouselWithIndicatorDemo(widget.product,
-                    Test.fragNavigate, (index) => onTapeed(index), (t) {
-                  setState(() {
-                    currentIndex = t;
-                  });
-                }),
-              ),
-              Flexible(
-                flex:6,
-                child: ProductviewBottomSheet(this.getIndex, this.getLabels,
-                    (color, size) {
-                  selectedColor = color;
-                  selectedSize = size;
-                  show();
-                }, widget.product, this.selectedSize, widget.quantity,
-                    selectedColor, currentIndex),
-              )
-            ],
-          ),
-        ),
+                Container(
+                  color: Colors.black45,
+                  height: MediaQuery.of(context).size.height - 90,
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    children: [
+                      CarouselWithIndicatorDemo(widget.product,
+                          Test.fragNavigate, (index) => onTapeed(index), (t) {
+                        setState(() {
+                          currentIndex = t;
+                        });
+                      }),
+                      ProductviewBottomSheet(this.getIndex, this.getLabels,
+                          (color, size, quant) {
+                        selectedColor = color;
+                        selectedSize = size;
+                        quantity = quant;
+                      }, widget.product, currentIndex),
+                    ],
+                  ),
+                ),
+                ConstrainedBox(
+                  constraints: BoxConstraints.tightFor(
+                      width: MediaQuery.of(context).size.width - 20,
+                      height: 40),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.red),
+                    ),
+                    child: Text(
+                      'Order',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                          fontFamily: Styles.font,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: () {
+                      if (selectedSize != null) {
+                        showModalBottomSheet(
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            isDismissible: true,
+                            isScrollControlled: true,
+                            builder: (BuildContext context) {
+                              return StatefulBuilder(
+                                builder: (BuildContext context,
+                                    StateSetter setModelState) {
+                                  return BottomContainer(
+                                      getIndex, getLabels, setModelState,
+                                      (color, size, quant) {
+                                    selectedColor = color;
+                                    selectedSize = size;
+                                    quantity = quant;
+                                    show();
+                                  }, selectedColor, widget.product, quantity);
+                                },
+                              );
+                            }).whenComplete(() {
+                          setState(() {
+                            selectedSize = null;
+                            quantity = 1;
+                          });
+                        });
+                      } else {
+                        Styles.showWarningToast(Colors.red,
+                            "Please select a size", Colors.white, 18);
+                      }
+                    },
+                  ),
+                ),
+              ],
+            )),
       ),
     );
   }
@@ -122,7 +167,7 @@ class _ProductViewState extends State<ProductView> {
         selectedColor,
         widget.product.Price,
         widget.product.Image.toString().split(",")[getIndex()].trim(),
-        widget.quantity,
+        quantity,
         selectedSize,
         widget.product.Name,
         widget.product.Id));

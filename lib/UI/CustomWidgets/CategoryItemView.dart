@@ -1,7 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:craftyfashions_webapp/Models/Categories.dart';
+import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class CategoryItemView extends StatelessWidget {
+class CategoryItemView extends StatefulWidget {
   const CategoryItemView(
       {Key key,
       @required this.list,
@@ -14,9 +17,14 @@ class CategoryItemView extends StatelessWidget {
   final int index;
 
   @override
+  _CategoryItemViewState createState() => _CategoryItemViewState();
+}
+
+class _CategoryItemViewState extends State<CategoryItemView>  with TickerProviderStateMixin{
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: OnTap,
+      onTap: widget.OnTap,
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -31,15 +39,26 @@ class CategoryItemView extends StatelessWidget {
             Flexible(
               fit: FlexFit.tight,
               flex: 10,
-              child: Image.network(
-                list[index].image,
+              child: CachedNetworkImage(
                 fit: BoxFit.fill,
+                imageUrl:  widget.list[widget.index].image,
+                progressIndicatorBuilder:
+                    (context, url, downloadProgress) => SizedBox(
+                    width: 50.0,
+                    height: 50.0,
+                    child:SpinKitFadingCube(
+                      color: Styles.price_color,
+                      size: 50.0,
+                      controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 1200)),
+                    )
+                ),
+                errorWidget: (context, url, error) => Icon(Icons.error),
               ),
             ),
             Flexible(
                 flex: 2,
                 fit: FlexFit.tight,
-                child: Text(list[index].name,
+                child: Text(widget.list[widget.index].name,
                     style: TextStyle(
                       fontFamily: "Halyard",
                       color: Colors.black54,

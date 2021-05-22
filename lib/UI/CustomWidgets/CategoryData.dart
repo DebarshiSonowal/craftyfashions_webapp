@@ -57,7 +57,7 @@ class _CategoryDataState extends State<CategoryData> with TickerProviderStateMix
                         width: 50.0,
                         height: 50.0,
                         child:SpinKitFadingCube(
-                          color: Styles.Log_sign,
+                          color: Styles.price_color,
                           size: 50.0,
                           controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 1200)),
                         )

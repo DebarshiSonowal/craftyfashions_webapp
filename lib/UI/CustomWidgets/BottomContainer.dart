@@ -9,12 +9,15 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'Photoview.dart';
 
-class BottomContainer extends StatefulWidget{
-  Function getIndex,getLabels,setModelState;
+class BottomContainer extends StatefulWidget {
+  Function getIndex, getLabels, setModelState;
+
   // Function(T) show;
-  final Function(String,String) show;
-  var product,quantity;
-  var selectedColor,selectedSize;
+  final Function(String, String,int) show;
+  var product;
+  int quantity;
+  var selectedColor, selectedSize;
+
   BottomContainer(this.getIndex, this.getLabels, this.setModelState, this.show,
       this.selectedColor, this.product, this.quantity);
 
@@ -22,9 +25,8 @@ class BottomContainer extends StatefulWidget{
   _BottomContainerState createState() => _BottomContainerState();
 }
 
-class _BottomContainerState extends State<BottomContainer> with TickerProviderStateMixin {
-
-
+class _BottomContainerState extends State<BottomContainer>
+    with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -35,45 +37,46 @@ class _BottomContainerState extends State<BottomContainer> with TickerProviderSt
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
-          height: MediaQuery.of(context).size.height/1.7,
-          color: Colors.white70,
-          child: Row(
+          height: MediaQuery.of(context).size.height / 1.7,
+          color: Color(0xffe3e3e6),
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
                 flex: 2,
                 child: GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) =>
-                            Photoview(widget.product.Image
+                        MaterialPageRoute(
+                            builder: (context) => Photoview(widget.product.Image
                                 .toString()
                                 .split(",")[widget.getIndex()]
                                 .trim())));
                   },
                   child: CachedNetworkImage(
-                    imageUrl:  widget.product.Image
+                    imageUrl: widget.product.Image
                         .toString()
                         .split(",")[widget.getIndex()]
                         .trim(),
-                    height: MediaQuery.of(context).size.height/ (2),
-                    progressIndicatorBuilder: (context, url, downloadProgress) =>
-                        SizedBox(
-                          width: 50.0,
-                          height: 50.0,
-                          child: SpinKitCubeGrid(
-                            color: Styles.Log_sign,
-                            size: 50.0,
-                            controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 1200)),
-                          )
-                        ),
+                    height: MediaQuery.of(context).size.height / (2),
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) => SizedBox(
+                            width: 50.0,
+                            height: 50.0,
+                            child: SpinKitCubeGrid(
+                              color: Styles.Log_sign,
+                              size: 50.0,
+                              controller: AnimationController(
+                                  vsync: this,
+                                  duration: const Duration(milliseconds: 1200)),
+                            )),
                     errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
                 ),
               ),
               Flexible(
-                flex:3,
+                flex: 3,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -85,10 +88,29 @@ class _BottomContainerState extends State<BottomContainer> with TickerProviderSt
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(widget.product.Name.toString(),style: TextStyle(fontWeight: FontWeight.bold),),
+                              Text(
+                                widget.product.Name.toString(),
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                               Text(widget.selectedColor),
                               Text(
                                 "₹${widget.product.Price}",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              Text(
+                                "${widget.selectedSize}",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              Text(
+                                "${widget.quantity}",
                                 style: TextStyle(
                                   color: Colors.red,
                                   fontWeight: FontWeight.bold,
@@ -102,128 +124,16 @@ class _BottomContainerState extends State<BottomContainer> with TickerProviderSt
                     ),
                     Flexible(
                       flex: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          "Available Sizes:",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Flexible(
-                      flex: 2,
-                      child: Container(
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 50,),
-                          child: CustomRadioButton(
-                            width: 65,
-                            elevation: 5,
-                            customShape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(20)),
-                            ),
-                            absoluteZeroSpacing: true,
-                            unSelectedColor: Theme.of(context).canvasColor,
-                            buttonLables: widget.getLabels(),
-                            buttonValues: widget.getLabels(),
-                            buttonTextStyle: ButtonTextStyle(
-                                selectedColor: Colors.black,
-                                unSelectedColor: Colors.black,
-                                textStyle: TextStyle(fontSize: 12)),
-                            radioButtonValue: (value) {
-                              widget.selectedSize = value;
-                              print(value);
-                            },
-                            selectedColor: Styles.Log_sign,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Flexible(
-                      flex: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          "Quantity:",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 140,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Flexible(
-                            flex: 4,
-                            child: Card(
-                              child: IconButton(
-                                icon: Icon(
-                                  FontAwesomeIcons.minus,
-                                  color: Colors.red,
-                                ),
-                                onPressed: () {
-                                  widget.setModelState(() {
-                                   widget.quantity == 1
-                                        ? Styles.showWarningToast(Colors.yellow,
-                                        "Minimum is one", Colors.black, 15)
-                                        : widget.quantity--;
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                              flex: 4,
-                              child: Card(
-                                  elevation: 0,
-                                  color: Styles.bg_color,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "${widget.quantity}",
-                                      style: TextStyle(fontSize: 16),
-                                    ),
-                                  ))),
-                          Flexible(
-                            flex: 4,
-                            child: Card(
-                              child: IconButton(
-                                icon: Icon(
-                                  FontAwesomeIcons.plus,
-                                  color: Colors.green,
-                                ),
-                                onPressed: () {
-                                  widget.setModelState(() {
-                                    widget.quantity == 5
-                                        ? Styles.showWarningToast(Colors.yellow,
-                                        "Miximum is 5", Colors.black, 15)
-                                        : widget.quantity++;
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Flexible(
-                      flex: 2,
                       child: Container(
                         // width: ,
                         height: getSize(context),
                         child: ElevatedButton(
                           onPressed: () {
-                            if (widget.selectedColor != null && widget.selectedSize != null) {
+                            if (widget.selectedColor != null &&
+                                widget.selectedSize != null) {
                               Navigator.pop(context);
-                              widget.show(widget.selectedColor,widget.selectedSize);
+                              widget.show(
+                                  widget.selectedColor, widget.selectedSize,widget.quantity);
                             } else {
                               Styles.showWarningToast(Styles.Log_sign,
                                   'Please select a size', Colors.black, 16);
@@ -238,7 +148,7 @@ class _BottomContainerState extends State<BottomContainer> with TickerProviderSt
                           ),
                           style: ButtonStyle(
                             backgroundColor:
-                            MaterialStateProperty.all(Styles.Log_sign),
+                                MaterialStateProperty.all(Styles.Log_sign),
                           ),
                         ),
                       ),
@@ -255,12 +165,11 @@ class _BottomContainerState extends State<BottomContainer> with TickerProviderSt
 
   getSize(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    if(width>1024){
+    if (width > 1024) {
       return MediaQuery.of(context).size.width / (5);
-    }else if(width<=kTabletBreakpoint){
+    } else if (width <= kTabletBreakpoint) {
       return MediaQuery.of(context).size.width / (6);
-    }
-    else{
+    } else {
       return MediaQuery.of(context).size.width / (3);
     }
   }

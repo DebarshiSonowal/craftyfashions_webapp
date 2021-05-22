@@ -28,7 +28,8 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> with 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height,
+      color: Color(0xffe3e3e6),
+      height: MediaQuery.of(context).size.height/(1.2),
       child: Center(
         child: Column(
             children: [
@@ -40,9 +41,9 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> with 
                       return GestureDetector(
                         onTap:()=> widget.onTap(_current),
                         child: Container(
-                          height: MediaQuery.of(context).size.height/(.3),
+                          height: MediaQuery.of(context).size.height/(2),
                           width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(color: Colors.transparent),
+                          decoration: BoxDecoration(color: Color(0xffe3e3e6)),
                           child:
                           CachedNetworkImage(
                             fit: BoxFit.fill,
@@ -52,7 +53,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> with 
                                   width: 50.0,
                                   height: 50.0,
                                   child: SpinKitCubeGrid(
-                                    color: Styles.Log_sign,
+                                    color: Styles.price_color,
                                     size: 50.0,
                                     controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 1200)),
                                   ),
@@ -65,7 +66,8 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> with 
                   );
                 }).toList(),
                 options: CarouselOptions(
-                    height: MediaQuery.of(context).size.height/(1.63),
+                    height: MediaQuery.of(context).size.height/(1.3),
+                    viewportFraction: 1,
                     autoPlay: false,
                     enlargeCenterPage: true,
                     aspectRatio: 2.8,
