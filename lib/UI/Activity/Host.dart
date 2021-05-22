@@ -3,7 +3,10 @@ import 'package:craftyfashions_webapp/Helper/CartData.dart';
 import 'package:craftyfashions_webapp/Helper/DataSearch.dart';
 import 'package:craftyfashions_webapp/Helper/Navigation.dart';
 import 'package:craftyfashions_webapp/Helper/Test.dart';
+import 'package:craftyfashions_webapp/Models/Ads.dart';
+import 'package:craftyfashions_webapp/Models/Categories.dart';
 import 'package:craftyfashions_webapp/Models/Products.dart';
+import 'package:craftyfashions_webapp/Models/Razorpay.dart';
 import 'package:craftyfashions_webapp/UI/Activity/RazorpayWeb.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/Photoview.dart';
 import 'package:craftyfashions_webapp/UI/Fragments/About.dart';
@@ -56,6 +59,9 @@ class HostState extends State<Host> {
     if (acc != null && ref != null) {
       Test.accessToken = acc;
       Test.refreshToken = ref;
+      getEverything(context);
+    }else{
+      getEverything(context);
     }
   }
 
@@ -65,7 +71,7 @@ class HostState extends State<Host> {
     _fragNav = FragNavigate(
       firstKey: 'Home',
       drawerContext: null,
-      screens: getList(),
+      screens: Test.getList(),
     );
     new Future.delayed(Duration.zero, () {
       _fragNav.setDrawerContext = context;
@@ -73,7 +79,7 @@ class HostState extends State<Host> {
       //   getEverything(context);
       // }
     });
-    getEverything(context);
+   getLoginData();
     super.initState();
   }
 
@@ -190,6 +196,39 @@ class HostState extends State<Host> {
   }
 
   void getEverything(BuildContext context) async {
+    UsersModel usersModel1 = UsersModel();
+    UsersModel usersModel3 = UsersModel();
+    UsersModel usersModel4 = UsersModel();
+    var data = await usersModel1.getRequired();
+    if (data != "Server Error") {
+      var data3 = data['razorpay'];
+      print("The key is ${data3}");
+      Provider.of<CartData>(context, listen: false)
+          .setRazorpay(Razorpay.fromJson(data3));
+      var data1 = data['require'] as List;
+      List<Categories> categories =
+      data1.map((e) => Categories.fromJson(e)).toList();
+      Provider.of<CartData>(context, listen: false).setCategory(categories);
+      var data2 = data['ads'] as List;
+      List<Ads> ads = data2.map((e) => Ads.fromJson(e)).toList();
+      Provider.of<CartData>(context, listen: false).setAds(ads);
+    }
+
+    var UserData = await usersModel4.getUser();
+    if (UserData != "User Not Found") {
+      Provider.of<CartData>(context, listen: false).updateUser(UserData);
+    }
+
+
+    if (Test.accessToken != null) {
+      var profile = await usersModel3
+          .getProf(Provider.of<CartData>(context, listen: false).user.id);
+      if (profile != "Server Error" && profile != null) {
+        Provider.of<CartData>(context, listen: false).updateProfile(profile);
+      }
+    }
+
+
     if (Provider.of<CartData>(context, listen: false).allproducts == null ||
         Provider.of<CartData>(context, listen: false).allproducts.length == 0) {
       UsersModel usersModel = UsersModel();
@@ -222,92 +261,13 @@ class HostState extends State<Host> {
     }
   }
 
-  getList() {
-    return <Posit>[
-    Posit(
-    key: 'Home',
-    title: 'Home',
-    fragment: Container(
-    color: Styles.bg_color,
-    child: HomePage(),
-    ),
-    icon: Icons.add),
-    Posit(
-    key: 'Profile',
-    title: 'Profile',
-    fragment: ProfilePage(),
-    icon: Icons.accessibility),
-    Posit(key: 'Cart', title: 'Cart', fragment: Cart(), icon: Icons.ac_unit),
-    Posit(
-    key: 'Men', title: 'Men', fragment: MenProducts(), icon: Icons.code),
-    Posit(
-    key: 'Women',
-    title: 'Women',
-    fragment: WomenProducts(),
-    icon: Icons.code),
-    Posit(
-    key: 'WishList',
-    title: 'Wishlist',
-    fragment: WishList(),
-    icon: Icons.code),
-    Posit(
-    key: 'Orders', title: 'Orders', fragment: Orders(), icon: Icons.code),
-    Posit(
-    key: 'Contact Us',
-    title: 'Contact Us',
-    fragment: ContactUs(),
-    icon: Icons.code),
-    Posit(key: 'About', title: 'About', fragment: About(), icon: Icons.code),
-    Posit(
-    key: 'Login',
-    title: 'Login',
-    fragment: Login(_fragNav),
-    icon: Icons.code),
-    Posit(
-    key: 'Signup', title: 'Signup', fragment: Signup(), icon: Icons.code),
-    Posit(
-    key: 'Result', title: 'Crafty', fragment: Result(), icon: Icons.code),
-    Posit(
-    key: 'photo',
-    title: 'Crafty',
-    fragment: Photoview(Test.url),
-    icon: Icons.code),
-    Posit(
-    key: 'All',
-    title: 'All Products',
-    icon: Icons.code,
-    fragment: AllProductsFragment()),
-    Posit(
-    key: 'Details',
-    title: 'Details',
-    icon: Icons.code,
-    fragment: OrderDetails()),
-    Posit(
-    key: 'Special',
-    title:
-    Provider.of<CartData>(context, listen: false).specialTxt == null
-    ? 'Special'
-        : Provider.of<CartData>(context, listen: false).specialTxt,
-    icon: Icons.code,
-    fragment: SpecialAds()),
-    Posit(
-    key: 'Payment',
-    title:
-    "Payment",
-    icon: Icons.code,
-    fragment: RazorPayWeb()),
-    Posit(
-    key: 'Couple', title: 'Couple', icon: Icons.code, fragment: Couple()
-    )
-    ,
-    ];
-  }
+
 
   void initialize() {
     _fragNav = FragNavigate(
       firstKey: 'Home',
       drawerContext: null,
-      screens: getList(),
+      screens: Test.getList(),
     );
     Test.fragNavigate = _fragNav;
     _fragNav.setDrawerContext = context;
@@ -324,7 +284,7 @@ class HostState extends State<Host> {
       print("False");
       return false;
     } else {
-      return true;
+      return false;
     }
   }
 
@@ -380,4 +340,6 @@ class HostState extends State<Host> {
       }
     });
   }
+
+
 }

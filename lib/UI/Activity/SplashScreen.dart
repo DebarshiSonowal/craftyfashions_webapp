@@ -4,8 +4,6 @@ import 'package:craftyfashions_webapp/Helper/Test.dart';
 import 'package:craftyfashions_webapp/Models/Ads.dart';
 import 'package:craftyfashions_webapp/Models/Categories.dart';
 import 'package:craftyfashions_webapp/Models/Razorpay.dart';
-import 'package:craftyfashions_webapp/UI/Activity/Host.dart';
-import 'package:craftyfashions_webapp/UI/Fragments/NoInternet.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
 import 'package:craftyfashions_webapp/Utility/Users.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
@@ -19,10 +17,12 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
   AnimationController animationController;
   bool status;
   String access, refresh;
+
   @override
   void initState() {
     checkInternet();
@@ -92,32 +92,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                   ],
                 ),
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  CircularProgressIndicator(
-                    backgroundColor: Styles.button_color,
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 20.0),
-                  ),
-                  Center(
-                    child: Text(
-                      "With love \n"
-                          "from\n"
-                          "Crafty",
-                      softWrap: true,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0,
-                        color: Colors.red,
-                      ),
-                    ),
-                  ),
-                ],
-              )
             ],
           )
         ],
@@ -138,15 +112,15 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   }
 
   void checkPrev() async {
-    status == true
-        ? Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) =>
-            Host()), (Route<dynamic> route) => false)
-        : Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) =>
-            NoInternet()), (Route<dynamic> route) => false);
+    // status == true
+    //     ? Navigator.pushAndRemoveUntil(
+    //     context,
+    //     MaterialPageRoute(builder: (context) =>
+    //         Host()), (Route<dynamic> route) => false)
+    //     : Navigator.pushAndRemoveUntil(
+    //     context,
+    //     MaterialPageRoute(builder: (context) =>
+    //         NoInternet()), (Route<dynamic> route) => false);
   }
 
   void getEverything(BuildContext context) async {
@@ -158,21 +132,21 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     if (data != "Server Error") {
       var data3 = data['razorpay'];
       print("The key is ${data3}");
-      Provider.of<CartData>(context,listen: false).setRazorpay(Razorpay.fromJson(data3));
+      Provider.of<CartData>(context, listen: false)
+          .setRazorpay(Razorpay.fromJson(data3));
       var data1 = data['require'] as List;
       List<Categories> categories =
-      data1.map((e) => Categories.fromJson(e)).toList();
+          data1.map((e) => Categories.fromJson(e)).toList();
       Provider.of<CartData>(context, listen: false).setCategory(categories);
       var data2 = data['ads'] as List;
       List<Ads> ads = data2.map((e) => Ads.fromJson(e)).toList();
       Provider.of<CartData>(context, listen: false).setAds(ads);
-
     } else {
       UsersModel usersModel1 = UsersModel();
       var data = await usersModel1.getRequired();
       var data1 = data['require'] as List;
       List<Categories> categories =
-      data1.map((e) => Categories.fromJson(e)).toList();
+          data1.map((e) => Categories.fromJson(e)).toList();
       Provider.of<CartData>(context, listen: false).setCategory(categories);
       var data2 = data['ads'] as List;
       List<Ads> ads = data2.map((e) => Ads.fromJson(e)).toList();
@@ -182,7 +156,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     if (UserData != "User Not Found") {
       Provider.of<CartData>(context, listen: false).updateUser(UserData);
     }
-    if (Test.accessToken!=null) {
+    if (Test.accessToken != null) {
       var profile = await usersModel3
           .getProf(Provider.of<CartData>(context, listen: false).user.id);
       if (profile != "Server Error" && profile != null) {
@@ -203,4 +177,3 @@ void getLoginData() async {
     Test.refreshToken = ref;
   }
 }
-

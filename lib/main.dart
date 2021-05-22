@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'Helper/CartData.dart';
+import 'UI/Activity/Host.dart';
 import 'UI/Activity/Login.dart';
-import 'UI/Activity/SplashScreen.dart';
 import 'UI/Styling/Styles.dart';
 
 void main() {
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Styles.bg_color,
           buttonColor: Styles.button_color,
         ),
-        home: SplashScreen(),
+        home: Host(),
       ),
     );
   }

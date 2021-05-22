@@ -5,7 +5,6 @@ import 'package:craftyfashions_webapp/Helper/Test.dart';
 import 'package:craftyfashions_webapp/Models/Products.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/AllProductsFragmentProductItemview.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/LoadingAnimation.dart';
-import 'package:craftyfashions_webapp/UI/CustomWidgets/ProductItemView.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Breakpoints.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
 import 'package:craftyfashions_webapp/Utility/Users.dart';
@@ -28,12 +27,6 @@ class _AllProductsState extends State<AllProductsFragment> {
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
   BuildContext sysContext;
-
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    throw UnimplementedError();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,46 +94,43 @@ class _AllProductsState extends State<AllProductsFragment> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Container(
-                            height: MediaQuery.of(context).size.height - 100,
-                            child: GridView.count(
-                                scrollDirection: Axis.vertical,
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 5,
-                                 childAspectRatio: (MediaQuery.of(context).size.width)/(MediaQuery.of(context).size.height),
-                                mainAxisSpacing: 5,
-                                shrinkWrap: true,
-                                semanticChildCount: 2,
-                                children: List.generate(
-                                    Provider.of<CartData>(context,
+                        Container(
+                          height: MediaQuery.of(context).size.height,
+                          child: GridView.count(
+                              scrollDirection: Axis.vertical,
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 0,
+                               childAspectRatio: (MediaQuery.of(context).size.width)/(MediaQuery.of(context).size.height+30),
+                              mainAxisSpacing: 5,
+                              shrinkWrap: true,
+                              semanticChildCount: 2,
+                              children: List.generate(
+                                  Provider.of<CartData>(context,
+                                          listen: false)
+                                      .allproducts
+                                      .length, (index) {
+                                return AllProductsFragmentProductItemView(
+                                    buttonSize: buttonSize,
+                                    list: Provider.of<CartData>(context,
                                             listen: false)
-                                        .allproducts
-                                        .length, (index) {
-                                  return AllProductsFragmentProductItemView(
-                                      buttonSize: buttonSize,
-                                      list: Provider.of<CartData>(context,
-                                              listen: false)
-                                          .allproducts,
-                                      OnTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ProductView(
-                                                      product: Provider.of<
-                                                                  CartData>(
-                                                              context,
-                                                              listen: false)
-                                                          .allproducts[index],
-                                                      fragNav:
-                                                          Test.fragNavigate,
-                                                    )));
-                                      },
-                                      Index: index);
-                                })),
-                          ),
+                                        .allproducts,
+                                    OnTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ProductView(
+                                                    product: Provider.of<
+                                                                CartData>(
+                                                            context,
+                                                            listen: false)
+                                                        .allproducts[index],
+                                                    fragNav:
+                                                        Test.fragNavigate,
+                                                  )));
+                                    },
+                                    Index: index);
+                              })),
                         ),
                       ],
                     ),

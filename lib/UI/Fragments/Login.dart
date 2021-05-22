@@ -12,9 +12,9 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
-  final FragNavigate _fragNavigate;
 
-  Login(this._fragNavigate);
+
+  Login();
 
   @override
   _LoginState createState() => _LoginState();

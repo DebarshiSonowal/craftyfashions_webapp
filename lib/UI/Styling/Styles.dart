@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Styles {
-  static const Log_sign = Color(0xffFFD819);
-  static const bg_color = Color(0xffF4F3F3);
+  //Color(0xffFFD819)
+  static const Log_sign = Colors.white;
+  //Color(0xffF4F3F3)
+  static const bg_color = Colors.white60;
+  static const price_color = Color(0xff00c99e);
   static const log_sign_text = Colors.black;
   static const button_color = Colors.black;
   static const button_text_color = Colors.white;

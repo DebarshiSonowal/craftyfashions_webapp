@@ -1,8 +1,28 @@
 
 import 'package:craftyfashions_webapp/Models/CartProduct.dart';
 import 'package:craftyfashions_webapp/Models/Products.dart';
+import 'package:craftyfashions_webapp/UI/Activity/RazorpayWeb.dart';
+import 'package:craftyfashions_webapp/UI/CustomWidgets/Photoview.dart';
+import 'package:craftyfashions_webapp/UI/Fragments/AllProducts.dart';
+import 'package:craftyfashions_webapp/UI/Fragments/Couple.dart';
+import 'package:craftyfashions_webapp/UI/Fragments/Login.dart';
+import 'package:craftyfashions_webapp/UI/Fragments/About.dart';
+import 'package:craftyfashions_webapp/UI/Fragments/Cart.dart';
+import 'package:craftyfashions_webapp/UI/Fragments/Contact_Us.dart';
+import 'package:craftyfashions_webapp/UI/Fragments/HomePage.dart';
+import 'package:craftyfashions_webapp/UI/Fragments/Men.dart';
+import 'package:craftyfashions_webapp/UI/Fragments/OrderDetails.dart';
+import 'package:craftyfashions_webapp/UI/Fragments/Orders.dart';
+import 'package:craftyfashions_webapp/UI/Fragments/Profile.dart';
+import 'package:craftyfashions_webapp/UI/Fragments/Result.dart';
+import 'package:craftyfashions_webapp/UI/Fragments/Signup.dart';
+import 'package:craftyfashions_webapp/UI/Fragments/SpecialAds.dart';
+import 'package:craftyfashions_webapp/UI/Fragments/WishList.dart';
+import 'package:craftyfashions_webapp/UI/Fragments/Women.dart';
+import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
 import 'package:craftyfashions_webapp/Utility/Users.dart';
 import 'package:flutter/material.dart';
+import 'package:fragment_navigate/navigate-support.dart';
 import 'package:provider/provider.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,6 +35,85 @@ class Test {
   static String url;
 
   static String orderId;
+
+  static  getList() {
+    return <Posit>[
+      Posit(
+          key: 'Home',
+          title: 'Home',
+          fragment: Container(
+            color: Styles.bg_color,
+            child: HomePage(),
+          ),
+          icon: Icons.add),
+      Posit(
+          key: 'Profile',
+          title: 'Profile',
+          fragment: ProfilePage(),
+          icon: Icons.accessibility),
+      Posit(key: 'Cart', title: 'Cart', fragment: Cart(), icon: Icons.ac_unit),
+      Posit(
+          key: 'Men', title: 'Men', fragment: MenProducts(), icon: Icons.code),
+      Posit(
+          key: 'Women',
+          title: 'Women',
+          fragment: WomenProducts(),
+          icon: Icons.code),
+      Posit(
+          key: 'WishList',
+          title: 'Wishlist',
+          fragment: WishList(),
+          icon: Icons.code),
+      Posit(
+          key: 'Orders', title: 'Orders', fragment: Orders(), icon: Icons.code),
+      Posit(
+          key: 'Contact Us',
+          title: 'Contact Us',
+          fragment: ContactUs(),
+          icon: Icons.code),
+      Posit(key: 'About', title: 'About', fragment: About(), icon: Icons.code),
+      Posit(
+          key: 'Login',
+          title: 'Login',
+          fragment: Login(),
+          icon: Icons.code),
+      Posit(
+          key: 'Signup', title: 'Signup', fragment: Signup(), icon: Icons.code),
+      Posit(
+          key: 'Result', title: 'Crafty', fragment: Result(), icon: Icons.code),
+      Posit(
+          key: 'photo',
+          title: 'Crafty',
+          fragment: Photoview(Test.url),
+          icon: Icons.code),
+      Posit(
+          key: 'All',
+          title: 'All Products',
+          icon: Icons.code,
+          fragment: AllProductsFragment()),
+      Posit(
+          key: 'Details',
+          title: 'Details',
+          icon: Icons.code,
+          fragment: OrderDetails()),
+      Posit(
+          key: 'Special',
+          title:
+          'Special',
+          icon: Icons.code,
+          fragment: SpecialAds()),
+      Posit(
+          key: 'Payment',
+          title:
+          "Payment",
+          icon: Icons.code,
+          fragment: RazorPayWeb()),
+      Posit(
+          key: 'Couple', title: 'Couple', icon: Icons.code, fragment: Couple()
+      )
+      ,
+    ];
+  }
 
   static String specialTag=null;
 
