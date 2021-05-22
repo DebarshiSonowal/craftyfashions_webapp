@@ -40,12 +40,12 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> with 
                       return GestureDetector(
                         onTap:()=> widget.onTap(_current),
                         child: Container(
-                          height: MediaQuery.of(context).size.height/2,
-                          width: MediaQuery.of(context).size.height,
-                          margin: EdgeInsets.symmetric(horizontal: 5.0),
+                          height: MediaQuery.of(context).size.height/(.3),
+                          width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(color: Colors.transparent),
                           child:
                           CachedNetworkImage(
+                            fit: BoxFit.fill,
                             imageUrl: i.trim(),
                             progressIndicatorBuilder: (context, url, downloadProgress) =>
                                 SizedBox(
@@ -65,7 +65,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> with 
                   );
                 }).toList(),
                 options: CarouselOptions(
-                    height: MediaQuery.of(context).size.height/(2),
+                    height: MediaQuery.of(context).size.height/(1.63),
                     autoPlay: false,
                     enlargeCenterPage: true,
                     aspectRatio: 2.8,

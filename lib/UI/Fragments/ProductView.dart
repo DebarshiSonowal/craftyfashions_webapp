@@ -71,31 +71,28 @@ class _ProductViewState extends State<ProductView> {
                     ),
                     Card(
                       color: Colors.white70,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: LikeButton(
-                          size: buttonSize,
-                          circleColor: CircleColor(
-                              start: Color(0xff00ddff), end: Color(0xff0099cc)),
-                          bubblesColor: BubblesColor(
-                            dotPrimaryColor: Color(0xff33b5e5),
-                            dotSecondaryColor: Color(0xff0099cc),
-                          ),
-                          likeBuilder: (bool isLiked) {
-                            return Icon(
-                              FontAwesomeIcons.heart,
-                              color: isLiked ? Colors.red : Colors.grey,
-                              size: buttonSize,
-                            );
-                          },
+                      child: LikeButton(
+                        size: buttonSize,
+                        circleColor: CircleColor(
+                            start: Color(0xff00ddff), end: Color(0xff0099cc)),
+                        bubblesColor: BubblesColor(
+                          dotPrimaryColor: Color(0xff33b5e5),
+                          dotSecondaryColor: Color(0xff0099cc),
                         ),
+                        likeBuilder: (bool isLiked) {
+                          return Icon(
+                            FontAwesomeIcons.heart,
+                            color: isLiked ? Colors.red : Colors.grey,
+                            size: buttonSize,
+                          );
+                        },
                       ),
                     )
                   ],
                 ),
               ),
               Flexible(
-                flex: 5,
+                flex: 13,
                 child: CarouselWithIndicatorDemo(widget.product,
                     Test.fragNavigate, (index) => onTapeed(index), (t) {
                   setState(() {
@@ -104,7 +101,7 @@ class _ProductViewState extends State<ProductView> {
                 }),
               ),
               Flexible(
-                flex: 3,
+                flex:6,
                 child: ProductviewBottomSheet(this.getIndex, this.getLabels,
                     (color, size) {
                   selectedColor = color;

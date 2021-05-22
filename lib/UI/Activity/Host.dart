@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:badges/badges.dart';
 import 'package:craftyfashions_webapp/Helper/CartData.dart';
 import 'package:craftyfashions_webapp/Helper/DataSearch.dart';
 import 'package:craftyfashions_webapp/Helper/Navigation.dart';
@@ -7,26 +8,7 @@ import 'package:craftyfashions_webapp/Models/Ads.dart';
 import 'package:craftyfashions_webapp/Models/Categories.dart';
 import 'package:craftyfashions_webapp/Models/Products.dart';
 import 'package:craftyfashions_webapp/Models/Razorpay.dart';
-import 'package:craftyfashions_webapp/UI/Activity/RazorpayWeb.dart';
-import 'package:craftyfashions_webapp/UI/CustomWidgets/Photoview.dart';
-import 'package:craftyfashions_webapp/UI/Fragments/About.dart';
-import 'package:craftyfashions_webapp/UI/Fragments/AllProducts.dart';
-import 'package:craftyfashions_webapp/UI/Fragments/Cart.dart';
-import 'package:craftyfashions_webapp/UI/Fragments/Contact_Us.dart';
-import 'package:craftyfashions_webapp/UI/Fragments/Couple.dart';
-import 'package:craftyfashions_webapp/UI/Fragments/HomePage.dart';
-import 'package:craftyfashions_webapp/UI/Fragments/Login.dart';
-import 'package:craftyfashions_webapp/UI/Fragments/Men.dart';
-import 'package:craftyfashions_webapp/UI/Fragments/OrderDetails.dart';
-import 'package:craftyfashions_webapp/UI/Fragments/Orders.dart';
-import 'package:craftyfashions_webapp/UI/Fragments/Profile.dart';
-import 'package:craftyfashions_webapp/UI/Fragments/Result.dart';
-import 'package:craftyfashions_webapp/UI/Fragments/Signup.dart';
-import 'package:craftyfashions_webapp/UI/Fragments/SpecialAds.dart';
-import 'package:craftyfashions_webapp/UI/Fragments/WishList.dart';
-import 'package:craftyfashions_webapp/UI/Fragments/Women.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Breakpoints.dart';
-import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
 import 'package:craftyfashions_webapp/Utility/Users.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -49,7 +31,7 @@ class HostState extends State<Host> {
   static FragNavigate _fragNav;
 
   static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   void getLoginData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -60,7 +42,7 @@ class HostState extends State<Host> {
       Test.accessToken = acc;
       Test.refreshToken = ref;
       getEverything(context);
-    }else{
+    } else {
       getEverything(context);
     }
   }
@@ -79,7 +61,7 @@ class HostState extends State<Host> {
       //   getEverything(context);
       // }
     });
-   getLoginData();
+    getLoginData();
     super.initState();
   }
 
@@ -118,8 +100,8 @@ class HostState extends State<Host> {
                   ),
                   new FlatButton(
                     onPressed: () {
-                      SystemChannels.platform.invokeMethod(
-                          'SystemNavigator.pop');
+                      SystemChannels.platform
+                          .invokeMethod('SystemNavigator.pop');
                     },
                     child: new Text('Yes'),
                   ),
@@ -140,15 +122,41 @@ class HostState extends State<Host> {
                 return Scaffold(
                   key: _fragNav.drawerKey,
                   appBar: AppBar(
-                    title: Text(s.data.title),
+                    title: TextButton(
+                      onPressed: () {
+                        _fragNav.putPosit(key: "Home");
+                      },
+                      child: Text(
+                        "Crafty",
+                        style: TextStyle(
+                          fontFamily: "Beyond",
+                          fontSize: 28,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
                     actions: [
+                      IconButton(
+                        icon: Badge(
+                            showBadge:
+                                Provider.of<CartData>(context).listLength == 0
+                                    ? false
+                                    : true,
+                            badgeContent: Text(
+                                "${Provider.of<CartData>(context).listLength}"),
+                            animationType: BadgeAnimationType.scale,
+                            child: Icon(Icons.add_shopping_cart)),
+                        onPressed: () {
+                          _fragNav.putPosit(key: "Cart");
+                        },
+                      ),
                       IconButton(
                         icon: Icon(Icons.search),
                         onPressed: () {
                           showSearch(
                               context: context, delegate: DataSearch(_fragNav));
                         },
-                      )
+                      ),
                     ],
                     bottom: s.data.bottom.child,
                   ),
@@ -156,35 +164,36 @@ class HostState extends State<Host> {
                   bottomNavigationBar: !checkifMobile()
                       ? null
                       : BottomNavigationBar(
-                    items: const <BottomNavigationBarItem>[
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.home),
-                        label: 'Home',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.verified_user),
-                        label: 'Profile',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.add_shopping_cart),
-                        label: 'Cart',
-                      ),
-                    ],
-                    currentIndex: _fragNav.screenList.keys
-                        .toList()
-                        .indexOf(_fragNav.currentKey) >
-                        2
-                        ? 0
-                        : _fragNav.screenList.keys
-                        .toList()
-                        .indexOf(_fragNav.currentKey),
-                    selectedItemColor: Colors.black,
-                    backgroundColor: Colors.white70,
-                    onTap: (index)=>changeFragment(index),
-                  ),
+                          items: const <BottomNavigationBarItem>[
+                            BottomNavigationBarItem(
+                              icon: Icon(Icons.home),
+                              label: 'Home',
+                            ),
+                            BottomNavigationBarItem(
+                              icon: Icon(Icons.verified_user),
+                              label: 'Profile',
+                            ),
+                            BottomNavigationBarItem(
+                              icon: Icon(Icons.add_shopping_cart),
+                              label: 'Cart',
+                            ),
+                          ],
+                          currentIndex: _fragNav.screenList.keys
+                                      .toList()
+                                      .indexOf(_fragNav.currentKey) >
+                                  2
+                              ? 0
+                              : _fragNav.screenList.keys
+                                  .toList()
+                                  .indexOf(_fragNav.currentKey),
+                          selectedItemColor: Colors.black,
+                          backgroundColor: Color(0xffF5F5F6),
+                          onTap: (index) => changeFragment(index),
+                        ),
                   body: DefaultTabController(
                     length: s.data.bottom.length,
-                    child: ScreenNavigate(child: s.data.fragment, bloc: _fragNav),
+                    child:
+                        ScreenNavigate(child: s.data.fragment, bloc: _fragNav),
                   ),
                 );
               }
@@ -207,7 +216,7 @@ class HostState extends State<Host> {
           .setRazorpay(Razorpay.fromJson(data3));
       var data1 = data['require'] as List;
       List<Categories> categories =
-      data1.map((e) => Categories.fromJson(e)).toList();
+          data1.map((e) => Categories.fromJson(e)).toList();
       Provider.of<CartData>(context, listen: false).setCategory(categories);
       var data2 = data['ads'] as List;
       List<Ads> ads = data2.map((e) => Ads.fromJson(e)).toList();
@@ -219,7 +228,6 @@ class HostState extends State<Host> {
       Provider.of<CartData>(context, listen: false).updateUser(UserData);
     }
 
-
     if (Test.accessToken != null) {
       var profile = await usersModel3
           .getProf(Provider.of<CartData>(context, listen: false).user.id);
@@ -227,7 +235,6 @@ class HostState extends State<Host> {
         Provider.of<CartData>(context, listen: false).updateProfile(profile);
       }
     }
-
 
     if (Provider.of<CartData>(context, listen: false).allproducts == null ||
         Provider.of<CartData>(context, listen: false).allproducts.length == 0) {
@@ -261,8 +268,6 @@ class HostState extends State<Host> {
     }
   }
 
-
-
   void initialize() {
     _fragNav = FragNavigate(
       firstKey: 'Home',
@@ -274,13 +279,8 @@ class HostState extends State<Host> {
   }
 
   checkifMobile() {
-    if (MediaQuery
-        .of(context)
-        .size
-        .width >= kDesktopBreakpoint || MediaQuery
-        .of(context)
-        .size
-        .width >= kTabletBreakpoint) {
+    if (MediaQuery.of(context).size.width >= kDesktopBreakpoint ||
+        MediaQuery.of(context).size.width >= kTabletBreakpoint) {
       print("False");
       return false;
     } else {
@@ -294,10 +294,7 @@ class HostState extends State<Host> {
     Test.accessToken = null;
     Test.refreshToken = null;
     Provider.of<CartData>(context, listen: false).removeOrders(
-        Provider
-            .of<CartData>(context, listen: false)
-            .order
-            .length);
+        Provider.of<CartData>(context, listen: false).order.length);
     Provider.of<CartData>(context, listen: false).removeProfile();
     Navigator.pop(context);
     SystemChannels.platform.invokeMethod('SystemNavigator.pop');
@@ -340,6 +337,4 @@ class HostState extends State<Host> {
       }
     });
   }
-
-
 }

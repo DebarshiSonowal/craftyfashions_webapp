@@ -18,8 +18,8 @@ class CategoryItemView extends StatelessWidget {
     return GestureDetector(
       onTap: OnTap,
       child: Container(
-
         decoration: BoxDecoration(
+          color: Colors.white,
           borderRadius: BorderRadius.circular(10),
         ),
         height: 200,

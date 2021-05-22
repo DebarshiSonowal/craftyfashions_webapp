@@ -83,7 +83,7 @@ class _CartScreennState extends State<CartScreenn> {
         ),
         Container(
           height: MediaQuery.of(context).size.height / 3,
-          width: MediaQuery.of(context).size.width / 3,
+          width: MediaQuery.of(context).size.width /(.5),
           child: ListView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.vertical,

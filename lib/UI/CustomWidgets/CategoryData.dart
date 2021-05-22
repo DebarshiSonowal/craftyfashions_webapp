@@ -70,7 +70,10 @@ class _CategoryDataState extends State<CategoryData> with TickerProviderStateMix
             );
           }).toList(),
         ),
-        SizedBox(height: 10,),
+        SizedBox(height: 15,
+        child: Container(
+          color: Color(0xffd2d2d7),
+        ),),
         Container(
           height: 320,
           width: MediaQuery.of(context).size.width,

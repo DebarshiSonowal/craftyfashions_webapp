@@ -13,6 +13,7 @@ class Styles {
   static const button_text_color = Colors.white;
   static const hyperlink = Colors.black;
   static const url = "https://officialcraftybackend.herokuapp.com/users/";
+  static final font = "Halyard";
 
   static getPriceSize(BuildContext context) {
     var width = MediaQuery.of(context).size.width;

@@ -175,8 +175,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: <Widget>[
                     Center(
                       child: new Container(
-                          width: 150.0,
-                          height: 150.0,
+                          width: 120.0,
+                          height: 120.0,
                           decoration: new BoxDecoration(
                               shape: BoxShape.circle,
                               image: new DecorationImage(
@@ -193,6 +193,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           nm == null ? "Name" : nm,
                           textAlign: TextAlign.center,
                           textScaleFactor: 1.5,
+                          style: TextStyle(
+                              fontFamily: Styles.font
+                          ),
                         ),
                       ],
                     )
@@ -214,10 +217,10 @@ class _ProfilePageState extends State<ProfilePage> {
                       name = text;
                     },
                     keyboardType: TextInputType.text,
-                    style: TextStyle(color: Styles.log_sign_text),
+                    style: TextStyle(color: Styles.log_sign_text,fontFamily: Styles.font),
                     decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Styles.log_sign_text),
-                      labelText: "Fullname",
+                      labelStyle: TextStyle(color: Styles.log_sign_text,fontFamily: Styles.font),
+                      labelText: "Full Name",
                       filled: true,
                       fillColor: Colors.white,
                       focusedBorder: OutlineInputBorder(
@@ -236,7 +239,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: TextField(
                     controller: addT1,
                     keyboardType: TextInputType.text,
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.black,fontFamily: Styles.font),
                     onChanged: (txt) {
                       setState(() {
                         enabled = checknull(
@@ -246,8 +249,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       addressline1 = txt;
                     },
                     decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Styles.log_sign_text),
-                      labelText: "Address(House no, Building, Street, Area)",
+                      labelStyle: TextStyle(color: Styles.log_sign_text,fontFamily: Styles.font),
+                      labelText: "Address (House no, Building, Street, Area)",
                       filled: true,
                       fillColor: Colors.white,
                       focusedBorder: OutlineInputBorder(
@@ -266,7 +269,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: TextField(
                     controller: addTtown,
                     keyboardType: TextInputType.text,
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.black,fontFamily: Styles.font),
                     onChanged: (txt) {
                       setState(() {
                         enabled = checknull(
@@ -276,7 +279,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       town_village = txt;
                     },
                     decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Styles.log_sign_text),
+                      labelStyle: TextStyle(color: Styles.log_sign_text,fontFamily: Styles.font),
                       labelText: "Town/Village",
                       filled: true,
                       fillColor: Colors.white,
@@ -296,7 +299,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: TextField(
                     controller: addTdis,
                     keyboardType: TextInputType.text,
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.black,fontFamily: Styles.font),
                     onChanged: (txt) {
                       setState(() {
                         enabled = checknull(
@@ -306,7 +309,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       district = txt;
                     },
                     decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Styles.log_sign_text),
+                      labelStyle: TextStyle(color: Styles.log_sign_text,fontFamily: Styles.font),
                       labelText: "District",
                       filled: true,
                       fillColor: Colors.white,
@@ -326,7 +329,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: TextField(
                     controller: addTstate,
                     keyboardType: TextInputType.text,
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.black,fontFamily: Styles.font),
                     onChanged: (txt) {
                       setState(() {
                         enabled = checknull(
@@ -336,7 +339,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       state = txt;
                     },
                     decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Styles.log_sign_text),
+                      labelStyle: TextStyle(color: Styles.log_sign_text,fontFamily: Styles.font),
                       labelText: "State",
                       filled: true,
                       fillColor: Colors.white,
@@ -357,7 +360,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     maxLength: 10,
                     controller: phT,
                     keyboardType: TextInputType.phone,
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.black,fontFamily: Styles.font),
                     onChanged: (txt) {
                       setState(() {
                         enabled = checknull(
@@ -367,7 +370,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       phone = txt;
                     },
                     decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Styles.log_sign_text),
+                      labelStyle: TextStyle(color: Styles.log_sign_text,fontFamily: Styles.font),
                       labelText: "Phone",
                       filled: true,
                       fillColor: Colors.white,
@@ -389,7 +392,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     controller: pinT,
                     keyboardType: TextInputType.number,
                     maxLength: 6,
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.black,fontFamily: Styles.font),
                     onChanged: (txt) {
                       setState(() {
                         enabled = checknull(
@@ -399,7 +402,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       pin = txt;
                     },
                     decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Styles.log_sign_text),
+                      labelStyle: TextStyle(color: Styles.log_sign_text,fontFamily: Styles.font),
                       labelText: "Pincode",
                       filled: true,
                       fillColor: Colors.white,
@@ -414,23 +417,21 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                 ),
+                GenderField(
+                  genderList: ['Male', 'Female'],
+                  def: def,
+                  callback: (value) {
+                    _gender = value;
+                    print(value);
+                  },
+                ),
                 TextButton(
                   onPressed: () {},
                   child: Text(
                     "Forgot Password",
-                    style: TextStyle(color: Styles.log_sign_text),
+                    style: TextStyle(color: Styles.log_sign_text,fontFamily: Styles.font),
                   ),
                 ),
-                Padding(
-                    padding: EdgeInsets.only(bottom: 5),
-                    child: GenderField(
-                      genderList: ['Male', 'Female'],
-                      def: def,
-                      callback: (value) {
-                        _gender = value;
-                        print(value);
-                      },
-                    )),
                 enabled
                     ? Container()
                     : Padding(

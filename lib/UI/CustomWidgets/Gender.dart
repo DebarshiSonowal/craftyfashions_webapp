@@ -1,4 +1,5 @@
 import 'package:craftyfashions_webapp/UI/Styling/Breakpoints.dart';
+import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
 import 'package:flutter/material.dart';
 
 /// Requires a list of string ['Male','Female','Other'] only once.
@@ -25,7 +26,8 @@ class GenderField extends StatelessWidget {
               Text(
                 'Gender : ',
                 style: TextStyle(fontWeight: FontWeight.w400,
-                color: Colors.black),
+                fontSize: 12,
+                color: Colors.black,fontFamily: Styles.font),
               ),
               ...mappedGender.entries.map(
                     (MapEntry<int, String> mapEntry) =>
@@ -45,6 +47,7 @@ class GenderField extends StatelessWidget {
                               },
                           ),
                           Text(mapEntry.value,style: TextStyle(
+                            fontFamily: Styles.font,
                             color: Colors.black,   fontSize: getFontSize(context),
                           ),)
                         ]),
@@ -60,7 +63,7 @@ class GenderField extends StatelessWidget {
     }else if(size == "Tablet"){
       return 14;
     }else{
-      return 8;
+      return 12;
     }
   }
   getDeviceType(BuildContext context) {

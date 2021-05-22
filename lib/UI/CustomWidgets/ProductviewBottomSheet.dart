@@ -51,7 +51,7 @@ class _ProductviewBottomSheetState extends State<ProductviewBottomSheet> {
                       MainAxisAlignment.spaceBetween,
                       children: [
                         Flexible(
-                          fit: FlexFit.loose,
+                          fit: FlexFit.tight,
                           child: Padding(
                             padding:
                             const EdgeInsets.only(left: 30),

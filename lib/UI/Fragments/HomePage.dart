@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     print("Home page build");
     return kIsWeb?Container(
-      color: Colors.transparent,
+      color: Color(0xffe3e3e6),
       child: SmartRefresher(
         enablePullDown: true,
         enablePullUp: false,

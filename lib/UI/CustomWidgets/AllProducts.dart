@@ -18,7 +18,7 @@ class AllProducts extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         color: Colors.transparent,
-        height: MediaQuery.of(context).size.height+50,
+        height: MediaQuery.of(context).size.height+35,
         child: GridView.count(
             physics: const NeverScrollableScrollPhysics(),
             crossAxisCount: 2,
