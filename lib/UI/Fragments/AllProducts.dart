@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:craftyfashions_webapp/Helper/CartData.dart';
 import 'package:craftyfashions_webapp/Helper/Test.dart';
 import 'package:craftyfashions_webapp/Models/Products.dart';
+import 'package:craftyfashions_webapp/UI/CustomWidgets/AllProductsFragmentProductItemview.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/LoadingAnimation.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/ProductItemView.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Breakpoints.dart';
@@ -106,16 +107,18 @@ class _AllProductsState extends State<AllProductsFragment> {
                             height: MediaQuery.of(context).size.height - 100,
                             child: GridView.count(
                                 scrollDirection: Axis.vertical,
-                                crossAxisCount: getCountAccordingToSize(),
-                                crossAxisSpacing: 20,
-                                mainAxisSpacing: 10,
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 5,
+                                 childAspectRatio: (MediaQuery.of(context).size.width)/(MediaQuery.of(context).size.height),
+                                mainAxisSpacing: 5,
                                 shrinkWrap: true,
+                                semanticChildCount: 2,
                                 children: List.generate(
                                     Provider.of<CartData>(context,
                                             listen: false)
                                         .allproducts
                                         .length, (index) {
-                                  return ProductItemVIew(
+                                  return AllProductsFragmentProductItemView(
                                       buttonSize: buttonSize,
                                       list: Provider.of<CartData>(context,
                                               listen: false)

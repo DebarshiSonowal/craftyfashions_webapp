@@ -120,5 +120,8 @@ flutter:
       fonts:
         - asset: assets/Fonts/Sumana-Bold.ttf
         - asset: assets/Fonts/Sumana-Regular.ttf
+    - family: Halyard
+      fonts:
+        - asset: assets/Fonts/Halyard Text Regular.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
