@@ -130,7 +130,7 @@ class HostState extends State<Host> {
                         "Crafty",
                         style: TextStyle(
                           fontFamily: "Beyond",
-                          fontSize: 28,
+                          fontSize: 25,
                           color: Colors.red,
                         ),
                       ),

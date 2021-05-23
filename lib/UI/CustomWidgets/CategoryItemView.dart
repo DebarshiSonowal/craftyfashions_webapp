@@ -26,15 +26,11 @@ class _CategoryItemViewState extends State<CategoryItemView>  with TickerProvide
     return GestureDetector(
       onTap: widget.OnTap,
       child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        height: 200,
-        width: MediaQuery.of(context).size.width/2,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        color: Colors.white,
+        child: Stack(
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          alignment:AlignmentDirectional.bottomCenter,
           children: [
             Flexible(
               fit: FlexFit.tight,
@@ -58,13 +54,20 @@ class _CategoryItemViewState extends State<CategoryItemView>  with TickerProvide
             Flexible(
                 flex: 2,
                 fit: FlexFit.tight,
-                child: Text(widget.list[widget.index].name,
-                    style: TextStyle(
-                      fontFamily: "Halyard",
-                      color: Colors.black54,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 22,
-                    ))),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xffE3859A),
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(5),topRight:  Radius.circular(5),),
+                  ),
+                  padding: EdgeInsets.only(left: 5,right: 5),
+                  child: Text(widget.list[widget.index].name,
+                      style: TextStyle(
+                        fontFamily: "Halyard",
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 22,
+                      )),
+                )),
           ],
         ),
       ),

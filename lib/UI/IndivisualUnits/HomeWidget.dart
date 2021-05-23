@@ -26,7 +26,7 @@ class _HomeWidgetState extends State<HomeWidget> {
         ? SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Provider.of<CartData>(context, listen: true)
                             .getCateg()
@@ -85,109 +85,143 @@ class _HomeWidgetState extends State<HomeWidget> {
                         }
                       }),
                 SizedBox(
-                  height: 10,
+                  height: 6,
                 ),
                 Card(
+                  elevation: 0,
                   color: Colors.white,
                   child: Container(
                     width: MediaQuery.of(context).size.width * 1,
-                    padding: EdgeInsets.all(10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        getAsset2(),
-                        Flexible(
-                            child: Text(
-                          'Craft your own look\n with \nCrafty',
-                          softWrap: true,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontFamily: "Halyard",
-                              fontSize: 24,
-                              color: Colors.black),
-                        ))
+                        Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              getAsset2(),
+                              Flexible(
+                                  child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Text(
+                                  'Craft your own look with Crafty!',
+                                  softWrap: true,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily: "Halyard",
+                                      fontSize: 24,
+                                      color: Colors.black),
+                                ),
+                              ))
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 5, bottom: 5,right: 5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Contact us:",
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                    fontFamily: "Halyard",
+                                    fontSize: 12,
+                                    color: Colors.black),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "info@craftyfashions.com",
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                        fontFamily: "Halyard",
+                                        fontSize: 12,
+                                        color: Colors.black),
+                                  ),
+                                  Text(
+                                    "9706065610",
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                        fontFamily: "Halyard",
+                                        fontSize: 12,
+                                        color: Colors.black),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ),
-                Padding(
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
                   padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  color: Colors.white,
+                  child: Column(
                     children: [
-                      Text(
-                        "All Products",
-                        style: TextStyle(
-                          fontFamily: "Halyard",
-                          color: Colors.black54,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 18,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "All Products",
+                            style: TextStyle(
+                              fontFamily: "Halyard",
+                              color: Colors.black54,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 18,
+                            ),
+                          ),
+                          TextButton(
+                              onPressed: () {
+                                try {
+                                  Test.fragNavigate
+                                      .putPosit(key: 'All', force: true);
+                                } catch (e) {
+                                  print(e);
+                                }
+                              },
+                              child: Text(
+                                "Show All",
+                                style: TextStyle(
+                                  fontFamily: "Halyard",
+                                  color: Styles.price_color,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                ),
+                              ))
+                        ],
                       ),
-                      TextButton(
-                          onPressed: () {
-                            try {
-                              Test.fragNavigate
-                                  .putPosit(key: 'All', force: true);
-                            } catch (e) {
-                              print(e);
-                            }
-                          },
-                          child: Text(
-                            "Show All",
-                              style: TextStyle(
-                                fontFamily: "Halyard",
-                                color: Styles.price_color,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                              ),
-                          ))
+                      Provider.of<CartData>(context, listen: true)
+                                  .allproducts
+                                  .length ==
+                              0
+                          ? LoadingAnimation(
+                              Provider.of<CartData>(context, listen: false)
+                                  .allproducts
+                                  .length,
+                              5,
+                              MediaQuery.of(context).size.height / 4)
+                          : Container(child: AllProducts()),
                     ],
                   ),
                 ),
-                Provider.of<CartData>(context, listen: true)
-                            .allproducts
-                            .length ==
-                        0
-                    ? LoadingAnimation(
-                        Provider.of<CartData>(context, listen: false)
-                            .allproducts
-                            .length,
-                        5,
-                        MediaQuery.of(context).size.height / 4)
-                    : AllProducts(),
                 SizedBox(
                   height: 15,
                 ),
-                Image.asset(
-                  'assets/images/kk.jpg',
-                  width: MediaQuery.of(context).size.width - 20,
-                  height: MediaQuery.of(context).size.width,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Card(
-                  elevation: 2,
+                Container(
                   color: Colors.white,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 1,
-                    padding: EdgeInsets.all(10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        getAsset(),
-                        Flexible(
-                            child: Text(
-                          'Stay Home\nStay Safe\nAnd order on Crafty 😉',
-                          softWrap: true,
-                          style: TextStyle(
-                              fontFamily: "Halyard",
-                              fontSize: 20,
-                              color: Colors.red),
-                        ))
-                      ],
-                    ),
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.only(top: 10,bottom: 10),
+                  child: Image.asset(
+                    'assets/images/kk.jpg',
                   ),
                 ),
               ],
