@@ -77,7 +77,7 @@ class _ProductViewState extends State<ProductView>
                             });
                           }, Color(0xffececec)),
                           Container(
-                            height: MediaQuery.of(context).size.height+150,
+                            height: MediaQuery.of(context).size.height + 150,
                             decoration: BoxDecoration(
                               color: Color(0xffe3e3e6),
                             ),
@@ -623,13 +623,18 @@ class _ProductViewState extends State<ProductView>
                                       ? false
                                       : true,
                                   badgeContent: Text(
-                                      "${Provider.of<CartData>(context).listLength}"),
+                                      "${Provider.of<CartData>(context).listLength}",
+                                      style: TextStyle(color: Colors.white)),
                                   animationType: BadgeAnimationType.scale,
                                   child: Icon(
                                     Icons.add_shopping_cart,
                                     color: Colors.white,
                                   )),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pop(context);
+                                Test.fragNavigate
+                                    .putPosit(key: 'Cart', force: true);
+                              },
                             ),
                           ),
                         ],
@@ -639,14 +644,13 @@ class _ProductViewState extends State<ProductView>
                 ),
                 ConstrainedBox(
                   constraints: BoxConstraints.tightFor(
-                      width: MediaQuery.of(context).size.width,
-                      height: 50),
+                      width: MediaQuery.of(context).size.width, height: 50),
                   child: ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.red),
                     ),
                     child: Text(
-                      'Add to Cart',
+                      'Proceed',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 17,
@@ -654,194 +658,342 @@ class _ProductViewState extends State<ProductView>
                           fontWeight: FontWeight.bold),
                     ),
                     onPressed: () {
-                      if (selectedSize != null) {
+                      if (selectedSize == null) {
                         showModalBottomSheet(
                             backgroundColor: Colors.transparent,
                             context: context,
                             isDismissible: true,
-                            isScrollControlled: true,
+                            isScrollControlled: false,
                             builder: (BuildContext context) {
                               return StatefulBuilder(
                                 builder: (BuildContext context,
                                     StateSetter setModelState) {
-                                  return Card(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(20),
-                                          topRight: Radius.circular(20)),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                  return Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    color: Colors.white,
+                                    child: SingleChildScrollView(
+                                      physics: NeverScrollableScrollPhysics(),
                                       child: Container(
-                                        height: MediaQuery.of(context)
-                                                .size
-                                                .height /
-                                            1.7,
-                                        color: Color(0xffe3e3e6),
+                                        padding: EdgeInsets.only(top: 20),
+                                        color: Colors.white,
                                         child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Flexible(
-                                              flex: 2,
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              Photoview(widget
-                                                                  .product
-                                                                  .Image
-                                                                  .toString()
-                                                                  .split(",")[
-                                                                      getIndex()]
-                                                                  .trim())));
-                                                },
-                                                child: CachedNetworkImage(
-                                                  imageUrl: widget
-                                                      .product.Image
-                                                      .toString()
-                                                      .split(",")[getIndex()]
-                                                      .trim(),
-                                                  height:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .height /
-                                                          (2),
-                                                  progressIndicatorBuilder: (context,
-                                                          url,
-                                                          downloadProgress) =>
-                                                      SizedBox(
-                                                          width: 50.0,
-                                                          height: 50.0,
-                                                          child:
-                                                              SpinKitCubeGrid(
-                                                            color: Styles
-                                                                .Log_sign,
-                                                            size: 50.0,
-                                                            controller: AnimationController(
-                                                                vsync: this,
-                                                                duration: const Duration(
-                                                                    milliseconds:
-                                                                        1200)),
-                                                          )),
-                                                  errorWidget:
-                                                      (context, url, error) =>
-                                                          Icon(Icons.error),
-                                                ),
-                                              ),
-                                            ),
-                                            Flexible(
-                                              flex: 3,
-                                              child: Column(
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  left: 10, right: 10),
+                                              child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
                                                         .spaceAround,
                                                 children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceAround,
-                                                    children: [
-                                                      Flexible(
-                                                        flex: 1,
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Text(
-                                                              widget.product
-                                                                  .Name
-                                                                  .toString(),
-                                                              style: TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                            ),
-                                                            Text(
-                                                                selectedColor),
-                                                            Text(
-                                                              "₹${widget.product.Price}",
-                                                              style:
-                                                                  TextStyle(
-                                                                color: Colors
-                                                                    .red,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontSize: 18,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              "${selectedSize}",
-                                                              style:
-                                                                  TextStyle(
-                                                                color: Colors
-                                                                    .red,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontSize: 18,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              "${quantity}",
-                                                              style:
-                                                                  TextStyle(
-                                                                color: Colors
-                                                                    .red,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontSize: 18,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
                                                   Flexible(
                                                     flex: 2,
                                                     child: Container(
-                                                      // width: ,
-                                                      height:
-                                                          getSize(context),
-                                                      child: ElevatedButton(
-                                                        onPressed: () {
-                                                          if (selectedColor !=
-                                                                  null &&
-                                                              selectedSize !=
-                                                                  null) {
-                                                            Navigator.pop(
-                                                                context);
-                                                          } else {
-                                                            Styles.showWarningToast(
-                                                                Styles
-                                                                    .Log_sign,
-                                                                'Please select a size',
-                                                                Colors.black,
-                                                                16);
-                                                          }
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) => Photoview(widget
+                                                                      .product
+                                                                      .Image
+                                                                      .toString()
+                                                                      .split(",")[
+                                                                          getIndex()]
+                                                                      .trim())));
                                                         },
-                                                        child: Text(
-                                                          'Next',
-                                                          style: TextStyle(
-                                                              color: Colors
-                                                                  .black,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 16),
+                                                        child:
+                                                            CachedNetworkImage(
+                                                          imageUrl: widget
+                                                              .product.Image
+                                                              .toString()
+                                                              .split(",")[
+                                                                  getIndex()]
+                                                              .trim(),
+                                                          progressIndicatorBuilder:
+                                                              (context, url,
+                                                                      downloadProgress) =>
+                                                                  SizedBox(
+                                                                      width:
+                                                                          50.0,
+                                                                      height:
+                                                                          50.0,
+                                                                      child:
+                                                                          SpinKitCubeGrid(
+                                                                        color: Styles
+                                                                            .price_color,
+                                                                        size:
+                                                                            50.0,
+                                                                        controller: AnimationController(
+                                                                            vsync:
+                                                                                this,
+                                                                            duration:
+                                                                                const Duration(milliseconds: 1200)),
+                                                                      )),
+                                                          errorWidget: (context,
+                                                                  url, error) =>
+                                                              Icon(Icons.error),
                                                         ),
-                                                        style: ButtonStyle(
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Flexible(
+                                                    flex: 3,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceEvenly,
+                                                      children: [
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceAround,
+                                                          children: [
+                                                            Flexible(
+                                                              flex: 1,
+                                                              child: Column(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Text(
+                                                                    widget
+                                                                        .product
+                                                                        .Name
+                                                                        .toString(),
+                                                                    maxLines: 1,
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                    style: TextStyle(
+                                                                        fontFamily:
+                                                                            "Halyard",
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w700,
+                                                                        fontSize:
+                                                                            16),
+                                                                  ),
+                                                                  Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceEvenly,
+                                                                    children: [
+                                                                      Padding(
+                                                                        padding:
+                                                                            EdgeInsets.only(right: 10),
+                                                                        child:
+                                                                            Column(
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.spaceBetween,
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.start,
+                                                                          children: [
+                                                                            SizedBox(
+                                                                              height: 10,
+                                                                            ),
+                                                                            Text(
+                                                                              "Color",
+                                                                              style: TextStyle(fontFamily: "Halyard", fontWeight: FontWeight.w400, fontSize: 16),
+                                                                            ),
+                                                                            SizedBox(
+                                                                              height: 10,
+                                                                            ),
+                                                                            Text(
+                                                                              "Price",
+                                                                              style: TextStyle(fontFamily: "Halyard", fontWeight: FontWeight.w400, fontSize: 16),
+                                                                            ),
+                                                                            SizedBox(
+                                                                              height: 10,
+                                                                            ),
+                                                                            Text(
+                                                                              "Size",
+                                                                              style: TextStyle(fontFamily: "Halyard", fontWeight: FontWeight.w400, fontSize: 16),
+                                                                            ),
+                                                                            SizedBox(
+                                                                              height: 10,
+                                                                            ),
+                                                                            Text(
+                                                                              "Quantity",
+                                                                              style: TextStyle(fontFamily: "Halyard", fontWeight: FontWeight.w400, fontSize: 16),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                      Column(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.start,
+                                                                        children: [
+                                                                          SizedBox(
+                                                                            height:
+                                                                                10,
+                                                                          ),
+                                                                          Text(
+                                                                            selectedColor,
+                                                                            style: TextStyle(
+                                                                                fontFamily: "Halyard",
+                                                                                fontWeight: FontWeight.w600,
+                                                                                fontSize: 16),
+                                                                          ),
+                                                                          SizedBox(
+                                                                            height:
+                                                                                10,
+                                                                          ),
+                                                                          Text(
+                                                                            "₹${widget.product.Price}",
+                                                                            style: TextStyle(
+                                                                                fontFamily: "Halyard",
+                                                                                fontWeight: FontWeight.w600,
+                                                                                fontSize: 16),
+                                                                          ),
+                                                                          SizedBox(
+                                                                            height:
+                                                                                10,
+                                                                          ),
+                                                                          Text(
+                                                                            "${selectedSize}",
+                                                                            style: TextStyle(
+                                                                                fontFamily: "Halyard",
+                                                                                fontWeight: FontWeight.w600,
+                                                                                fontSize: 16),
+                                                                          ),
+                                                                          SizedBox(
+                                                                            height:
+                                                                                10,
+                                                                          ),
+                                                                          Text(
+                                                                            "${quantity}",
+                                                                            style: TextStyle(
+                                                                                fontFamily: "Halyard",
+                                                                                fontWeight: FontWeight.w600,
+                                                                                fontSize: 16),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 100,
+                                            ),
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
+                                                children: [
+                                                  ConstrainedBox(
+                                                    constraints:
+                                                        BoxConstraints.tightFor(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width /
+                                                                (2),
+                                                            height: 50),
+                                                    child: ElevatedButton(
+                                                      onPressed: () {
+                                                        Provider.of<CartData>(
+                                                                context,
+                                                                listen: false)
+                                                            .addProduct(CartProduct(
+                                                                selectedColor,
+                                                                widget.product
+                                                                    .Price,
+                                                                widget.product
+                                                                    .Image
+                                                                    .toString()
+                                                                    .split(",")[
+                                                                        getIndex()]
+                                                                    .trim(),
+                                                                quantity,
+                                                                selectedSize,
+                                                                widget.product
+                                                                    .Name,
+                                                                widget.product
+                                                                    .Id));
+                                                        Navigator.pop(context);
+                                                      },
+                                                      style: ButtonStyle(
+                                                          backgroundColor:
+                                                              MaterialStateProperty
+                                                                  .all(Color(
+                                                                      0xffE6E6E6)),
+                                                          shape: MaterialStateProperty.all<
+                                                                  RoundedRectangleBorder>(
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .zero,
+                                                          ))),
+                                                      child: Text(
+                                                        'Add',
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontSize: 17,
+                                                            fontFamily:
+                                                                Styles.font,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  ConstrainedBox(
+                                                    constraints:
+                                                        BoxConstraints.tightFor(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width /
+                                                                (2),
+                                                            height: 50),
+                                                    child: ElevatedButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                        Navigator.pop(context);
+                                                        Test.fragNavigate
+                                                            .putPosit(
+                                                                key: 'Cart',
+                                                                force: true);
+                                                      },
+                                                      style: ButtonStyle(
                                                           backgroundColor:
                                                               MaterialStateProperty
                                                                   .all(Styles
-                                                                      .Log_sign),
-                                                        ),
+                                                                      .price_color),
+                                                          shape: MaterialStateProperty.all<
+                                                                  RoundedRectangleBorder>(
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .zero,
+                                                          ))),
+                                                      child: Text(
+                                                        'Go to Cart',
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 17,
+                                                            fontFamily:
+                                                                Styles.font,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
                                                       ),
                                                     ),
                                                   ),
@@ -956,3 +1108,45 @@ class _ProductViewState extends State<ProductView>
     }
   }
 }
+// Flexible(
+// flex: 2,
+// child: Container(
+// // width: ,
+// height:
+// getSize(context),
+// child: ElevatedButton(
+// onPressed: () {
+// if (selectedColor !=
+// null &&
+// selectedSize !=
+// null) {
+// Navigator.pop(
+// context);
+// } else {
+// Styles.showWarningToast(
+// Styles
+//     .Log_sign,
+// 'Please select a size',
+// Colors.black,
+// 16);
+// }
+// },
+// child: Text(
+// 'Next',
+// style: TextStyle(
+// color: Colors
+//     .black,
+// fontWeight:
+// FontWeight
+//     .bold,
+// fontSize: 16),
+// ),
+// style: ButtonStyle(
+// backgroundColor:
+// MaterialStateProperty
+//     .all(Styles
+//     .Log_sign),
+// ),
+// ),
+// ),
+// ),
