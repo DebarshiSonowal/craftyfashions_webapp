@@ -127,7 +127,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                     fontFamily: "Halyard",
-                                    fontSize: 12,
+                                    fontSize: 14,
                                     color: Colors.black),
                               ),
                               Row(
@@ -138,7 +138,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     textAlign: TextAlign.start,
                                     style: TextStyle(
                                         fontFamily: "Halyard",
-                                        fontSize: 12,
+                                        fontSize: 14,
                                         color: Colors.black),
                                   ),
                                   Text(
@@ -146,7 +146,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     textAlign: TextAlign.start,
                                     style: TextStyle(
                                         fontFamily: "Halyard",
-                                        fontSize: 12,
+                                        fontSize: 14,
                                         color: Colors.black),
                                   ),
                                 ],

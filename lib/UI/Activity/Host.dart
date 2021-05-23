@@ -29,7 +29,7 @@ class HostState extends State<Host> {
   static var id;
   static var bottom;
   static FragNavigate _fragNav;
-
+  final _scaffoldKey = new GlobalKey<ScaffoldState>();
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
@@ -122,6 +122,14 @@ class HostState extends State<Host> {
                 return Scaffold(
                   key: _fragNav.drawerKey,
                   appBar: AppBar(
+                    titleSpacing:0,
+                    leading: IconButton(
+                      iconSize: 25,
+                      icon: Icon(Icons.menu),
+                      onPressed: () {
+                        _fragNav.drawerKey.currentState.openDrawer();
+                      },
+                    ),
                     title: TextButton(
                       onPressed: () {
                         _fragNav.putPosit(key: "Home");
@@ -130,7 +138,7 @@ class HostState extends State<Host> {
                         "Crafty",
                         style: TextStyle(
                           fontFamily: "Beyond",
-                          fontSize: 25,
+                          fontSize: 19,
                           color: Colors.red,
                         ),
                       ),

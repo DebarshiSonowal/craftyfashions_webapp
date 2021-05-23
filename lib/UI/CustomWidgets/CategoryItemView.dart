@@ -32,42 +32,35 @@ class _CategoryItemViewState extends State<CategoryItemView>  with TickerProvide
           // crossAxisAlignment: CrossAxisAlignment.center,
           alignment:AlignmentDirectional.bottomCenter,
           children: [
-            Flexible(
-              fit: FlexFit.tight,
-              flex: 10,
-              child: CachedNetworkImage(
-                fit: BoxFit.fill,
-                imageUrl:  widget.list[widget.index].image,
-                progressIndicatorBuilder:
-                    (context, url, downloadProgress) => SizedBox(
-                    width: 50.0,
-                    height: 50.0,
-                    child:SpinKitFadingCube(
-                      color: Styles.price_color,
-                      size: 50.0,
-                      controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 1200)),
-                    )
-                ),
-                errorWidget: (context, url, error) => Icon(Icons.error),
+            CachedNetworkImage(
+              fit: BoxFit.fill,
+              imageUrl:  widget.list[widget.index].image,
+              progressIndicatorBuilder:
+                  (context, url, downloadProgress) => SizedBox(
+                  width: 50.0,
+                  height: 50.0,
+                  child:SpinKitFadingCube(
+                    color: Styles.price_color,
+                    size: 50.0,
+                    controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 1200)),
+                  )
               ),
+              errorWidget: (context, url, error) => Icon(Icons.error),
             ),
-            Flexible(
-                flex: 2,
-                fit: FlexFit.tight,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xffE3859A),
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(5),topRight:  Radius.circular(5),),
-                  ),
-                  padding: EdgeInsets.only(left: 5,right: 5),
-                  child: Text(widget.list[widget.index].name,
-                      style: TextStyle(
-                        fontFamily: "Halyard",
-                        color: Colors.black,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 22,
-                      )),
-                )),
+            Container(
+              decoration: BoxDecoration(
+                color: Color(0xffE3859A),
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(5),topRight:  Radius.circular(5),),
+              ),
+              padding: EdgeInsets.only(left: 5,right: 5),
+              child: Text(widget.list[widget.index].name,
+                  style: TextStyle(
+                    fontFamily: "Halyard",
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 22,
+                  )),
+            ),
           ],
         ),
       ),
