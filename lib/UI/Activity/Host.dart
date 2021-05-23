@@ -84,34 +84,8 @@ class HostState extends State<Host> {
         if (_fragNav.stack.length > 1) {
           _fragNav.jumpBack();
           return Future.value(false);
-        } else {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return new AlertDialog(
-                title: new Text('Are you sure?'),
-                content: new Text('Do you want to exit an App'),
-                actions: <Widget>[
-                  new FlatButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(false);
-                    },
-                    child: new Text('No'),
-                  ),
-                  new FlatButton(
-                    onPressed: () {
-                      SystemChannels.platform
-                          .invokeMethod('SystemNavigator.pop');
-                    },
-                    child: new Text('Yes'),
-                  ),
-                ],
-              );
-            },
-          ).whenComplete(() => Future.value(false));
-          return Future.delayed(Duration(seconds: 3), () {
-            return Future.value(false);
-          });
+        }else{
+          return Future.value(false);
         }
       },
       child: Scaffold(
@@ -130,16 +104,19 @@ class HostState extends State<Host> {
                         _fragNav.drawerKey.currentState.openDrawer();
                       },
                     ),
-                    title: TextButton(
-                      onPressed: () {
-                        _fragNav.putPosit(key: "Home");
-                      },
-                      child: Text(
-                        "Crafty",
-                        style: TextStyle(
-                          fontFamily: "Beyond",
-                          fontSize: 19,
-                          color: Colors.red,
+                    title: Padding(
+                      padding:EdgeInsets.only(top:6),
+                      child: TextButton(
+                        onPressed: () {
+                          _fragNav.putPosit(key: "Home");
+                        },
+                        child: Text(
+                          "Crafty",
+                          style: TextStyle(
+                            fontFamily: "Beyond",
+                            fontSize: 16,
+                            color: Colors.red,
+                          ),
                         ),
                       ),
                     ),

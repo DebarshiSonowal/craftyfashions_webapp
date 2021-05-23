@@ -88,9 +88,17 @@ class _HomeWidgetState extends State<HomeWidget> {
                   height: 6,
                 ),
                 Card(
-                  elevation: 0,
-                  color: Colors.white,
+                  elevation: 1,
                   child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        new BoxShadow(
+                          color: Color(0xff586172),
+                          blurRadius: 5.0,
+                        ),
+                      ],
+                    ),
                     width: MediaQuery.of(context).size.width * 1,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,62 +169,81 @@ class _HomeWidgetState extends State<HomeWidget> {
                 SizedBox(
                   height: 10,
                 ),
-                Container(
-                  padding: const EdgeInsets.all(8.0),
-                  color: Colors.white,
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "All Products",
-                            style: TextStyle(
-                              fontFamily: "Halyard",
-                              color: Colors.black54,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 18,
+                Card(
+                  elevation: 1,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        new BoxShadow(
+                          color: Color(0xff586172),
+                          blurRadius: 5.0,
+                        ),
+                      ],
+                    ),
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "All Products",
+                              style: TextStyle(
+                                fontFamily: "Halyard",
+                                color: Colors.black54,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 18,
+                              ),
                             ),
-                          ),
-                          TextButton(
-                              onPressed: () {
-                                try {
-                                  Test.fragNavigate
-                                      .putPosit(key: 'All', force: true);
-                                } catch (e) {
-                                  print(e);
-                                }
-                              },
-                              child: Text(
-                                "Show All",
-                                style: TextStyle(
-                                  fontFamily: "Halyard",
-                                  color: Styles.price_color,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 18,
-                                ),
-                              ))
-                        ],
-                      ),
-                      Provider.of<CartData>(context, listen: true)
-                                  .allproducts
-                                  .length ==
-                              0
-                          ? LoadingAnimation(
-                              Provider.of<CartData>(context, listen: false)
-                                  .allproducts
-                                  .length,
-                              5,
-                              MediaQuery.of(context).size.height / 4)
-                          : Container(child: AllProducts()),
-                    ],
+                            TextButton(
+                                onPressed: () {
+                                  try {
+                                    Test.fragNavigate
+                                        .putPosit(key: 'All', force: true);
+                                  } catch (e) {
+                                    print(e);
+                                  }
+                                },
+                                child: Text(
+                                  "Show All",
+                                  style: TextStyle(
+                                    fontFamily: "Halyard",
+                                    color: Styles.price_color,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18,
+                                  ),
+                                ))
+                          ],
+                        ),
+                        Provider.of<CartData>(context, listen: true)
+                                    .allproducts
+                                    .length ==
+                                0
+                            ? LoadingAnimation(
+                                Provider.of<CartData>(context, listen: false)
+                                    .allproducts
+                                    .length,
+                                5,
+                                MediaQuery.of(context).size.height / 4)
+                            : Container(child: AllProducts()),
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(
                   height: 15,
                 ),
                 Container(
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      new BoxShadow(
+                        color: Color(0xff586172),
+                        blurRadius: 5.0,
+                      ),
+                    ],
+                  ),
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.only(top: 10,bottom: 10),

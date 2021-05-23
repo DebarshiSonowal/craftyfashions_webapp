@@ -29,85 +29,105 @@ class _CategoryDataState extends State<CategoryData> with TickerProviderStateMix
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            color: Colors.white,
-            child: Column(
-              children: [
-                CarouselSlider(
-                  carouselController: widget.controller,
-                  options: CarouselOptions(
-                    autoPlay: true,
-                    aspectRatio: 16/10,
-                    autoPlayInterval: Duration(seconds: 3),
-                    autoPlayAnimationDuration: Duration(milliseconds: 800),
-                    autoPlayCurve: Curves.easeIn,
-                    enableInfiniteScroll: true,
-                    viewportFraction: 1.05,
-                    reverse: false,
-                    onPageChanged: (index, reason){
-                      setState(() {
-                        _current = index;
-                      });
-                    }
+          Card(
+            elevation: 1,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  new BoxShadow(
+                    color: Color(0xff586172),
+                    blurRadius: 5.0,
                   ),
-                  items:
-                  Provider.of<CartData>(context, listen: false).getAdImage().map((i) {
-                    return Builder(
-                      builder: (BuildContext context) {
-                        return GestureDetector(
-                          onTap: () => widget.showIndex(
-                              Provider.of<CartData>(context, listen: false)
-                                  .getAdImage()
-                                  .indexOf(i)),
-                          child: Container(
-                            margin: EdgeInsets.symmetric(horizontal: 5.0),
-                            child: CachedNetworkImage(
-                              fit: BoxFit.fill,
-                              imageUrl: i,
-                              progressIndicatorBuilder:
-                                  (context, url, downloadProgress) => SizedBox(
-                                width: 50.0,
-                                height: 50.0,
-                                child:SpinKitFadingCube(
-                                  color: Styles.price_color,
-                                  size: 50.0,
-                                  controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 1200)),
-                                )
+                ],
+              ),
+              child: Column(
+                children: [
+                  CarouselSlider(
+                    carouselController: widget.controller,
+                    options: CarouselOptions(
+                      autoPlay: true,
+                      aspectRatio: 16/10,
+                      autoPlayInterval: Duration(seconds: 3),
+                      autoPlayAnimationDuration: Duration(milliseconds: 800),
+                      autoPlayCurve: Curves.easeIn,
+                      enableInfiniteScroll: true,
+                      viewportFraction: 1.05,
+                      reverse: false,
+                      onPageChanged: (index, reason){
+                        setState(() {
+                          _current = index;
+                        });
+                      }
+                    ),
+                    items:
+                    Provider.of<CartData>(context, listen: false).getAdImage().map((i) {
+                      return Builder(
+                        builder: (BuildContext context) {
+                          return GestureDetector(
+                            onTap: () => widget.showIndex(
+                                Provider.of<CartData>(context, listen: false)
+                                    .getAdImage()
+                                    .indexOf(i)),
+                            child: Container(
+                              margin: EdgeInsets.symmetric(horizontal: 5.0),
+                              child: CachedNetworkImage(
+                                fit: BoxFit.fill,
+                                imageUrl: i,
+                                progressIndicatorBuilder:
+                                    (context, url, downloadProgress) => SizedBox(
+                                  width: 50.0,
+                                  height: 50.0,
+                                  child:SpinKitFadingCube(
+                                    color: Styles.price_color,
+                                    size: 50.0,
+                                    controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 1200)),
+                                  )
+                                ),
+                                errorWidget: (context, url, error) => Icon(Icons.error),
                               ),
-                              errorWidget: (context, url, error) => Icon(Icons.error),
                             ),
-                          ),
-                        );
-                      },
-                    );
-                  }).toList(),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: Provider.of<CartData>(context, listen: false).getAdImage().map((url) {
-                    int index = Provider.of<CartData>(context, listen: false).getAdImage().indexOf(url);
-                    return Container(
-                      width: 5.0,
-                      height: 3.0,
-                      margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: _current == index
-                            ? Color.fromRGBO(0, 0, 0, 0.9)
-                            : Color.fromRGBO(0, 0, 0, 0.4),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ],
+                          );
+                        },
+                      );
+                    }).toList(),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: Provider.of<CartData>(context, listen: false).getAdImage().map((url) {
+                      int index = Provider.of<CartData>(context, listen: false).getAdImage().indexOf(url);
+                      return Container(
+                        width: 5.0,
+                        height: 3.0,
+                        margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: _current == index
+                              ? Color.fromRGBO(0, 0, 0, 0.9)
+                              : Color.fromRGBO(0, 0, 0, 0.4),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
             ),
           ),
           SizedBox(
             height: 10,
           ),
           Card(
-            elevation: 0,
+            elevation: 1,
             child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  new BoxShadow(
+                    color: Color(0xff586172),
+                    blurRadius: 5.0,
+                  ),
+                ],
+              ),
               height: 270,
               width: MediaQuery.of(context).size.width,
               child: ListView.builder(
