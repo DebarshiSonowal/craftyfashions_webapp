@@ -36,7 +36,7 @@ class _CategoryDataState extends State<CategoryData> with TickerProviderStateMix
                 color: Colors.white,
                 boxShadow: [
                   new BoxShadow(
-                    color: Color(0xff586172),
+                    color: Color(0xffE3E3E3),
                     blurRadius: 5.0,
                   ),
                 ],
@@ -123,7 +123,7 @@ class _CategoryDataState extends State<CategoryData> with TickerProviderStateMix
                 color: Colors.white,
                 boxShadow: [
                   new BoxShadow(
-                    color: Color(0xff586172),
+                    color: Color(0xffE3E3E3),
                     blurRadius: 5.0,
                   ),
                 ],

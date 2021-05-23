@@ -172,7 +172,7 @@ class HostState extends State<Host> {
                                   .toList()
                                   .indexOf(_fragNav.currentKey),
                           selectedItemColor: Colors.black,
-                          backgroundColor: Color(0xffF5F5F6),
+                          backgroundColor: Color(0xffeeeeee),
                           onTap: (index) => changeFragment(index),
                         ),
                   body: DefaultTabController(

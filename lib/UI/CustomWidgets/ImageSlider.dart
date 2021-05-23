@@ -3,16 +3,16 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:craftyfashions_webapp/Models/Products.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/scheduler/ticker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fragment_navigate/navigate-bloc.dart';
 
 class CarouselWithIndicatorDemo<T> extends StatefulWidget {
   Products item;
   FragNavigate _fragNavigate;
+  var colors;
   Function(int) onTap;
   final void Function(T) value;
-  CarouselWithIndicatorDemo(this.item, this._fragNavigate,this.onTap,this.value);
+  CarouselWithIndicatorDemo(this.item, this._fragNavigate,this.onTap,this.value,this.colors);
 
   @override
   State<StatefulWidget> createState() {
@@ -28,8 +28,8 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> with 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xffe3e3e6),
-      height: MediaQuery.of(context).size.height/(1.2),
+      color: widget.colors,
+      height: MediaQuery.of(context).size.height-173,
       child: Center(
         child: Column(
             children: [
@@ -83,9 +83,9 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> with 
                 children: widget.item.Image.toString().split(',').map((url) {
                   int index = widget.item.Image.toString().split(',').indexOf(url);
                   return Container(
-                    width: 8.0,
-                    height: 8.0,
-                    margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                    width: 5.0,
+                    height: 5.0,
+                    margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 2.0),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: _current == index

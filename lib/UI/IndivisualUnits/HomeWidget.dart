@@ -94,7 +94,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                       color: Colors.white,
                       boxShadow: [
                         new BoxShadow(
-                          color: Color(0xff586172),
+                          color: Color(0xffE3E3E3),
                           blurRadius: 5.0,
                         ),
                       ],
@@ -176,7 +176,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                       color: Colors.white,
                       boxShadow: [
                         new BoxShadow(
-                          color: Color(0xff586172),
+                          color: Color(0xffE3E3E3),
                           blurRadius: 5.0,
                         ),
                       ],
@@ -239,7 +239,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                     color: Colors.white,
                     boxShadow: [
                       new BoxShadow(
-                        color: Color(0xff586172),
+                        color: Color(0xffE3E3E3),
                         blurRadius: 5.0,
                       ),
                     ],
