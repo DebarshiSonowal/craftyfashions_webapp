@@ -155,6 +155,7 @@ class _CartScreennState extends State<CartScreenn> {
             ),
           ],
         ),
+        Text("Price Break down"),
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: FlatButton(
