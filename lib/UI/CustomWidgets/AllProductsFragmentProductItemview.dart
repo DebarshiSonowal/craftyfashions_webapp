@@ -131,7 +131,7 @@ class AllProductsFragmentProductItemView extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8.0),
                   child: FadeInImage.assetNetwork(
                     placeholder: "assets/images/404.png",
-                    image: list1[Index].Image.toString().split(",")[0],
+                    image: list[Index].Image.toString().split(",")[0],
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -144,7 +144,7 @@ class AllProductsFragmentProductItemView extends StatelessWidget {
                 padding: const EdgeInsets.only(
                     left: 10.0, top: 5.0, right: 3),
                 child: Text(
-                  list1[Index].Name,
+                  list[Index].Name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -162,7 +162,7 @@ class AllProductsFragmentProductItemView extends StatelessWidget {
                 padding: const EdgeInsets.only(
                     left: 10.0, top: 2.0, bottom: 2, right: 3),
                 child: Text(
-                  list1[Index].Short,
+                  list[Index].Short,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -179,7 +179,7 @@ class AllProductsFragmentProductItemView extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 10.0, top: 1.0,bottom: 1.0),
                 child: Text(
-                  "₹ ${list1[Index].Price}",
+                  "₹ ${list[Index].Price}",
                   style: TextStyle(
                       fontSize: Styles.getPriceSize(context),
                       color: Styles.price_color,
