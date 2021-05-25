@@ -4,6 +4,7 @@ import 'package:craftyfashions_webapp/Models/Products.dart';
 import 'package:craftyfashions_webapp/UI/Activity/RazorpayWeb.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/Photoview.dart';
 import 'package:craftyfashions_webapp/UI/Fragments/AllProducts.dart';
+import 'package:craftyfashions_webapp/UI/Fragments/BlankPage.dart';
 import 'package:craftyfashions_webapp/UI/Fragments/Couple.dart';
 import 'package:craftyfashions_webapp/UI/Fragments/Login.dart';
 import 'package:craftyfashions_webapp/UI/Fragments/About.dart';
@@ -38,6 +39,14 @@ class Test {
 
   static  getList() {
     return <Posit>[
+      Posit(
+          key: 'Test',
+          title: 'Home',
+          fragment: Container(
+            color: Styles.bg_color,
+            child: BlankPage(),
+          ),
+          icon: Icons.add),
       Posit(
           key: 'Home',
           title: 'Home',

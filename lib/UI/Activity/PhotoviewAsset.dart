@@ -8,7 +8,6 @@ class PhotoviewAsset extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Gender $url");
     return Container(
         color: Colors.transparent,
         child: Padding(

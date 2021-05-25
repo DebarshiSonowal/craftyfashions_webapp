@@ -31,12 +31,8 @@ class _HomePageState extends State<HomePage> {
         Provider.of<CartData>(context, listen: false).getCateg() == null
             ? true
             : false);
-    print("Is is ${Provider.of<CartData>(context, listen: false).getCateg() == null
-        ? true
-        : false}");
     super.initState();
     customcontext = context;
-    print("Home page init");
   }
 
   @override
@@ -58,7 +54,6 @@ class _HomePageState extends State<HomePage> {
         List<Products> data = Data;
         if (data != null) {
           setState(() {
-            print("Here");
             Provider.of<CartData>(customcontext, listen: false)
                 .setAllProduct(data);
             addData(data);
@@ -93,7 +88,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print("Home page build");
     return kIsWeb?Container(
       color: Color(0xffe3e3e6),
       child: SmartRefresher(
@@ -135,10 +129,8 @@ class _HomePageState extends State<HomePage> {
       for (var i in data) {
         if (i.Gender == "MALE") {
           men.add(i);
-          print("MEN $i");
         } else {
           women.add(i);
-          print("WOMEN $i");
         }
       }
       setState(() {
@@ -147,7 +139,6 @@ class _HomePageState extends State<HomePage> {
         Provider.of<CartData>(context, listen: false).setWomen(women);
       });
     } else {
-      print("empty");
     }
   }
 }

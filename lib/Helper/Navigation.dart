@@ -65,7 +65,6 @@ class NavDrawer extends StatelessWidget {
                 _fragNavigate.putPosit(key: 'Home', force: true);
               } catch (e) {
                 _fragNavigate.jumpBackTo('Home');
-                print("hee $e");
               }},
           ),
           ListTile(

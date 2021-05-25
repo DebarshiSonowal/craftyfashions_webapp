@@ -94,7 +94,6 @@ class RazorPayWeb extends StatelessWidget {
     var body = json.encode(data);
     UsersModel usersModel = UsersModel();
     var b = await usersModel.saveOrder(body);
-    print(b["result"]);
     if (b["result"].toString().trim() == "Successful") {
       try {
         UsersModel usersModel = UsersModel();
@@ -108,14 +107,12 @@ class RazorPayWeb extends StatelessWidget {
                 ? Provider.of<CartData>(context, listen: false).user.name
                 : Provider.of<CartData>(context, listen: false).name);
         if (a != null && a != "Unable to save order") {
-          print("@1");
           // Navigator.pop(context);
           CartData.removeALL(0, CartData.listLengths);
           CartData.RESULT = "assets/raw/successful.json";
           CartData.TXT = response.paymentId;
           Test.fragNavigate.putPosit(key: 'Result');
         } else {
-          print("@2");
           // Navigator.pop(context);
           Test.fragNavigate.putPosit(key: 'Result');
           CartData.RESULT = "assets/raw/failed.json";
@@ -128,7 +125,6 @@ class RazorPayWeb extends StatelessWidget {
       }
     } else {
       // Navigator.pop(context);
-      print("@3");
       CartData.RESULT = "assets/raw/failed.json";
       CartData.TXT = "Payment ID" + response.orderId;
       Test.fragNavigate.putPosit(key: 'Result');

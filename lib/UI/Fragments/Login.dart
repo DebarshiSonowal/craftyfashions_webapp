@@ -155,7 +155,6 @@ class _LoginState extends State<Login> {
                                 fontWeight: FontWeight.w600));
                         if (email == null && password == null) {
                           Styles.showWarningToast(Colors.red, "Please enter required fields", Colors.white, 15);
-                          print("ADAD");
                           // LogIn(email,password);
 
                         } else {
@@ -186,7 +185,6 @@ class _LoginState extends State<Login> {
                       ),
                       TextButton(
                         onPressed: () {
-                          print("pvvv ${Test.fragNavigate}");
                           // Navigator.pushNamed(context, 'SignUp');
                           Test.fragNavigate.putPosit(key: 'Signup');
                         },
@@ -265,10 +263,8 @@ class _LoginState extends State<Login> {
       await prefs.setString("access", data["accessToken"]);
       await prefs.setString("refresh", data["refreshToken"]);
       var UserData = await usersModel.getUser();
-      print("NNN");
       print(UserData);
       if (UserData != "User Not Found") {
-        print("V: ${UserData.name}");
         Provider.of<CartData>(context, listen: false).updateUser(UserData);
       }
       var profile = await usersModel.getProf(UserData.id);
@@ -283,18 +279,14 @@ class _LoginState extends State<Login> {
 
       Styles.showWarningToast(Colors.green, "Successful", Colors.white, 15);
       pr.hide().then((isHidden) {
-        print(isHidden);
         Test.fragNavigate.putAndClean(key:'Home');
       });
     } else if (data == "Server Error") {
       pr.hide().then((isHidden) {
-        print(isHidden);
         Styles.showWarningToast(Colors.red, "Something is wrong. Please try again later", Colors.white, 15);
       });
     } else {
       pr.hide().then((isHidden) {
-        print(isHidden);
-        print("Password or email is wrong");
         Styles.showWarningToast(Colors.red, "Email or password is wrong", Colors.white, 15);
       });
     }

@@ -19,8 +19,6 @@ class _OrderDetailsState extends State<OrderDetails> {
 
   @override
   Widget build(BuildContext context) {
-    print(
-        "The li asg ${Provider.of<CartData>(context).orderSelected.products.toString().split(",").length}");
     return Container(
       color: Styles.bg_color,
       height: MediaQuery.of(context).size.height,

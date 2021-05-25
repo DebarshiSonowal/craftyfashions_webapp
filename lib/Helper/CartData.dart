@@ -15,7 +15,12 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CartData extends ChangeNotifier {
-  static List<CartProduct> _list = [];
+  static List<CartProduct> _list = [
+    CartProduct("Nt.Blue", "499", "https://firebasestorage.googleapis.com/v0/b/crafty-fashions-assam.appspot.com/o/testinng%2FFOBP01_adobespark.png?alt=media&token=d5e84bfc-75e8-440e-9542-fcc6cee91c28", 1, "XL", "Dilbar mere", "106412"),
+    CartProduct("Ntr.Blue", "499", "https://firebasestorage.googleapis.com/v0/b/crafty-fashions-assam.appspot.com/o/testinng%2FFOBP01_adobespark.png?alt=media&token=d5e84bfc-75e8-440e-9542-fcc6cee91c28", 2, "XXL", "Dilbar mere bassa", "142412"),
+    CartProduct("N.Blue", "599", "https://firebasestorage.googleapis.com/v0/b/crafty-fashions-assam.appspot.com/o/testinng%2FFOBP01_adobespark.png?alt=media&token=d5e84bfc-75e8-440e-9542-fcc6cee91c28", 3, "M", "Dilbar mere aqwf", "152412"),
+    CartProduct("N2.Blue", "499", "https://firebasestorage.googleapis.com/v0/b/crafty-fashions-assam.appspot.com/o/testinng%2FFOBP01_adobespark.png?alt=media&token=d5e84bfc-75e8-440e-9542-fcc6cee91c28", 1, "XL", "Dilbar mere", "102412")
+  ];
   User _user = null;
   Profile _profile = null;
   List<Order> _order = [];
@@ -47,13 +52,11 @@ class CartData extends ChangeNotifier {
 
   void setOrderSelected(Order value) {
     _orderSelected = value;
-    print("Selected ${value.products}");
     notifyListeners();
   }
 
   void setCategory(List<Categories> list) {
     _categ = list;
-    print("Category set");
     notifyListeners();
   }
   void setSpecial(List<Products>list){
@@ -70,13 +73,11 @@ class CartData extends ChangeNotifier {
   }
   void setRazorpay(Razorpay razorpay) {
     _razorpay = razorpay;
-    print("RAzor ${_razorpay.Key}");
     notifyListeners();
   }
 
   void setAds(List<Ads> ads) {
     _ads = ads;
-    print("Ads set");
     notifyListeners();
   }
 
@@ -182,7 +183,6 @@ class CartData extends ChangeNotifier {
     for (var i in getAds()) {
       list.add(i.picture);
     }
-    print("Size ${list.length}");
     return list;
   }
 
@@ -236,6 +236,7 @@ class CartData extends ChangeNotifier {
     double price = 0;
     for (int i = 0; i < _list.length; i++) {
       price += double.parse(_list[i].payment.toString()) * _list[i].quantity;
+      print(double.parse(_list[i].payment.toString()) * _list[i].quantity);
     }
     return price;
   }
@@ -280,7 +281,13 @@ class CartData extends ChangeNotifier {
     }
     return col;
   }
-
+int get noOfTotalItems{
+    int a = 0;
+    for(var i in _list){
+      a += i.quantity;
+    }
+    return a;
+}
   String get quantity {
     List<String> col = [];
     for (var i in _list) {

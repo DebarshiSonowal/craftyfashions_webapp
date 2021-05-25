@@ -1043,12 +1043,8 @@ class _ProductViewState extends State<ProductView>
 
   getLabels() {
     var list = widget.product.Color.split(",");
-    print(list);
     int i = list.indexOf(
         selectedColor == null ? list[0].toString() : selectedColor.toString());
-    print(list
-        .indexOf(selectedColor == null ? list[0].toString() : selectedColor)
-        .toString());
     var lst = widget.product.Size.split(".");
     return lst[i].toString().split(",");
   }
@@ -1057,16 +1053,8 @@ class _ProductViewState extends State<ProductView>
     if (widget.product.Image.toString().split(",").length > -1 &&
         widget.product.Image.toString().split(",").length >
             widget.product.Color.toString().split(",").indexOf(selectedColor)) {
-      print(widget.product.Image.toString().split(",").length);
-      print(widget.product.Color.toString().split(",").indexOf(selectedColor));
-      print(
-          "DW ${widget.product.Color.toString().split(",").indexOf(selectedColor)}");
       return widget.product.Color.toString().split(",").indexOf(selectedColor);
     } else {
-      print(selectedColor);
-      print(widget.product.Image.toString().split(",").length);
-      print(widget.product.Color.toString().split(",").indexOf(selectedColor));
-      print("DW 0");
       return 0;
     }
   }

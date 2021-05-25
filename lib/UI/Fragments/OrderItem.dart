@@ -125,9 +125,6 @@ class OrderItem extends StatelessWidget {
                                       child: Text("Details"),
                                     ),
                                     onTap: () {
-                                      print("Order is ${Provider.of<CartData>(context,
-                                          listen: false)
-                                          .order[index]}");
                                       Provider.of<CartData>(context,listen: false).setOrderSelected(Provider.of<CartData>(context,
                                           listen: false)
                                           .order[index]);
@@ -154,7 +151,6 @@ class OrderItem extends StatelessWidget {
                                     onTap:Provider.of<CartData>(context,
                                         listen: false)
                                         .order[index].status.toString().trim()=="Cancelled"?null:() {
-                                      print('Cancelled');
                                       cancelOrder(Provider.of<CartData>(context,
                                           listen: false)
                                           .order[index]

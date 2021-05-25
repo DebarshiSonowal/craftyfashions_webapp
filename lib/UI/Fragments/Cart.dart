@@ -233,7 +233,6 @@ class _CartState extends State<Cart> {
         null));
     if (data != null) {
       pr.hide().then((isHidden) {
-        print(isHidden);
         Fluttertoast.showToast(
             msg: "Successful",
             toastLength: Toast.LENGTH_SHORT,
@@ -248,7 +247,6 @@ class _CartState extends State<Cart> {
       });
     } else {
       pr.hide().then((isHidden) {
-        print(isHidden);
         Navigator.pop(context);
         Fluttertoast.showToast(
             msg: "Failed",

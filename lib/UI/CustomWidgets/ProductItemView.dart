@@ -106,7 +106,6 @@ class ProductItemVIew extends StatelessWidget {
     if (width > 1025) {
       return "Desktop";
     }else if(width > 412 && width < kTabletBreakpoint){
-      print("Mini");
       return "Mini";
     }
     else if (width > kMobileBreakpoint && width <1025) {

@@ -131,7 +131,6 @@ class _SplashScreenState extends State<SplashScreen>
     var data = await usersModel1.getRequired();
     if (data != "Server Error") {
       var data3 = data['razorpay'];
-      print("The key is ${data3}");
       Provider.of<CartData>(context, listen: false)
           .setRazorpay(Razorpay.fromJson(data3));
       var data1 = data['require'] as List;
@@ -170,7 +169,6 @@ void getLoginData() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var acc = prefs.get('access');
   var ref = prefs.get('refresh');
-  print("Get data ${acc}");
   if (acc != null && ref != null) {
     print("The data is ${acc}");
     Test.accessToken = acc;

@@ -281,7 +281,6 @@ class _LoginState extends State<Login> {
       });
     } else {
       pr.hide().then((isHidden) {
-        print("Password or email is wrong");
         Styles.showWarningToast(Colors.red, "Email or password is wrong", Colors.white, 15);
       });
     }

@@ -131,10 +131,8 @@ class _ProductviewBottomSheetState extends State<ProductviewBottomSheet> {
                           setState(() {
                             widget.selectedColor = value;
                             widget.show(value,widget.selectedSize,widget.quantity);
-                            print("selected ${widget.selectedColor} $value");
                             // selectedSize = null;
                           });
-                          print("selected ${widget.selectedColor}");
                         },
                         selectedColor: Styles.Log_sign,
                         defaultSelected: widget.product.Color
@@ -255,7 +253,6 @@ class _ProductviewBottomSheetState extends State<ProductviewBottomSheet> {
                         radioButtonValue: (value) {
                           widget.selectedSize = value;
                           widget.show(widget.selectedColor,value,widget.quantity);
-                          print(value);
                         },
                         selectedColor: Styles.Log_sign,
                       ),
@@ -293,7 +290,6 @@ class _ProductviewBottomSheetState extends State<ProductviewBottomSheet> {
   }
 
   bool checkGender() {
-    print(widget.product.Gender.toString());
     return widget.product.Gender.toString().trim() == "MALE" ? true : false;
   }
 

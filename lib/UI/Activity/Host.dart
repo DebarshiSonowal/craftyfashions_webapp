@@ -29,7 +29,6 @@ class HostState extends State<Host> {
   static var id;
   static var bottom;
   static FragNavigate _fragNav;
-  final _scaffoldKey = new GlobalKey<ScaffoldState>();
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
@@ -51,15 +50,12 @@ class HostState extends State<Host> {
   void initState() {
     // getLoginData();
     _fragNav = FragNavigate(
-      firstKey: 'Home',
+      firstKey: 'Test',
       drawerContext: null,
       screens: Test.getList(),
     );
     new Future.delayed(Duration.zero, () {
       _fragNav.setDrawerContext = context;
-      // if(Provider.of<CartData>(context, listen: false).allproducts.length==0){
-      //   getEverything(context);
-      // }
     });
     getLoginData();
     super.initState();
@@ -196,7 +192,6 @@ class HostState extends State<Host> {
     var data = await usersModel1.getRequired();
     if (data != "Server Error") {
       var data3 = data['razorpay'];
-      print("The key is ${data3}");
       Provider.of<CartData>(context, listen: false)
           .setRazorpay(Razorpay.fromJson(data3));
       var data1 = data['require'] as List;
@@ -266,7 +261,6 @@ class HostState extends State<Host> {
   checkifMobile() {
     if (MediaQuery.of(context).size.width >= kDesktopBreakpoint ||
         MediaQuery.of(context).size.width >= kTabletBreakpoint) {
-      print("False");
       return false;
     } else {
       return false;
