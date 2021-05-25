@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:craftyfashions_webapp/Helper/CartData.dart';
 import 'package:craftyfashions_webapp/Helper/Test.dart';
+import 'package:craftyfashions_webapp/UI/CustomWidgets/EmptyView.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/ProductItemView.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,12 +28,18 @@ class _BlankPageState extends State<BlankPage> with TickerProviderStateMixin {
         "price ${Provider.of<CartData>(context).noOfTotalItems * 699} and ${Provider.of<CartData>(context).getPrice()}");
     return Container(
       color: Color(0xffE3E3E3),
-      child: Column(
+      child: Provider.of<CartData>(context, listen: true)
+          .list
+          .length>0?Column(
         children: [
           Expanded(
             child: SingleChildScrollView(
-              child: Column(children: [
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                 Container(
+                  color:Colors.white,
+                  width: 150,
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: [
@@ -50,7 +57,6 @@ class _BlankPageState extends State<BlankPage> with TickerProviderStateMixin {
                           .length,
                       itemBuilder: (BuildContext context, int index) {
                         return Card(
-                            key: UniqueKey(),
                             child: Container(
                               decoration: BoxDecoration(
                                 color: Colors.white,
@@ -120,7 +126,7 @@ class _BlankPageState extends State<BlankPage> with TickerProviderStateMixin {
                                                           child: Container(
                                                             padding:
                                                                 EdgeInsets.only(
-                                                                    top: 4),
+                                                                    top: 8),
                                                             child: Text(
                                                               "${Provider.of<CartData>(context).list[index].name}",
                                                               style: TextStyle(
@@ -143,15 +149,12 @@ class _BlankPageState extends State<BlankPage> with TickerProviderStateMixin {
                                                                     .spaceEvenly,
                                                             children: [
                                                               Column(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceEvenly,
                                                                 crossAxisAlignment:
                                                                     CrossAxisAlignment
                                                                         .start,
                                                                 children: [
                                                                   Text(
-                                                                    "Color",
+                                                                    "Color:",
                                                                     textAlign:
                                                                         TextAlign
                                                                             .start,
@@ -168,13 +171,13 @@ class _BlankPageState extends State<BlankPage> with TickerProviderStateMixin {
                                                                   ),
                                                                   Padding(
                                                                     padding: EdgeInsets.only(
-                                                                        top: 12,
+                                                                        top: 16,
                                                                         bottom:
                                                                             12),
                                                                     child: Row(
                                                                       children: [
                                                                         Text(
-                                                                          "Size ",
+                                                                          "Size:  ",
                                                                           textAlign:
                                                                               TextAlign.start,
                                                                           style: TextStyle(
@@ -197,7 +200,7 @@ class _BlankPageState extends State<BlankPage> with TickerProviderStateMixin {
                                                                     ),
                                                                   ),
                                                                   Text(
-                                                                    "Price",
+                                                                    "Price: ",
                                                                     textAlign:
                                                                         TextAlign
                                                                             .start,
@@ -218,15 +221,12 @@ class _BlankPageState extends State<BlankPage> with TickerProviderStateMixin {
                                                                 width: 7,
                                                               ),
                                                               Column(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceEvenly,
                                                                 crossAxisAlignment:
                                                                     CrossAxisAlignment
                                                                         .end,
                                                                 children: [
                                                                   Text(
-                                                                    "₹${Provider.of<CartData>(context).list[index].color}",
+                                                                    "${Provider.of<CartData>(context).list[index].color}",
                                                                     style: TextStyle(
                                                                         fontFamily:
                                                                             "Halyard",
@@ -244,7 +244,7 @@ class _BlankPageState extends State<BlankPage> with TickerProviderStateMixin {
                                                                             .center,
                                                                     children: [
                                                                       Text(
-                                                                        "Qty ",
+                                                                        "Qty:  ",
                                                                         style: TextStyle(
                                                                             fontFamily:
                                                                                 "Halyard",
@@ -338,18 +338,23 @@ class _BlankPageState extends State<BlankPage> with TickerProviderStateMixin {
                                     flex: 2,
                                     child: Container(
                                       padding: EdgeInsets.only(
-                                          top: 1, bottom: 1, left: 4, right: 4),
+                                          top: 1, bottom: 1, left: 8, right: 8),
                                       decoration: BoxDecoration(
                                         border: Border(
                                           top: BorderSide(
-                                            width: .3,
-                                            color: Color(0xff545454),
+                                            width: .1,
+                                            color: Color(0xffb2b2b2),
                                           ),
                                         ),
                                         color: Colors.white,
                                       ),
                                       child: ElevatedButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          Provider.of<CartData>(context, listen: false)
+                                              .removeProduct(index);
+                                          Styles.showWarningToast(
+                                              Styles.Log_sign, "Item removed", Colors.black, 15);
+                                        },
                                         style: ButtonStyle(
                                           enableFeedback: true,
                                           backgroundColor:
@@ -464,7 +469,7 @@ class _BlankPageState extends State<BlankPage> with TickerProviderStateMixin {
                                                 color: Colors.black),
                                           ),
                                           Text(
-                                            "Discount",
+                                            "Discount on MRP",
                                             textAlign: TextAlign.start,
                                             style: TextStyle(
                                                 fontFamily: "Halyard",
@@ -487,8 +492,6 @@ class _BlankPageState extends State<BlankPage> with TickerProviderStateMixin {
                                             style: TextStyle(
                                                 fontFamily: "Halyard",
                                                 fontSize: 14,
-                                                decoration:
-                                                    TextDecoration.lineThrough,
                                                 fontWeight: FontWeight.w600,
                                                 color: Colors.black),
                                           ),
@@ -592,8 +595,10 @@ class _BlankPageState extends State<BlankPage> with TickerProviderStateMixin {
           Card(
             elevation: 1,
             child: Container(
+
               decoration: BoxDecoration(
-                color: Color(0xffE3E3E3),
+                color: Colors.white,
+                // color: Color(0xffE3E3E3),
                 boxShadow: [
                   new BoxShadow(
                     color: Color(0xffE3E3E3),
@@ -608,15 +613,19 @@ class _BlankPageState extends State<BlankPage> with TickerProviderStateMixin {
                 height: 50,
                 width: double.infinity,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () {},
                         style: ButtonStyle(
                           enableFeedback: true,
+                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.zero,
+                                )
+                            ),
                           backgroundColor:
-                              MaterialStateProperty.all(Colors.white),
+                              MaterialStateProperty.all(Color(0xffE3E3E3)),
                           shadowColor:
                               MaterialStateProperty.all(Color(0xffE3E3E3)),
                           elevation: MaterialStateProperty.all(4),
@@ -642,7 +651,7 @@ class _BlankPageState extends State<BlankPage> with TickerProviderStateMixin {
                     ),
                     SizedBox(
                       height: 30,
-                      width: 1,
+                      width: 2,
                       child: Container(
                         margin: EdgeInsets.all(2),
                         color: Colors.black,
@@ -650,9 +659,41 @@ class _BlankPageState extends State<BlankPage> with TickerProviderStateMixin {
                     ),
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showModalBottomSheet(
+                              context: context,
+                              isDismissible: true,
+                              isScrollControlled: true,
+                              builder: (BuildContext context) {
+                                return Card(
+                                  child: Container(
+                                    color: Colors.white,
+                                    child: Column(
+                                      children: [
+                                        Card(
+                                         child: Container(
+                                           color: Color(0xff6d6d6d),
+                                           child: Column(
+                                             children: [
+                                               Text(""),
+                                             ],
+                                           ),
+                                         ),
+                                        ),
+                                        
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              });
+                        },
                         style: ButtonStyle(
                           enableFeedback: true,
+                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.zero,
+                                )
+                            ),
                           backgroundColor:
                               MaterialStateProperty.all(Styles.price_color),
                           shadowColor:
@@ -684,7 +725,7 @@ class _BlankPageState extends State<BlankPage> with TickerProviderStateMixin {
             ),
           )
         ],
-      ),
+      ):EmptyView(txt: "Please add some items to the cart",),
     );
   }
 
@@ -710,7 +751,10 @@ class _BlankPageState extends State<BlankPage> with TickerProviderStateMixin {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("All products"),
-                    TextButton(onPressed: () {}, child: Text("Show all"))
+                    TextButton(onPressed: () {
+                      Test.fragNavigate
+                          .putPosit(key: 'All', force: true);
+                    }, child: Text("Show all"))
                   ],
                 ),
               )),
