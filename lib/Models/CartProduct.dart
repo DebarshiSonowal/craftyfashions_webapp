@@ -32,4 +32,8 @@ class CartProduct {
   get payment => _payment;
 
   get color => _color;
+
+  set setQuantity(value) {
+    _quantity = value;
+  }
 }
