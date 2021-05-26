@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:craftyfashions_webapp/Helper/CartData.dart';
 import 'package:craftyfashions_webapp/Helper/Test.dart';
 import 'package:craftyfashions_webapp/Models/Products.dart';
+import 'package:craftyfashions_webapp/UI/CustomWidgets/AllProductsFragmentProductItemview.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/LoadingAnimation.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/ProductItemView.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Breakpoints.dart';
@@ -87,59 +88,42 @@ class _WomenProductsState extends State<WomenProducts> {
         Provider.of<CartData>(context, listen: true).allproducts.length,
         10,
         null)
-        : Container(
-      height: MediaQuery.of(context).size.height,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Container(
-                      height: MediaQuery.of(context).size.height - 100,
-                      child: GridView.count(
-                          scrollDirection: Axis.vertical,
-                          crossAxisCount: getCountAccordingToSize(),
-                          crossAxisSpacing: 20,
-                          mainAxisSpacing: 10,
-                          shrinkWrap: true,
-                          children: List.generate(
-                              Provider.of<CartData>(context,
-                                  listen: false)
-                                  .women
-                                  .length, (index) {
-                            return ProductItemVIew(
-                                buttonSize: buttonSize,
-                                list: Provider.of<CartData>(context,
+        : Padding(
+      padding: EdgeInsets.only(top: 10),
+      child: Container(
+          color: Colors.transparent,
+          height: MediaQuery.of(context).size.height,
+          child: GridView.count(
+              crossAxisCount: 2,
+              crossAxisSpacing: 0,
+              childAspectRatio: (MediaQuery.of(context).size.width) /
+                  (MediaQuery.of(context).size.height + 30),
+              mainAxisSpacing: 5,
+              primary: true,
+              shrinkWrap: true,
+              semanticChildCount: 2,
+              children: List.generate(
+                  Provider.of<CartData>(context, listen: false)
+                      .women
+                      .length, (index) {
+                return AllProductsFragmentProductItemView(
+                    buttonSize: buttonSize,
+                    list:
+                    Provider.of<CartData>(context, listen: false)
+                        .women,
+                    OnTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProductView(
+                                product: Provider.of<CartData>(context,
                                     listen: false)
-                                    .women,
-                                OnTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) =>
-                                          ProductView(
-                                            product:
-                                            Provider.of<CartData>(
-                                                context,
-                                                listen: false)
-                                                .women[index],
-                                            fragNav: Test.fragNavigate,
-                                          )));
-                                },
-                                Index: index);
-                          })),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+                                    .women[index],
+                                fragNav: Test.fragNavigate,
+                              )));
+                    },
+                    Index: index);
+              }))),
     );
   }
 
