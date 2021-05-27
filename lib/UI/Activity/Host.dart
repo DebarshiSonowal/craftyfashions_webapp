@@ -36,7 +36,7 @@ class HostState extends State<Host> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var acc = prefs.get('access');
     var ref = prefs.get('refresh');
-    print(acc);
+    print("The tokens are ${acc} and ${ref}");
     if (acc != null && ref != null) {
       Test.accessToken = acc;
       Test.refreshToken = ref;

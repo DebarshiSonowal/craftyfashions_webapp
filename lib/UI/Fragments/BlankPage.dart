@@ -1,13 +1,22 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:craftyfashions_webapp/Helper/CartData.dart';
+import 'package:craftyfashions_webapp/Helper/DioError.dart';
 import 'package:craftyfashions_webapp/Helper/Test.dart';
+import 'package:craftyfashions_webapp/Models/Address.dart';
+import 'package:craftyfashions_webapp/Models/Order.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/EmptyView.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/ProductItemView.dart';
+import 'package:craftyfashions_webapp/UI/Fragments/Payment%20Mode.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
+import 'package:craftyfashions_webapp/Utility/Users.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
 import 'ProductView.dart';
@@ -21,9 +30,41 @@ class BlankPage extends StatefulWidget {
 
 class _BlankPageState extends State<BlankPage> with TickerProviderStateMixin {
   var selectedSize = "1";
+  var paymentMethod = [
+    'UPI',
+    'Debit Card',
+    'Credit Card',
+    'NetBanking',
+    'Wallet',
+    'COD'
+  ];
+  ProgressDialog pr;
+  BuildContext buildContext;
+
+  @override
+  void initState() {
+    pr = ProgressDialog(context,
+        type: ProgressDialogType.Normal, isDismissible: false, showLogs: true);
+    pr.style(
+        message: 'Please Wait....',
+        borderRadius: 10.0,
+        backgroundColor: Colors.white,
+        progressWidget: CircularProgressIndicator(),
+        elevation: 10.0,
+        insetAnimCurve: Curves.easeInOut,
+        progress: 0.0,
+        maxProgress: 100.0,
+        progressTextStyle: TextStyle(
+            color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
+        messageTextStyle: TextStyle(
+            color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600));
+    buildContext = context;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    buildContext = context;
     print(
         "price ${Provider.of<CartData>(context).noOfTotalItems * 699} and ${Provider.of<CartData>(context).getPrice()}");
     return Container(
@@ -639,17 +680,8 @@ class _BlankPageState extends State<BlankPage> with TickerProviderStateMixin {
                                     isDismissible: true,
                                     isScrollControlled: true,
                                     builder: (BuildContext context) {
-                                      return Card(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(20), topRight: Radius.circular(20))),
-                                        color: Colors.transparent,
-                                        child: Wrap(
-                                          children: [
-                                            BottomSheetWidget(context),
-                                          ],
-                                        ),
-                                      );
+                                      return BottomSheetAddressSelector(
+                                          context);
                                     });
                               },
                               style: ButtonStyle(
@@ -698,6 +730,20 @@ class _BlankPageState extends State<BlankPage> with TickerProviderStateMixin {
     );
   }
 
+  Card BottomSheetAddressSelector(BuildContext context) {
+    return Card(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+      color: Colors.transparent,
+      child: Wrap(
+        children: [
+          BottomSheetWidget(context),
+        ],
+      ),
+    );
+  }
+
   Container BottomSheetWidget(BuildContext context) {
     return Container(
       color: Colors.white,
@@ -712,113 +758,148 @@ class _BlankPageState extends State<BlankPage> with TickerProviderStateMixin {
                   fontSize: 15,
                   fontWeight: FontWeight.w400,
                   color: Colors.black)),
-          SizedBox(height: 10,),
-          ListView.builder(
-              itemCount: 2,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return Card(
-                  elevation: 1.5,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        new BoxShadow(
-                          color: Color(0xffE3E3E3),
-                          blurRadius: 5.0,
-                        ),
-                      ],
-                    ),
-                    child: Material(
-                      color: Colors.white,
-                      child: InkWell(
-                        radius: MediaQuery.of(context).size.width + 10,
-                        splashColor: Colors.black,
-                        enableFeedback: true,
-                        onTap: () {},
-                        child: Container(
-                          height: 130,
-                          width: MediaQuery.of(context).size.width - 10,
-                          padding: EdgeInsets.all(10),
-                          child: Row(
-                            children: [
-                              Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                      "${Provider.of<CartData>(context, listen: true).profile.name}",
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                          fontFamily: "Halyard",
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.black)),
-                                  Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                          "${Provider.of<CartData>(context, listen: true).profile.address.split(",")[0]}",
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                              fontFamily: "Halyard",
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w300,
-                                              color: Colors.black)),
-                                      Text(
-                                          "${Provider.of<CartData>(context, listen: true).profile.address.split(",")[1]}, Pincode: ${Provider.of<CartData>(context, listen: true).profile.pincode}",
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                              fontFamily: "Halyard",
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w300,
-                                              color: Colors.black)),
-                                      Text(
-                                          "${Provider.of<CartData>(context, listen: true).profile.address.split(",")[2]}, ${Provider.of<CartData>(context, listen: true).profile.address.split(",")[3]}",
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                              fontFamily: "Halyard",
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w300,
-                                              color: Colors.black)),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text("Mobile: ",
-                                          style: TextStyle(
-                                              fontFamily: "Halyard",
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w300,
-                                              color: Colors.black)),
-                                      Text(
-                                          "${Provider.of<CartData>(context, listen: true).profile.phone}",
-                                          style: TextStyle(
-                                              fontFamily: "Halyard",
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.black)),
-                                    ],
+          SizedBox(
+            height: 10,
+          ),
+          Provider.of<CartData>(context, listen: true).profile != null
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ListView.builder(
+                        itemCount: 1,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            elevation: 1.5,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  new BoxShadow(
+                                    color: Color(0xffE3E3E3),
+                                    blurRadius: 5.0,
                                   ),
                                 ],
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              }),
-          Text("OR",
-              style: TextStyle(
-                  fontFamily: "Halyard",
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black)),
+                              ),
+                              child: Material(
+                                color: Colors.white,
+                                child: InkWell(
+                                  radius:
+                                      MediaQuery.of(context).size.width + 10,
+                                  splashColor: Colors.black,
+                                  enableFeedback: true,
+                                  onTap: () {
+                                    SetSelectedAddress(
+                                        Provider.of<CartData>(context,
+                                                listen: false)
+                                            .profile
+                                            .address,
+                                        Provider.of<CartData>(context,
+                                                listen: false)
+                                            .profile
+                                            .phone
+                                            .toString(),
+                                        Provider.of<CartData>(context,
+                                                listen: false)
+                                            .profile
+                                            .pincode
+                                            .toString());
+                                    Navigator.pop(context);
+                                    ShowPaymentOptions();
+                                  },
+                                  child: Container(
+                                    height: 130,
+                                    width:
+                                        MediaQuery.of(context).size.width - 10,
+                                    padding: EdgeInsets.all(10),
+                                    child: Row(
+                                      children: [
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                                "${Provider.of<CartData>(context, listen: true).profile.name}",
+                                                textAlign: TextAlign.start,
+                                                style: TextStyle(
+                                                    fontFamily: "Halyard",
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.black)),
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                    "${Provider.of<CartData>(context, listen: true).profile.address.split(",")[0]}",
+                                                    textAlign: TextAlign.start,
+                                                    style: TextStyle(
+                                                        fontFamily: "Halyard",
+                                                        fontSize: 13,
+                                                        fontWeight:
+                                                            FontWeight.w300,
+                                                        color: Colors.black)),
+                                                Text(
+                                                    "${Provider.of<CartData>(context, listen: true).profile.address.split(",")[1]}, Pincode: ${Provider.of<CartData>(context, listen: true).profile.pincode}",
+                                                    textAlign: TextAlign.start,
+                                                    style: TextStyle(
+                                                        fontFamily: "Halyard",
+                                                        fontSize: 13,
+                                                        fontWeight:
+                                                            FontWeight.w300,
+                                                        color: Colors.black)),
+                                                Text(
+                                                    "${Provider.of<CartData>(context, listen: true).profile.address.split(",")[2]}, ${Provider.of<CartData>(context, listen: true).profile.address.split(",")[3]}",
+                                                    textAlign: TextAlign.start,
+                                                    style: TextStyle(
+                                                        fontFamily: "Halyard",
+                                                        fontSize: 13,
+                                                        fontWeight:
+                                                            FontWeight.w300,
+                                                        color: Colors.black)),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text("Mobile: ",
+                                                    style: TextStyle(
+                                                        fontFamily: "Halyard",
+                                                        fontSize: 13,
+                                                        fontWeight:
+                                                            FontWeight.w300,
+                                                        color: Colors.black)),
+                                                Text(
+                                                    "${Provider.of<CartData>(context, listen: true).profile.phone}",
+                                                    style: TextStyle(
+                                                        fontFamily: "Halyard",
+                                                        fontSize: 13,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: Colors.black)),
+                                              ],
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        }),
+                    Text("OR",
+                        style: TextStyle(
+                            fontFamily: "Halyard",
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black)),
+                  ],
+                )
+              : Container(),
           SizedBox(
             height: 10,
           ),
@@ -826,7 +907,9 @@ class _BlankPageState extends State<BlankPage> with TickerProviderStateMixin {
             width: MediaQuery.of(context).size.width / 2,
             height: 50,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                addNewAddress();
+              },
               style: ButtonStyle(
                 enableFeedback: true,
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -846,7 +929,7 @@ class _BlankPageState extends State<BlankPage> with TickerProviderStateMixin {
               ),
               child: Container(
                 child: Center(
-                  child: Text("Continue Shopping",
+                  child: Text("Add New Address",
                       style: TextStyle(
                           fontFamily: "Halyard",
                           fontSize: 14,
@@ -952,5 +1035,235 @@ class _BlankPageState extends State<BlankPage> with TickerProviderStateMixin {
 
   getLabels() {
     return ['1', '2', '3', '4', '5'];
+  }
+
+  void SetSelectedAddress(address, phone, pincode) {
+    Provider.of<CartData>(context, listen: false)
+        .setAddress(Address(address, phone, pincode));
+  }
+
+  void ShowPaymentOptions() {
+    showModalBottomSheet(
+        context: context,
+        isDismissible: true,
+        isScrollControlled: true,
+        builder: (context) {
+          return Card(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20))),
+            color: Colors.transparent,
+            child: Wrap(
+              children: [PaymentOptionMethods(buildContext)],
+            ),
+          );
+        });
+  }
+
+  Container PaymentOptionMethods(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      // height: MediaQuery.of(context).,
+      padding: EdgeInsets.only(top: 10, left: 5, right: 5, bottom: 5),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text("Select a payment method",
+              style: TextStyle(
+                  fontFamily: "Halyard",
+                  fontSize: 15,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black)),
+          SizedBox(
+            height: 10,
+          ),
+          Provider.of<CartData>(context, listen: true).profile != null
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ListView.builder(
+                        itemCount: 6,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            elevation: 1.5,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  new BoxShadow(
+                                    color: Color(0xffE3E3E3),
+                                    blurRadius: 5.0,
+                                  ),
+                                ],
+                              ),
+                              child: Material(
+                                color: Colors.white,
+                                child: InkWell(
+                                  radius:
+                                      MediaQuery.of(context).size.width + 10,
+                                  splashColor: Colors.black,
+                                  enableFeedback: true,
+                                  onTap: () {
+                                    if (paymentMethod[index] == "COD") {
+                                      initCOD(buildContext);
+                                    } else {
+                                      addNewAddress();
+                                    }
+                                  },
+                                  child: Container(
+                                      height: 90,
+                                      width: MediaQuery.of(context).size.width -
+                                          10,
+                                      padding: EdgeInsets.all(10),
+                                      child: Center(
+                                        child: Text(
+                                          "${paymentMethod[index]}",
+                                          style: TextStyle(
+                                              fontFamily: "Halyard",
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              color: Styles.price_color),
+                                        ),
+                                      )),
+                                ),
+                              ),
+                            ),
+                          );
+                        }),
+                  ],
+                )
+              : Container(),
+          SizedBox(
+            height: 10,
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width / 2,
+            height: 50,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              style: ButtonStyle(
+                enableFeedback: true,
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                )),
+                backgroundColor: MaterialStateProperty.all(Styles.price_color),
+                shadowColor: MaterialStateProperty.all(Color(0xffE3E3E3)),
+                elevation: MaterialStateProperty.all(4),
+                overlayColor: MaterialStateProperty.resolveWith(
+                  (states) {
+                    return states.contains(MaterialState.pressed)
+                        ? Color(0xffE3E3E3)
+                        : null;
+                  },
+                ),
+              ),
+              child: Container(
+                child: Center(
+                  child: Text("Close",
+                      style: TextStyle(
+                          fontFamily: "Halyard",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white)),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  void initCOD(BuildContext context) async {
+    Navigator.pop(context);
+    await pr.show();
+    UsersModel usersModel = UsersModel();
+    const _chars =
+        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+    Random _rnd = Random();
+    String getRandomString(int length) =>
+        String.fromCharCodes(Iterable.generate(
+            length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+    Styles.showWarningToast(Colors.green, "Successful", Colors.white, 15);
+
+    var id = "order_cod_" + getRandomString(5);
+    try {
+      var a = await usersModel.saveOrderDatabase(
+          saveToDatabase(
+              id,
+              Provider.of<CartData>(context, listen: false).getPrice() * 100,
+              "COD",
+              context),
+          Provider.of<CartData>(context, listen: false).name == null
+              ? Provider.of<CartData>(context, listen: false).user.name
+              : Provider.of<CartData>(context, listen: false).name);
+      if (a != null && a != "Unable to save order") {
+        Provider.of<CartData>(context, listen: false)
+            .removeAll(0, CartData.listLengths);
+        setState(() {
+          pr.hide().then((isHidden) {
+            CartData.RESULT = "assets/raw/successful.json";
+            CartData.TXT = id;
+            Test.fragNavigate.putPosit(key: 'Result');
+          });
+        });
+      } else {
+        pr.hide().then((isHidden) {
+          CartData.RESULT = "assets/raw/failed.json";
+          CartData.TXT = id;
+          Test.fragNavigate.putPosit(key: 'Result');
+        });
+      }
+    } on DioError catch (e) {
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+      print(errorMessage);
+      pr.hide().then((isHidden) {
+        CartData.RESULT = "assets/raw/failed.json";
+        CartData.TXT = id;
+        Test.fragNavigate.putPosit(key: 'Result');
+      });
+      // CartData.RESULT = "assets/raw/failed.json";
+      // CartData.TXT = id;
+      // Test.fragNavigate.putPosit(key: 'Result');
+    }
+  }
+
+  Order saveToDatabase(id, double amount, String status, BuildContext context) {
+    return Order(
+        Provider.of<CartData>(context, listen: false).Colours,
+        "15-02-21",
+        Provider.of<CartData>(context, listen: false).Names,
+        Provider.of<CartData>(context, listen: false).user.email,
+        status,
+        Provider.of<CartData>(context, listen: false).ids,
+        Provider.of<CartData>(context, listen: false)
+            .Pictures
+            .split(",")[0]
+            .trim(),
+        amount,
+        Provider.of<CartData>(context, listen: false).quantity,
+        Provider.of<CartData>(context, listen: false).Sizes,
+        "Preparing",
+        id,
+        Provider.of<CartData>(context, listen: false).user.id,
+        Provider.of<CartData>(context, listen: false).getAddress.address,
+        Provider.of<CartData>(context, listen: false).getAddress.phone,
+        Provider.of<CartData>(context, listen: false).getAddress.pin,
+        "NOT AVAILABLE");
+  }
+
+  void addNewAddress() {
+    Navigator.pop(context);
+    showModalBottomSheet<dynamic>(
+        context: context,
+        isDismissible: true,
+        isScrollControlled: true,
+        builder: (BuildContext context) {
+          return Wrap(children: [Payment()]);
+        });
   }
 }

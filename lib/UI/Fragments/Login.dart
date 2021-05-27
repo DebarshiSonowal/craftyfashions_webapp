@@ -260,8 +260,8 @@ class _LoginState extends State<Login> {
       Test.accessToken = data["accessToken"];
       Test.refreshToken = data["refreshToken"];
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString("access", data["accessToken"]);
-      await prefs.setString("refresh", data["refreshToken"]);
+      await prefs.setString("access", data["accessToken"]).whenComplete(() => print("The access is ${data["accessToken"]}"));
+      await prefs.setString("refresh", data["refreshToken"]).whenComplete(() => print("The access is ${data["refreshToken"]}"));
       var UserData = await usersModel.getUser();
       print(UserData);
       if (UserData != "User Not Found") {
