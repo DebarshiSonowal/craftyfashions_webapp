@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:html';
-import 'dart:ui' as ui;
 
 //conditional import
 import 'package:craftyfashions_webapp/Helper/DioError.dart';
@@ -67,20 +66,32 @@ class RazorPayWeb extends StatelessWidget {
       element.src = 'assets/assets/Policy/payment.html';
       element.style.border = 'none';
       element.dataset = options;
+      element.allowFullscreen=true;
+      // element.onClick;
+      element.id=UniqueKey().toString();
+      document.addEventListener('touchstart',(eve){
+        print("event ${eve}");
+      });
+
       return element;
     });
-     return Scaffold(body: Builder(builder: (BuildContext context) {
-      return Container(
-        child: Provider.of<CartData>(context, listen: true).orderId != null
-            ? HtmlElementView(viewType: 'rzp-html')
-            : Center(
-                child: Text(
-                  "Please try again",
-                  style: TextStyle(fontSize: 20),
+     return Material(
+       child: Scaffold(body: Builder(builder: (BuildContext context) {
+        return Container(
+          child: Provider.of<CartData>(context, listen: true).orderId != null
+              ? SizedBox(
+            height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: HtmlElementView(viewType: 'rzp-html',key: UniqueKey(),))
+              : Center(
+                  child: Text(
+                    "Please try again",
+                    style: TextStyle(fontSize: 20),
+                  ),
                 ),
-              ),
-      );
-    }));
+        );
+    })),
+     );
   }
 
   _handlePaymentSuccess(

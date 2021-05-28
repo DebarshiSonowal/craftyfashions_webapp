@@ -26,8 +26,8 @@ class HelpScreenState extends State<HelpScreen> {
           padding: const EdgeInsets.all(8.0),
           child: EasyWebView(
             src: widget.which.toString().trim() == "T&C"
-                ? 'assets/Policy/index.html'
-                : 'assets/Policy/RETURN AND REFUND POLICY.htm',
+                ? 'assets/assets/Policy/index.html'
+                : 'assets/assets/Policy/RETURN AND REFUND POLICY.htm',
             isHtml: false,
             // Use Html syntax
             isMarkdown: false,
@@ -36,8 +36,8 @@ class HelpScreenState extends State<HelpScreen> {
             onLoaded: () {
               IFrameElement iframeElement = IFrameElement()
                 ..src = widget.which.toString().trim() == "T&C"
-                    ? 'assets/Policy/index.html'
-                    : 'assets/Policy/RETURN AND REFUND POLICY.htm'
+                    ? 'assets/assets/Policy/index.html'
+                    : 'assets/assets/Policy/RETURN AND REFUND POLICY.htm'
                 ..style.border = 'none'
                 ..onLoad.listen((event) {
                   // perform you logic here.
@@ -61,10 +61,4 @@ class HelpScreenState extends State<HelpScreen> {
         ));
   }
 
-  _loadHtmlFromAssets() async {
-    return await rootBundle.loadString(
-        widget.which.toString().trim() == "T&C"
-            ? 'assets/Policy/index.html'
-            : 'assets/Policy/RETURN AND REFUND POLICY.htm');
-  }
 }
