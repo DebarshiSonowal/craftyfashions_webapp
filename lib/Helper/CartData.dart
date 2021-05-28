@@ -43,6 +43,7 @@ class CartData extends ChangeNotifier {
   void setAddress(Address value) {
     _address = value;
     notifyListeners();
+    print("${_address.address}");
   }
 
   void setOrderId(String id){

@@ -39,14 +39,14 @@ class Test {
 
   static  getList() {
     return <Posit>[
-      Posit(
-          key: 'Test',
-          title: 'Home',
-          fragment: Container(
-            color: Styles.bg_color,
-            child: BlankPage(),
-          ),
-          icon: Icons.add),
+      // Posit(
+      //     key: 'Test',
+      //     title: 'Home',
+      //     fragment: Container(
+      //       color: Styles.bg_color,
+      //       child: BlankPage(),
+      //     ),
+      //     icon: Icons.add),
       Posit(
           key: 'Home',
           title: 'Home',
