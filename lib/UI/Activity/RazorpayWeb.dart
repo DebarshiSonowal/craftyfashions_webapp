@@ -64,7 +64,7 @@ class RazorPayWeb extends StatelessWidget {
       });
 
       element.requestFullscreen();
-      element.src = 'assets/Policy/payment.html';
+      element.src = 'assets/assets/Policy/payment.html';
       element.style.border = 'none';
       element.dataset = options;
       return element;
