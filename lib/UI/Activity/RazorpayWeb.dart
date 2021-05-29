@@ -91,7 +91,9 @@ class _RazorPayWebState extends State<RazorPayWeb> {
       return element;
     });
      return Material(
-       child: Scaffold(body: Builder(builder: (BuildContext context) {
+       child: Scaffold(
+           resizeToAvoidBottomInset : false,
+           body: Builder(builder: (BuildContext context) {
         return Container(
           child: Provider.of<CartData>(context, listen: true).orderId != null
               ? SizedBox(
