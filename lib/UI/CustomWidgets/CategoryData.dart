@@ -114,7 +114,7 @@ class _CategoryDataState extends State<CategoryData> with TickerProviderStateMix
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 1.5,
           ),
           Card(
             elevation: 1,
@@ -132,7 +132,7 @@ class _CategoryDataState extends State<CategoryData> with TickerProviderStateMix
               width: MediaQuery.of(context).size.width,
               child: ListView.builder(
                 shrinkWrap: true,
-                padding: EdgeInsets.only(bottom: 15),
+                padding: EdgeInsets.only(bottom: 7,top:7),
                 scrollDirection: Axis.horizontal,
                 itemCount:
                 Provider.of<CartData>(context, listen: true).getCateg().length,

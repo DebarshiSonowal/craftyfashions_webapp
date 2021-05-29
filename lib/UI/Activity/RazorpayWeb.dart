@@ -137,7 +137,7 @@ class _RazorPayWebState extends State<RazorPayWeb> {
           CartData.RESULT = "assets/raw/successful.json";
           CartData.TXT = "Successful";
           CartData.id = response.orderId.toString();
-          CartData.price = (Provider.of<CartData>(context, listen: false).getPrice() * 100).toString();
+          CartData.price = (Provider.of<CartData>(context, listen: false).getPrice()).toString();
           Test.fragNavigate.putPosit(key: 'Result');
           CartData.removeALL(0, CartData.listLengths);
         } else {
@@ -158,7 +158,7 @@ class _RazorPayWebState extends State<RazorPayWeb> {
       CartData.RESULT = "assets/raw/failed.json";
       CartData.TXT = "Failed";
       CartData.id = response.orderId.toString();
-      CartData.price = (Provider.of<CartData>(context, listen: false).getPrice() * 100).toString();
+      CartData.price = (Provider.of<CartData>(context, listen: false).getPrice()).toString();
       Test.fragNavigate.putPosit(key: 'Result');
     }
   }

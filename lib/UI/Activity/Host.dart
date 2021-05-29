@@ -217,20 +217,17 @@ class HostState extends State<Host> {
       }
     }
 
-    if (Provider.of<CartData>(context, listen: false).allproducts == null ||
-        Provider.of<CartData>(context, listen: false).allproducts.length == 0) {
       UsersModel usersModel = UsersModel();
       var Data = await usersModel.getAll();
-      List<Products> data = [];
+      List<Products> data1 = Data;
       if (Data.toString() == "Server Error" ||
           Data.toString() == "Products not found") {
         showMaterialDialog();
       } else {
-        data = Data;
         List<Products> men = [];
         List<Products> women = [];
         if (data != null) {
-          for (var i in data) {
+          for (var i in data1) {
             if (i.Gender == "MALE") {
               men.add(i);
             } else {
@@ -246,7 +243,7 @@ class HostState extends State<Host> {
           print("empty");
         }
       }
-    }
+
   }
 
   void initialize() {

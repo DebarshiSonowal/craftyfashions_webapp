@@ -85,7 +85,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                         }
                       }),
                 SizedBox(
-                  height: 6,
+                  height: .2,
                 ),
                 Card(
                   elevation: 1,
@@ -167,7 +167,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                   ),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: .2,
                 ),
                 Card(
                   elevation: 1,
@@ -232,7 +232,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                   ),
                 ),
                 SizedBox(
-                  height: 15,
+                  height: 2.5,
                 ),
                 Container(
                   decoration: BoxDecoration(

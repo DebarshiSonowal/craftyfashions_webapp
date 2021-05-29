@@ -13,11 +13,11 @@ class PaymentOptionsMethod extends StatefulWidget {
   var paymentsub = ['UPI, Card, Net Banking...', 'Cash on delivery'];
 
   var paymentIcon = [
-    FontAwesomeIcons.googlePay,
-    FontAwesomeIcons.creditCard,
-    MaterialCommunityIcons.bank,
-    FontAwesomeIcons.wallet,
-    FontAwesomeIcons.rupeeSign
+    MaterialCommunityIcons.contactless_payment,
+    MaterialCommunityIcons.cash,
+    // MaterialCommunityIcons.bank,
+    // FontAwesomeIcons.wallet,
+    // FontAwesomeIcons.rupeeSign
   ];
 
   PaymentOptionsMethod({this.paymentMethod, this.onTap});
@@ -88,7 +88,7 @@ class _PaymentOptionsMethodState extends State<PaymentOptionsMethod> {
                                             padding:
                                                 EdgeInsets.only(bottom: 32),
                                             child:
-                                                Icon(widget.paymentIcon[index]),
+                                                Icon(widget.paymentIcon[index],size: 25,),
                                           )),
                                       Expanded(
                                         flex: 15,

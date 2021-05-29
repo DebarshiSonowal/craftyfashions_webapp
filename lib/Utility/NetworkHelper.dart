@@ -246,6 +246,7 @@ class NetworkHelper {
     }
     if (response.statusCode == 200) {
       var data = response.data["products"] as List;
+      print("Data loadaed");
       List<Products> Data = data.map((e) => Products.fromJson(e)).toList();
       return Data;
     } else if (response.statusCode == 500) {

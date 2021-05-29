@@ -28,9 +28,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     _refreshController = RefreshController(
         initialRefresh:
-        Provider.of<CartData>(context, listen: false).getCateg() == null
-            ? true
-            : false);
+        true);
     super.initState();
     customcontext = context;
   }

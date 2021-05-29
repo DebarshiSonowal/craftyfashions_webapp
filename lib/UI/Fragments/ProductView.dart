@@ -77,7 +77,7 @@ class _ProductViewState extends State<ProductView>
                             });
                           }, Color(0xffececec)),
                           Container(
-                            height: MediaQuery.of(context).size.height + 150,
+                            height: MediaQuery.of(context).size.height + 60,
                             decoration: BoxDecoration(
                               color: Color(0xffe3e3e6),
                             ),
@@ -658,7 +658,7 @@ class _ProductViewState extends State<ProductView>
                           fontWeight: FontWeight.bold),
                     ),
                     onPressed: () {
-                      if (selectedSize == null) {
+                      if (selectedSize != null) {
                         showModalBottomSheet(
                             backgroundColor: Colors.transparent,
                             context: context,
@@ -674,219 +674,262 @@ class _ProductViewState extends State<ProductView>
                                     child: SingleChildScrollView(
                                       physics: NeverScrollableScrollPhysics(),
                                       child: Container(
-                                        padding: EdgeInsets.only(top: 20),
+                                        padding: EdgeInsets.only(top: 10),
                                         color: Colors.white,
                                         child: Column(
                                           children: [
                                             Container(
                                               padding: EdgeInsets.only(
                                                   left: 10, right: 10),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
-                                                  Flexible(
-                                                    flex: 2,
-                                                    child: Container(
-                                                      child: GestureDetector(
-                                                        onTap: () {
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder: (context) => Photoview(widget
-                                                                      .product
-                                                                      .Image
-                                                                      .toString()
-                                                                      .split(",")[
-                                                                          getIndex()]
-                                                                      .trim())));
-                                                        },
-                                                        child:
-                                                            CachedNetworkImage(
-                                                          imageUrl: widget
-                                                              .product.Image
-                                                              .toString()
-                                                              .split(",")[
-                                                                  getIndex()]
-                                                              .trim(),
-                                                          progressIndicatorBuilder:
-                                                              (context, url,
-                                                                      downloadProgress) =>
-                                                                  SizedBox(
-                                                                      width:
-                                                                          50.0,
-                                                                      height:
-                                                                          50.0,
-                                                                      child:
-                                                                          SpinKitCubeGrid(
-                                                                        color: Styles
-                                                                            .price_color,
-                                                                        size:
-                                                                            50.0,
-                                                                        controller: AnimationController(
-                                                                            vsync:
-                                                                                this,
-                                                                            duration:
-                                                                                const Duration(milliseconds: 1200)),
-                                                                      )),
-                                                          errorWidget: (context,
-                                                                  url, error) =>
-                                                              Icon(Icons.error),
-                                                        ),
+                                                  Text(
+                                                    "Product Summary",
+                                                    maxLines: 1,
+                                                    textAlign:
+                                                    TextAlign
+                                                        .center,
+                                                    style: TextStyle(
+                                                        fontFamily:
+                                                        "Halyard",
+                                                        fontWeight:
+                                                        FontWeight
+                                                            .w700,
+                                                        fontSize:
+                                                        22),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(top: 25,bottom: 25),
+                                                    child: SizedBox(
+                                                      child: Container(
+                                                        color: Color(0xffE4E4E7),
                                                       ),
+                                                      height: 1.5,
                                                     ),
                                                   ),
-                                                  Flexible(
-                                                    flex: 3,
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceEvenly,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceAround,
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceAround,
+                                                    children: [
+                                                      Flexible(
+                                                        flex: 2,
+                                                        child: Container(
+                                                          child: GestureDetector(
+                                                            onTap: () {
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder: (context) => Photoview(widget
+                                                                          .product
+                                                                          .Image
+                                                                          .toString()
+                                                                          .split(",")[
+                                                                              getIndex()]
+                                                                          .trim())));
+                                                            },
+                                                            child:
+                                                                CachedNetworkImage(
+                                                              imageUrl: widget
+                                                                  .product.Image
+                                                                  .toString()
+                                                                  .split(",")[
+                                                                      getIndex()]
+                                                                  .trim(),
+                                                              progressIndicatorBuilder:
+                                                                  (context, url,
+                                                                          downloadProgress) =>
+                                                                      SizedBox(
+                                                                          width:
+                                                                              50.0,
+                                                                          height:
+                                                                              50.0,
+                                                                          child:
+                                                                              SpinKitCubeGrid(
+                                                                            color: Styles
+                                                                                .price_color,
+                                                                            size:
+                                                                                50.0,
+                                                                            controller: AnimationController(
+                                                                                vsync:
+                                                                                    this,
+                                                                                duration:
+                                                                                    const Duration(milliseconds: 1200)),
+                                                                          )),
+                                                              errorWidget: (context,
+                                                                      url, error) =>
+                                                                  Icon(Icons.error),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Flexible(
+                                                        flex: 3,
+                                                        child: Column(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                                           children: [
-                                                            Flexible(
-                                                              flex: 1,
-                                                              child: Column(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                children: [
-                                                                  Text(
-                                                                    widget
-                                                                        .product
-                                                                        .Name
-                                                                        .toString(),
-                                                                    maxLines: 1,
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .center,
-                                                                    style: TextStyle(
-                                                                        fontFamily:
-                                                                            "Halyard",
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w700,
-                                                                        fontSize:
-                                                                            16),
-                                                                  ),
-                                                                  Row(
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceAround,
+                                                              children: [
+                                                                Flexible(
+                                                                  flex: 1,
+                                                                  child: Column(
                                                                     mainAxisAlignment:
                                                                         MainAxisAlignment
-                                                                            .spaceEvenly,
+                                                                            .spaceBetween,
+                                                                    crossAxisAlignment: CrossAxisAlignment.stretch,
                                                                     children: [
+                                                                      Container(
+                                                                        padding: EdgeInsets.only(left: 35),
+
+                                                                        child: Expanded(
+                                                                          child: Text(
+                                                                            widget
+                                                                                .product
+                                                                                .Name
+                                                                                .toString(),
+                                                                            maxLines: 1,
+                                                                            textAlign:
+                                                                                TextAlign
+                                                                                    .start,
+                                                                            overflow: TextOverflow.ellipsis,
+                                                                            style: TextStyle(
+                                                                                fontFamily:
+                                                                                    "Halyard",
+                                                                                fontWeight:
+                                                                                    FontWeight
+                                                                                        .w700,
+                                                                                fontSize:
+                                                                                    16),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      SizedBox(height: 20,),
                                                                       Padding(
-                                                                        padding:
-                                                                            EdgeInsets.only(right: 10),
-                                                                        child:
-                                                                            Column(
+                                                                        padding: EdgeInsets.only(bottom:68),
+                                                                        child: Row(
                                                                           mainAxisAlignment:
-                                                                              MainAxisAlignment.spaceBetween,
-                                                                          crossAxisAlignment:
-                                                                              CrossAxisAlignment.start,
+                                                                              MainAxisAlignment
+                                                                                  .spaceEvenly,
                                                                           children: [
-                                                                            SizedBox(
-                                                                              height: 10,
+                                                                            Padding(
+                                                                              padding:
+                                                                                  EdgeInsets.only(right: 10),
+                                                                              child:
+                                                                                  Column(
+                                                                                mainAxisAlignment:
+                                                                                    MainAxisAlignment.spaceBetween,
+                                                                                crossAxisAlignment:
+                                                                                    CrossAxisAlignment.start,
+                                                                                children: [
+                                                                                  SizedBox(
+                                                                                    height: 10,
+                                                                                  ),
+                                                                                  Text(
+                                                                                    "Quantity",
+                                                                                    style: TextStyle(fontFamily: "Halyard", fontWeight: FontWeight.w400, fontSize: 16),
+                                                                                  ),
+                                                                                  SizedBox(
+                                                                                    height: 10,
+                                                                                  ),
+                                                                                  Text(
+                                                                                    "Size",
+                                                                                    style: TextStyle(fontFamily: "Halyard", fontWeight: FontWeight.w400, fontSize: 16),
+                                                                                  ),
+
+                                                                                  SizedBox(
+                                                                                    height: 10,
+                                                                                  ),
+                                                                                  Text(
+                                                                                    "Price",
+                                                                                    style: TextStyle(fontFamily: "Halyard", fontWeight: FontWeight.w400, fontSize: 16),
+                                                                                  ),
+                                                                                  SizedBox(
+                                                                                    height: 10,
+                                                                                  ),
+                                                                                  Text(
+                                                                                    "Color",
+                                                                                    style: TextStyle(fontFamily: "Halyard", fontWeight: FontWeight.w400, fontSize: 16),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
                                                                             ),
-                                                                            Text(
-                                                                              "Color",
-                                                                              style: TextStyle(fontFamily: "Halyard", fontWeight: FontWeight.w400, fontSize: 16),
-                                                                            ),
-                                                                            SizedBox(
-                                                                              height: 10,
-                                                                            ),
-                                                                            Text(
-                                                                              "Price",
-                                                                              style: TextStyle(fontFamily: "Halyard", fontWeight: FontWeight.w400, fontSize: 16),
-                                                                            ),
-                                                                            SizedBox(
-                                                                              height: 10,
-                                                                            ),
-                                                                            Text(
-                                                                              "Size",
-                                                                              style: TextStyle(fontFamily: "Halyard", fontWeight: FontWeight.w400, fontSize: 16),
-                                                                            ),
-                                                                            SizedBox(
-                                                                              height: 10,
-                                                                            ),
-                                                                            Text(
-                                                                              "Quantity",
-                                                                              style: TextStyle(fontFamily: "Halyard", fontWeight: FontWeight.w400, fontSize: 16),
+                                                                            Column(
+                                                                              mainAxisAlignment:
+                                                                                  MainAxisAlignment.spaceBetween,
+                                                                              crossAxisAlignment:
+                                                                                  CrossAxisAlignment.end,
+                                                                              children: [
+                                                                                SizedBox(
+                                                                                  height:
+                                                                                      10,
+                                                                                ),
+                                                                                Text(
+                                                                                  "${quantity}",
+                                                                                  style: TextStyle(
+                                                                                      fontFamily: "Halyard",
+                                                                                      fontWeight: FontWeight.w600,
+                                                                                      fontSize: 16),
+                                                                                ),
+
+                                                                                SizedBox(
+                                                                                  height:
+                                                                                      10,
+                                                                                ),
+                                                                                Text(
+                                                                                  "${selectedSize}",
+                                                                                  style: TextStyle(
+                                                                                      fontFamily: "Halyard",
+                                                                                      fontWeight: FontWeight.w600,
+                                                                                      fontSize: 16),
+                                                                                ),
+
+                                                                                SizedBox(
+                                                                                  height:
+                                                                                      10,
+                                                                                ),
+                                                                                Text(
+                                                                                  "₹${widget.product.Price}",
+                                                                                  style: TextStyle(
+                                                                                      fontFamily: "Halyard",
+                                                                                      fontWeight: FontWeight.w600,
+                                                                                      color:Styles.price_color,
+                                                                                      fontSize: 16),
+                                                                                ),
+                                                                                SizedBox(
+                                                                                  height:
+                                                                                      10,
+                                                                                ),
+                                                                                Text(
+                                                                                  selectedColor,
+                                                                                  style: TextStyle(
+                                                                                      fontFamily: "Halyard",
+                                                                                      fontWeight: FontWeight.w600,
+                                                                                      fontSize: 16),
+                                                                                ),
+                                                                              ],
                                                                             ),
                                                                           ],
                                                                         ),
                                                                       ),
-                                                                      Column(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.spaceBetween,
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.start,
-                                                                        children: [
-                                                                          SizedBox(
-                                                                            height:
-                                                                                10,
-                                                                          ),
-                                                                          Text(
-                                                                            selectedColor,
-                                                                            style: TextStyle(
-                                                                                fontFamily: "Halyard",
-                                                                                fontWeight: FontWeight.w600,
-                                                                                fontSize: 16),
-                                                                          ),
-                                                                          SizedBox(
-                                                                            height:
-                                                                                10,
-                                                                          ),
-                                                                          Text(
-                                                                            "₹${widget.product.Price}",
-                                                                            style: TextStyle(
-                                                                                fontFamily: "Halyard",
-                                                                                fontWeight: FontWeight.w600,
-                                                                                fontSize: 16),
-                                                                          ),
-                                                                          SizedBox(
-                                                                            height:
-                                                                                10,
-                                                                          ),
-                                                                          Text(
-                                                                            "${selectedSize}",
-                                                                            style: TextStyle(
-                                                                                fontFamily: "Halyard",
-                                                                                fontWeight: FontWeight.w600,
-                                                                                fontSize: 16),
-                                                                          ),
-                                                                          SizedBox(
-                                                                            height:
-                                                                                10,
-                                                                          ),
-                                                                          Text(
-                                                                            "${quantity}",
-                                                                            style: TextStyle(
-                                                                                fontFamily: "Halyard",
-                                                                                fontWeight: FontWeight.w600,
-                                                                                fontSize: 16),
-                                                                          ),
-                                                                        ],
-                                                                      ),
                                                                     ],
                                                                   ),
-                                                                ],
-                                                              ),
-                                                            )
+                                                                )
+                                                              ],
+                                                            ),
                                                           ],
                                                         ),
-                                                      ],
-                                                    ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ],
                                               ),
                                             ),
                                             SizedBox(
-                                              height: 100,
+                                              height:20,
                                             ),
                                             Container(
                                               width: MediaQuery.of(context)

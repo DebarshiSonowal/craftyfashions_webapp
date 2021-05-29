@@ -310,7 +310,7 @@ class _ResultState extends State<Result> {
             "A confirmation email has been sent to",
             style: TextStyle(
                 fontFamily: "Halyard",
-                fontSize: 18,
+                fontSize: 15,
                 fontWeight: FontWeight.w300,
                 color: Colors.black54),
           ),
@@ -371,8 +371,8 @@ class _ResultState extends State<Result> {
               child: Text("View Order history",
                   style: TextStyle(
                       fontFamily: "Halyard",
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w500,
                       color: Colors.black)),
             ),
           ),
@@ -419,8 +419,8 @@ class _ResultState extends State<Result> {
               child: Text("Go back",
                   style: TextStyle(
                       fontFamily: "Halyard",
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w500,
                       color: Colors.black)),
             ),
           ),
