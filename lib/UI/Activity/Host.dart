@@ -51,7 +51,7 @@ class HostState extends State<Host> {
     // getLoginData();
     _fragNav = FragNavigate(
       // firstKey: 'Home',
-      firstKey: 'Result',
+      firstKey: 'Home',
       drawerContext: null,
       screens: Test.getList(),
     );
