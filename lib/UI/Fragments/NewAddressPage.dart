@@ -5,8 +5,14 @@ import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class NewAddressPage extends StatelessWidget {
+class NewAddressPage extends StatefulWidget {
   NewAddressPage({Key key}) : super(key: key);
+
+  @override
+  _NewAddressPageState createState() => _NewAddressPageState();
+}
+
+class _NewAddressPageState extends State<NewAddressPage> {
   var email,
       name,
       pin,
@@ -16,16 +22,27 @@ class NewAddressPage extends StatelessWidget {
       town_village,
       district,
       state;
+
   final double paddingNo = 5.0;
+
   String nm, ids;
+
   Profile profile;
+
   bool enabled = false;
+
   var nT = TextEditingController();
+
   var pinT = TextEditingController();
+
   var phT = TextEditingController();
+
   var addT1 = TextEditingController();
+
   var addTtown = TextEditingController();
+
   var addTdis = TextEditingController();
+
   var addTstate = TextEditingController();
 
   @override

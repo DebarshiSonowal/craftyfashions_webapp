@@ -14,9 +14,14 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'UiFake.dart' if (dart.library.html) 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
-class RazorPayWeb extends StatelessWidget {
+class RazorPayWeb extends StatefulWidget {
   RazorPayWeb();
 
+  @override
+  _RazorPayWebState createState() => _RazorPayWebState();
+}
+
+class _RazorPayWebState extends State<RazorPayWeb> {
   @override
   Widget build(BuildContext context) {
     Map<String, String> options = {
@@ -65,14 +70,13 @@ class RazorPayWeb extends StatelessWidget {
       element.requestFullscreen();
       element.src = 'assets/assets/Policy/payment.html';
       element.style.border = 'none';
-      element.dataset = options;
       element.allowFullscreen=true;
+      element.dataset = options;
       // element.onClick;
       element.id=UniqueKey().toString();
-      document.addEventListener('touchstart',(eve){
-        print("event ${eve}");
+      document.addEventListener('touchstart', (en){
+        print("AndA ${en.type}");
       });
-
       return element;
     });
      return Material(
