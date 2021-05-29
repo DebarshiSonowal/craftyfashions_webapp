@@ -784,27 +784,23 @@ class _ProductViewState extends State<ProductView>
                                                                     children: [
                                                                       Container(
                                                                         padding: EdgeInsets.only(left: 35),
-
-                                                                        child: Expanded(
-                                                                          child: Text(
-                                                                            widget
-                                                                                .product
-                                                                                .Name
-                                                                                .toString(),
-                                                                            maxLines: 1,
-                                                                            textAlign:
-                                                                                TextAlign
-                                                                                    .start,
-                                                                            overflow: TextOverflow.ellipsis,
-                                                                            style: TextStyle(
-                                                                                fontFamily:
-                                                                                    "Halyard",
-                                                                                fontWeight:
-                                                                                    FontWeight
-                                                                                        .w700,
-                                                                                fontSize:
-                                                                                    16),
-                                                                          ),
+                                                                        child: Text(widget
+                                                                              .product
+                                                                              .Name
+                                                                              .toString(),
+                                                                          maxLines: 1,
+                                                                          textAlign:
+                                                                              TextAlign
+                                                                                  .start,
+                                                                          overflow: TextOverflow.ellipsis,
+                                                                          style: TextStyle(
+                                                                              fontFamily:
+                                                                                  "Halyard",
+                                                                              fontWeight:
+                                                                                  FontWeight
+                                                                                      .w700,
+                                                                              fontSize:
+                                                                                  16),
                                                                         ),
                                                                       ),
                                                                       SizedBox(height: 20,),
