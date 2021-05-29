@@ -1124,19 +1124,24 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
               ? Provider.of<CartData>(context, listen: false).user.name
               : Provider.of<CartData>(context, listen: false).name);
       if (a != null && a != "Unable to save order") {
+        var amount = Provider.of<CartData>(context, listen: false).getPrice() * 100;
         Provider.of<CartData>(context, listen: false)
             .removeAll(0, CartData.listLengths);
         setState(() {
           pr.hide().then((isHidden) {
             CartData.RESULT = "assets/raw/successful.json";
-            CartData.TXT = id;
+            CartData.TXT = "Successful";
+            CartData.id = id.toString();
+            CartData.price = amount.toString();
             Test.fragNavigate.putPosit(key: 'Result');
           });
         });
       } else {
         pr.hide().then((isHidden) {
           CartData.RESULT = "assets/raw/failed.json";
-          CartData.TXT = id;
+          CartData.TXT = "Failed";
+          CartData.id = id.toString();
+          CartData.price = (Provider.of<CartData>(context, listen: false).getPrice() * 100).toString();
           Test.fragNavigate.putPosit(key: 'Result');
         });
       }
@@ -1145,7 +1150,9 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
       print(errorMessage);
       pr.hide().then((isHidden) {
         CartData.RESULT = "assets/raw/failed.json";
-        CartData.TXT = id;
+        CartData.TXT = "Failed";
+        CartData.id = id.toString();
+        CartData.price = (Provider.of<CartData>(context, listen: false).getPrice() * 100).toString();
         Test.fragNavigate.putPosit(key: 'Result');
       });
       // CartData.RESULT = "assets/raw/failed.json";
@@ -1185,7 +1192,10 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
         isDismissible: true,
         isScrollControlled: true,
         builder: (BuildContext context) {
-          return Wrap(children: [NewAddressPage()]);
+          return SingleChildScrollView(child: Container(
+              padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Wrap(children: [NewAddressPage()])));
         }).whenComplete(() {
       if (Provider.of<CartData>(context, listen: false).getAddress != null) {
         ShowPaymentOptions();

@@ -28,7 +28,7 @@ class CartData extends ChangeNotifier {
   List<Products> _men = [];
   List<Products> _women = [];
   List<Products> _couple = [];
-  static String RESULT = "assets/raw/loading.json", TXT = "Please Wait";
+  static String RESULT = "assets/raw/loading.json", TXT = "Successful",price,id;
   Razorpay _razorpay = null;
   List<Categories> _categ = [];
   List<Ads> _ads = [];

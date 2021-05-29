@@ -134,15 +134,19 @@ class _RazorPayWebState extends State<RazorPayWeb> {
                 : Provider.of<CartData>(context, listen: false).name);
         if (a != null && a != "Unable to save order") {
           // Navigator.pop(context);
-          CartData.removeALL(0, CartData.listLengths);
           CartData.RESULT = "assets/raw/successful.json";
-          CartData.TXT = response.paymentId;
+          CartData.TXT = "Successful";
+          CartData.id = response.orderId.toString();
+          CartData.price = (Provider.of<CartData>(context, listen: false).getPrice() * 100).toString();
           Test.fragNavigate.putPosit(key: 'Result');
+          CartData.removeALL(0, CartData.listLengths);
         } else {
           // Navigator.pop(context);
           // Test.fragNavigate.putPosit(key: 'Result');
           CartData.RESULT = "assets/raw/failed.json";
-          CartData.TXT = response.orderId;
+          CartData.TXT = "Failed";
+          CartData.id = response.orderId.toString();
+          CartData.price = (Provider.of<CartData>(context, listen: false).getPrice() * 100).toString();
           Test.fragNavigate.putPosit(key: 'Result');
         }
       } on DioError catch (e) {
@@ -152,12 +156,13 @@ class _RazorPayWebState extends State<RazorPayWeb> {
     } else {
       // Navigator.pop(context);
       CartData.RESULT = "assets/raw/failed.json";
-      CartData.TXT = "Payment ID" + response.orderId;
+      CartData.TXT = "Failed";
+      CartData.id = response.orderId.toString();
+      CartData.price = (Provider.of<CartData>(context, listen: false).getPrice() * 100).toString();
       Test.fragNavigate.putPosit(key: 'Result');
     }
   }
 
-  _handlePaymentError(PaymentFailureResponse response) {}
 
   Order saveToDatabase(id, double amount, String status, BuildContext context) {
     return Order(
