@@ -34,11 +34,7 @@ class Cart extends StatefulWidget {
 class _CartState extends State<Cart> with TickerProviderStateMixin{
   var selectedSize = "1";
   var paymentMethod = [
-    'UPI',
-    'Debit Card',
-    'Credit Card',
-    'NetBanking',
-    'Wallet',
+    'Pay Now',
     'COD'
   ];
   var products,id;
@@ -679,23 +675,23 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () {
-                          showSelectAddress();
-                          // if (Provider.of<CartData>(context,
-                          //             listen: false)
-                          //         .profile !=
-                          //     null) {
-                          //   showSelectAddress();
-                          // } else {
-                          //   Styles.showSnackBar(
-                          //       context,
-                          //       Colors.red,
-                          //       Duration(seconds: 2),
-                          //       "Log in first",
-                          //       Colors.white, () {
-                          //     Test.fragNavigate
-                          //         .putPosit(key: 'Login', force: true);
-                          //   });
-                          // }
+                          // showSelectAddress();
+                          if (Provider.of<CartData>(context,
+                                      listen: false)
+                                  .profile !=
+                              null) {
+                            showSelectAddress();
+                          } else {
+                            Styles.showSnackBar(
+                                context,
+                                Colors.red,
+                                Duration(seconds: 2),
+                                "Log in first",
+                                Colors.white, () {
+                              Test.fragNavigate
+                                  .putPosit(key: 'Login', force: true);
+                            });
+                          }
                         },
                         style: ButtonStyle(
                           enableFeedback: true,
@@ -768,7 +764,7 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
           Text("Select a address",
               style: TextStyle(
                   fontFamily: "Halyard",
-                  fontSize: 15,
+                  fontSize: 22,
                   fontWeight: FontWeight.w400,
                   color: Colors.black)),
           SizedBox(
@@ -826,6 +822,16 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
                               padding: EdgeInsets.all(10),
                               child: Row(
                                 children: [
+                                  Padding(
+                                    padding:EdgeInsets.only(bottom: 85.0,right: 10),
+                                    child: Radio(
+                                      value: true,
+                                      toggleable: true,
+                                      onChanged: (vaw){
+
+                                      }, groupValue: null,
+                                    ),
+                                  ),
                                   Column(
                                     mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -925,7 +931,7 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
             height: 10,
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width / 2,
+            width: MediaQuery.of(context).size.width,
             height: 50,
             child: ElevatedButton(
               onPressed: () {
@@ -1087,7 +1093,7 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
                         makeOtherPayments();
                         print("ADADA1441");
                       }
-                    })
+                    }),
               ],
             ),
           );

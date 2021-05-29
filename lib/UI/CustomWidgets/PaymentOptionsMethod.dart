@@ -1,11 +1,25 @@
 import 'package:craftyfashions_webapp/Helper/CartData.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:material_dialogs/material_dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:provider/provider.dart';
 
 class PaymentOptionsMethod extends StatefulWidget {
   var paymentMethod;
   Function(int) onTap;
+  var paymentsub = ['UPI, Card, Net Banking...', 'Cash on delivery'];
+
+  var paymentIcon = [
+    FontAwesomeIcons.googlePay,
+    FontAwesomeIcons.creditCard,
+    MaterialCommunityIcons.bank,
+    FontAwesomeIcons.wallet,
+    FontAwesomeIcons.rupeeSign
+  ];
 
   PaymentOptionsMethod({this.paymentMethod, this.onTap});
 
@@ -26,7 +40,7 @@ class _PaymentOptionsMethodState extends State<PaymentOptionsMethod> {
           Text("Select a payment method",
               style: TextStyle(
                   fontFamily: "Halyard",
-                  fontSize: 15,
+                  fontSize: 22,
                   fontWeight: FontWeight.w400,
                   color: Colors.black)),
           SizedBox(
@@ -36,7 +50,7 @@ class _PaymentOptionsMethodState extends State<PaymentOptionsMethod> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ListView.builder(
-                  itemCount: 6,
+                  itemCount: 2,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return Card(
@@ -56,19 +70,59 @@ class _PaymentOptionsMethodState extends State<PaymentOptionsMethod> {
                             radius: MediaQuery.of(context).size.width + 10,
                             splashColor: Colors.black,
                             enableFeedback: true,
-                            onTap: () => widget.onTap(index),
+                            // onTap: () => widget.onTap(index),
+                            onTap: index == 0
+                                ? () => widget.onTap(index)
+                                : () {
+                                    showPaymentDialog(index);
+                                  },
                             child: Container(
-                                height: 90,
+                                height: 85,
                                 width: MediaQuery.of(context).size.width - 10,
                                 padding: EdgeInsets.all(10),
                                 child: Center(
-                                  child: Text(
-                                    "${widget.paymentMethod[index]}",
-                                    style: TextStyle(
-                                        fontFamily: "Halyard",
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        color: Styles.price_color),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                          flex: 3,
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsets.only(bottom: 32),
+                                            child:
+                                                Icon(widget.paymentIcon[index]),
+                                          )),
+                                      Expanded(
+                                        flex: 15,
+                                        child: Container(
+                                          padding: EdgeInsets.only(left: 10),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "${widget.paymentMethod[index]}",
+                                                style: TextStyle(
+                                                    fontFamily: "Halyard",
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Colors.black),
+                                              ),
+                                              Text(
+                                                "${widget.paymentsub[index]}",
+                                                style: TextStyle(
+                                                    fontFamily: "Halyard",
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: Colors.black45),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                          flex: 1,
+                                          child: Icon(FontAwesome.angle_right))
+                                    ],
                                   ),
                                 )),
                           ),
@@ -76,49 +130,134 @@ class _PaymentOptionsMethodState extends State<PaymentOptionsMethod> {
                       ),
                     );
                   }),
+              Card(
+                elevation: 1.5,
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      new BoxShadow(
+                        color: Color(0xffE3E3E3),
+                        blurRadius: 5.0,
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 10, top: 5, bottom: 5),
+                      child: Text(
+                        "Go for contactless payment for your safety.Cash may not be accepted in COVID restricted areas.",
+                        style: TextStyle(
+                            fontFamily: "Halyard",
+                            fontSize: 16,
+                            fontWeight: FontWeight.w200,
+                            color: Colors.red),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
-          SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width / 2,
-            height: 50,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              style: ButtonStyle(
-                enableFeedback: true,
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero,
-                )),
-                backgroundColor: MaterialStateProperty.all(Styles.price_color),
-                shadowColor: MaterialStateProperty.all(Color(0xffE3E3E3)),
-                elevation: MaterialStateProperty.all(4),
-                overlayColor: MaterialStateProperty.resolveWith(
-                  (states) {
-                    return states.contains(MaterialState.pressed)
-                        ? Color(0xffE3E3E3)
-                        : null;
-                  },
-                ),
-              ),
-              child: Container(
-                child: Center(
-                  child: Text("Close",
-                      style: TextStyle(
-                          fontFamily: "Halyard",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white)),
-                ),
-              ),
-            ),
-          )
         ],
       ),
     );
+  }
+
+  void showPaymentDialog(index) {
+    Dialogs.materialDialog(
+        customView: Container(
+          padding: EdgeInsets.only(left: 4, right: 4, top: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                height: 10,
+                width: MediaQuery.of(context).size.width,
+              ),
+              Text("Please Confirm",
+                  style: TextStyle(
+                      fontFamily: "Halyard",
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black)),
+              SizedBox(
+                height: 10,
+                width: MediaQuery.of(context).size.width,
+              ),
+              SizedBox(
+                child: Container(
+                  color: Color(0xffE4E4E7),
+                ),
+                height: 0.4,
+                width: MediaQuery.of(context).size.width,
+              ),
+              SizedBox(
+                height: 20,
+                width: MediaQuery.of(context).size.width,
+              ),
+              Text("You have selected to pay on delivery",
+                  style: TextStyle(
+                      fontFamily: "Halyard",
+                      fontSize: 17,
+                      fontWeight: FontWeight.w200,
+                      color: Colors.black)),
+              SizedBox(
+                height: 40,
+                width: MediaQuery.of(context).size.width,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 38.0, right: 38.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    MaterialButton(
+                      onPressed: () => {
+                      Navigator.pop(context),
+                        widget.onTap(index)},
+                      child: Icon(
+                        MaterialCommunityIcons.check,
+                        size: 24,
+                        color: Colors.green,
+                      ),
+                      padding: EdgeInsets.all(16),
+                      shape: CircleBorder(
+                        side: BorderSide(color: Colors.green, width: 1),
+                      ),
+                    ),
+                    MaterialButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(
+                        MaterialCommunityIcons.close,
+                        size: 24,
+                        color: Colors.redAccent,
+                      ),
+                      padding: EdgeInsets.all(16),
+                      shape: CircleBorder(
+                        side: BorderSide(color: Colors.redAccent, width: 1),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+        color: Colors.white,
+        context: context,
+        actions: []);
+  }
+
+  getDiscount(context) {
+    int post = (Provider.of<CartData>(context).getPrice()).toInt();
+    int pre = (Provider.of<CartData>(context).noOfTotalItems * 699);
+
+    return (pre - post) / pre * 100;
   }
 }

@@ -52,11 +52,23 @@ class _RazorPayWebState extends State<RazorPayWeb> {
       window.onMessage.forEach((element) {
         print('Event Received in callback: ${element.data}');
         if (element.data == 'MODAL_CLOSED') {
-          Navigator.pop(context);
+          print('Here');
+          try {
+            CartData.RESULT = "assets/raw/failed.json";
+            CartData.TXT = "${element.data['data']['v2'].toString()}";
+            Test.fragNavigate.putPosit(key: 'Result');
+          } catch (e) {
+            print(e);
+          }
         } else if (element.data == 'SUCCESS') {
           print('PAYMENT SUCCESSFULL!!!!!!!${element.data} ');
-          // _handlePaymentSuccess(PaymentSuccessResponse(id:element.data));
-          Navigator.pop(context);
+          _handlePaymentSuccess(
+              PaymentSuccessResponse(
+                  element.data['data']['v1'].toString(),
+                  element.data['data']['v2'].toString(),
+                  element.data['data']['v3'].toString()),
+              context);
+
         } else {
           _handlePaymentSuccess(
               PaymentSuccessResponse(
@@ -74,9 +86,8 @@ class _RazorPayWebState extends State<RazorPayWeb> {
       element.dataset = options;
       // element.onClick;
       element.id=UniqueKey().toString();
-      document.addEventListener('touchstart', (en){
-        print("AndA ${en.type}");
-      });
+      Function onTouch( e ){};
+      document.addEventListener( 'touchstart', onTouch, false );
       return element;
     });
      return Material(
@@ -129,7 +140,7 @@ class _RazorPayWebState extends State<RazorPayWeb> {
           Test.fragNavigate.putPosit(key: 'Result');
         } else {
           // Navigator.pop(context);
-          Test.fragNavigate.putPosit(key: 'Result');
+          // Test.fragNavigate.putPosit(key: 'Result');
           CartData.RESULT = "assets/raw/failed.json";
           CartData.TXT = response.orderId;
           Test.fragNavigate.putPosit(key: 'Result');
