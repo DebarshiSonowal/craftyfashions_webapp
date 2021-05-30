@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:craftyfashions_webapp/Helper/CartData.dart';
 import 'package:craftyfashions_webapp/Helper/Test.dart';
+import 'package:craftyfashions_webapp/Models/CartProduct.dart';
 import 'package:craftyfashions_webapp/Models/Products.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/GroupButton.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/ImageSlider.dart';
@@ -806,9 +807,28 @@ class _TempoState extends State<Tempo> {
                           fontFamily: Styles.font,
                           fontWeight: FontWeight.bold),
                     ),
-                 onPressed: (){
-
-                 },
+                    onPressed: () {
+                      Provider.of<CartData>(
+                          context,
+                          listen: false)
+                          .addProduct(CartProduct(
+                          selectedColor,
+                          widget.product
+                              .Price,
+                          widget.product
+                              .Image
+                              .toString()
+                              .split(",")[
+                          getIndex()]
+                              .trim(),
+                          quantity,
+                          selectedSize,
+                          widget.product
+                              .Name,
+                          widget.product
+                              .Id));
+                      Navigator.pop(context);
+                    },
                   ),
                 ),
               ),
@@ -838,5 +858,14 @@ class _TempoState extends State<Tempo> {
         MaterialPageRoute(
             builder: (context) => Photoview(
                 widget.product.Image.toString().split(',')[index].trim())));
+  }
+  getIndex() {
+    if (widget.product.Image.toString().split(",").length > -1 &&
+        widget.product.Image.toString().split(",").length >
+            widget.product.Color.toString().split(",").indexOf(selectedColor)) {
+      return widget.product.Color.toString().split(",").indexOf(selectedColor);
+    } else {
+      return 0;
+    }
   }
 }
