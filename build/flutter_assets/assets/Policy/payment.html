@@ -5,7 +5,7 @@
 <body>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
-
+            console.log(window.frameElement.getAttribute('data-key'));
        var options = {
         "key": window.frameElement.getAttribute('data-key'),
           "amount": window.frameElement.getAttribute('data-amount'), "currency": "INR",
@@ -47,12 +47,15 @@
             }
           }
        };
-
+        var windowResizeTo = window.resizeTo; // In case we want to put it back later
+        window.resizeTo = function() {
+        console.log("Error")};
        var rzp1 = new Razorpay(options);
        window.onload = function(e){  //1
           rzp1.open();
           e.preventDefault();
        }
+
 
 
 

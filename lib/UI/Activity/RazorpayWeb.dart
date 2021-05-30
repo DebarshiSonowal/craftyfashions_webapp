@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:html';
-
+import 'dart:html' as html;
 //conditional import
 import 'package:craftyfashions_webapp/Helper/DioError.dart';
 import 'package:craftyfashions_webapp/Helper/Test.dart';
@@ -78,11 +78,26 @@ class _RazorPayWebState extends State<RazorPayWeb> {
               context);
         }
       });
+      window.onBlur.listen((e) {
+        print(e.type);
+      FocusManager.instance.primaryFocus.unfocus();
+      });
+      window.onFocus.listen((event) {
+        print("Focus event ${event.type}");
+      });
+
+      window.onKeyUp.listen((event) {
+        print("Keyboard event ${event.type}");
+      });
 
       element.requestFullscreen();
+      element.height = '500';
+      element.width = '500';
       element.src = 'assets/assets/Policy/payment.html';
       element.style.border = 'none';
-      element.allowFullscreen=true;
+      element.allowFullscreen=false;
+      element.allowPaymentRequest=true;
+      // element.onFocus=
       element.dataset = options;
       // element.onClick;
       element.id=UniqueKey().toString();
@@ -95,11 +110,9 @@ class _RazorPayWebState extends State<RazorPayWeb> {
            resizeToAvoidBottomInset : false,
            body: Builder(builder: (BuildContext context) {
         return Container(
+          padding: EdgeInsets.only(bottom:50,),
           child: Provider.of<CartData>(context, listen: true).orderId != null
-              ? SizedBox(
-            height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: HtmlElementView(viewType: 'rzp-html',key: UniqueKey(),))
+              ? HtmlElementView(viewType: 'rzp-html',key: UniqueKey(),)
               : Center(
                   child: Text(
                     "Please try again",
