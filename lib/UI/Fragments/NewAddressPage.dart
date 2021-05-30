@@ -423,7 +423,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
             ),
           ),
           SizedBox(
-            height: 5,
+            height: 20,
           ),
         ],
       ),
