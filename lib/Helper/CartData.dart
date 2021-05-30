@@ -21,6 +21,7 @@ class CartData extends ChangeNotifier {
     CartProduct("N.Blue", "599", "https://firebasestorage.googleapis.com/v0/b/crafty-fashions-assam.appspot.com/o/testinng%2FFOBP01_adobespark.png?alt=media&token=d5e84bfc-75e8-440e-9542-fcc6cee91c28", 3, "M", "Dilbar mere aqwf", "152412"),
     CartProduct("N2.Blue", "499", "https://firebasestorage.googleapis.com/v0/b/crafty-fashions-assam.appspot.com/o/testinng%2FFOBP01_adobespark.png?alt=media&token=d5e84bfc-75e8-440e-9542-fcc6cee91c28", 1, "XL", "Dilbar mere", "102412")
   ];
+  Map<String, String> paymentdata;
   User _user = null;
   Profile _profile = null;
   List<Order> _order = [];

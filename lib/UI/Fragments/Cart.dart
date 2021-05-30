@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:craftyfashions_webapp/Helper/CartData.dart';
+import 'package:craftyfashions_webapp/Helper/CashOrder.dart';
 import 'package:craftyfashions_webapp/Helper/DioError.dart';
 import 'package:craftyfashions_webapp/Helper/Test.dart';
 import 'package:craftyfashions_webapp/Models/Address.dart';
@@ -625,7 +626,10 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
                     children: [
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Test.fragNavigate
+                                .putPosit(key: 'Login', force: true);
+                          },
                           style: ButtonStyle(
                             enableFeedback: true,
                             shape: MaterialStateProperty.all<
@@ -1255,8 +1259,34 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
       Test.currentCartItems =
           Provider.of<CartData>(context, listen: false).list;
       try {
-        pr.hide().then((isHidden) {
-          Test.fragNavigate.putPosit(key: 'Payment', force: true);
+        pr.hide().then((isHidden) async{
+          CashOrder order = getOrder(Provider.of<CartData>(context, listen: false).getPrice(),context);
+          var data = await getTokenData(order);
+          Map<String, String> options = {
+            'Token':
+            data['body']['cftoken'].toString(),
+            'Id':data['id'],
+            'stage':'TEST',
+            'price': (Provider.of<CartData>(context, listen: false).getPrice())
+                .toString(),
+            'address': Provider.of<CartData>(context, listen: false).profile.address,
+            'phone': Provider.of<CartData>(context, listen: false)
+                .profile
+                .phone
+                .toString(),
+            'name':
+            Provider.of<CartData>(context, listen: false).profile.name.toString(),
+            'email': Provider.of<CartData>(context, listen: false)
+                .profile
+                .email
+                .toString(),
+            'order_id':
+            order.orderId.toString()
+                .substring(1, order.orderId.toString().length - 1),
+            'orderNote': 'Crafty',
+          };
+          Provider.of<CartData>(context, listen: false).paymentdata = options;
+          Test.fragNavigate.putPosit(key: 'Payment', force: true,);
         });
       } catch (e) {
         print("VVVV $e");
@@ -1588,6 +1618,21 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
             ],
           ),
         ));
+  }
+  getTokenData(CashOrder cashOrder) async {
+    UsersModel usersModel = new UsersModel();
+    return await usersModel.savePayment(cashOrder);
+  }
+  getOrder(amount,context) {
+    print("SGVAS");
+    var order = CashOrder();
+    order.customerName =
+        Provider.of<CartData>(context, listen: false).user.name;
+    order.customerEmail =  Provider.of<CartData>(context, listen: false).profile.email;
+    order.customerPhone = Provider.of<CartData>(context, listen: false).profile.phone;
+    order.orderAmount = amount;
+    order.stage = "PROD";
+    return order;
   }
 }
 

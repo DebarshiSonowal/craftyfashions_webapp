@@ -1,5 +1,6 @@
 import 'package:craftyfashions_webapp/UI/Activity/T&C.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:craftyfashions_webapp/Helper/Test.dart';
 import 'package:craftyfashions_webapp/Models/SignUpData.dart';
@@ -30,56 +31,81 @@ class _SignUpState extends State<Signup> {
   final pass = TextEditingController();
   final nm = TextEditingController();
   final cnf = TextEditingController();
-
+  bool isTapped=false;
+  FocusNode focusNodeFullname= FocusNode();FocusNode focusNodeEmail= FocusNode();
+  FocusNode focusNodePass= FocusNode();FocusNode focusNodeConf= FocusNode();
   @override
   Widget build(BuildContext context) {
     return Material(
       child: Center(
         child: Container(
-          width: MediaQuery.of(context).size.width / 2,
+          color:Color(0xffF9F9F9),
           child: GestureDetector(
             onTap: () {
               FocusScope.of(context).requestFocus(new FocusNode());
             },
             child: SingleChildScrollView(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height/9,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                      child: Text(
-                        "SIGN UP",
-                        style: TextStyle(
-                            color: Styles.log_sign_text,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 26),
-                      ),
+                  Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          "SIGN UP",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Halyard",
+                              fontSize: 26),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Create an account with Crafty to get all the features",
+                          style: TextStyle(
+                              color: Colors.black45,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: "Halyard",
+                              fontSize: 14),
+                        ),
+                      ],
                     ),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 40,
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: TextField(
+                    padding: EdgeInsets.only(bottom: 7.0,right: 25,left: 25,top: 5),
+                    child: TextFormField(
+                      focusNode: focusNodeFullname,
                       controller: nm,
+                      onTap: (){
+                        _requestFoucs(focusNodeFullname);
+                      },
+                      autofocus: false,
                       onChanged: (text) {
                         name = text;
                       },
                       keyboardType: TextInputType.text,
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(
+                          fontFamily: "Halyard",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black),
                       decoration: InputDecoration(
                         labelText: "Fullname",
+                        labelStyle: TextStyle(
+                            fontFamily: "Halyard",
+                            fontSize: 14,
+                            color: focusNodeFullname.hasFocus?Styles.price_color:Colors.black45),
                         filled: true,
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(10),
+                          borderSide:
+                          const BorderSide(color: Styles.price_color, width: 1.0),
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
@@ -89,21 +115,34 @@ class _SignUpState extends State<Signup> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: TextField(
+                    padding: EdgeInsets.only(bottom: 7.0,right: 25,left: 25,top: 5),
+                    child: TextFormField(
+                      focusNode: focusNodeEmail,
                       controller: em,
                       onChanged: (text) {
                         email = text;
                       },
                       keyboardType: TextInputType.emailAddress,
-                      style: TextStyle(color: Colors.black),
+                      onTap: (){
+                        _requestFoucs(focusNodeEmail);
+                      },
+                      style: TextStyle(
+                          fontFamily: "Halyard",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black
+                      ),
                       decoration: InputDecoration(
-                        labelText: "Email",
+                        labelText: "E-mail",
+                        labelStyle: TextStyle(
+                            fontFamily: "Halyard",
+                            fontSize: 14,
+                            color: focusNodeEmail.hasFocus?Styles.price_color:Colors.black45),
                         filled: true,
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(10),
+                          borderSide:
+                          const BorderSide(color: Styles.price_color, width: 1.0),
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
@@ -113,12 +152,16 @@ class _SignUpState extends State<Signup> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: TextField(
+                    padding: EdgeInsets.only(bottom: 7.0,right: 25,left: 25,top: 5),
+                    child: TextFormField(
+                      focusNode: focusNodePass,
                       controller: pass,
                       keyboardType: TextInputType.text,
                       onChanged: (text) {
                         password = text;
+                      },
+                      onTap: (){
+                        _requestFoucs(focusNodePass);
                       },
                       style: TextStyle(color: Colors.black),
                       obscureText: _isHidden,
@@ -131,10 +174,14 @@ class _SignUpState extends State<Signup> {
                             _isHidden ? Icons.visibility : Icons.visibility_off,
                           ),
                         ),
+                        labelStyle: TextStyle(
+                            fontFamily: "Halyard",
+                            fontSize: 14,
+                            color: focusNodePass.hasFocus?Styles.price_color:Colors.black45),
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(10),
+                          borderSide:
+                          const BorderSide(color: Styles.price_color, width: 1.0),
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
@@ -144,13 +191,17 @@ class _SignUpState extends State<Signup> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(5.0),
+                    padding: EdgeInsets.only(bottom: 7.0,right: 25,left: 25,top: 5),
                     child: TextField(
+                      focusNode: focusNodeConf,
                       controller: cnf,
                       keyboardType: TextInputType.text,
                       style: TextStyle(color: Colors.black),
                       onChanged: (text) {
                         cnfpass = text;
+                      },
+                      onTap: (){
+                        _requestFoucs(focusNodeConf);
                       },
                       obscureText: _isHidden1,
                       decoration: InputDecoration(
@@ -162,10 +213,14 @@ class _SignUpState extends State<Signup> {
                             _isHidden1 ? Icons.visibility : Icons.visibility_off,
                           ),
                         ),
+                        labelStyle: TextStyle(
+                            fontFamily: "Halyard",
+                            fontSize: 14,
+                            color: focusNodeConf.hasFocus?Styles.price_color:Colors.black45),
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(10),
+                          borderSide:
+                          const BorderSide(color: Styles.price_color, width: 1.0),
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
@@ -174,33 +229,28 @@ class _SignUpState extends State<Signup> {
                       ),
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Checkbox(
-                        fillColor: MyColor(),
-                        checkColor: Colors.white,
-                        activeColor: Colors.red,
-                        value: _agree,
-                        onChanged: (bool value) {
-                          setState(() {
-                            print(value);
-                            _agree = value;
-                          });
-                        },
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          _launchURL();
-                        },
-                        child:  ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor:MaterialStateProperty.resolveWith<Color>(
-                                  (Set<MaterialState> states) {
-                                  return Colors.transparent;// Use the component's default.
-                              },
-                            ),
-                          ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 10,bottom: 10,left: 25),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Checkbox(
+                          fillColor: MyColor(),
+                          checkColor: Colors.white,
+                          activeColor: Colors.red,
+                          value: _agree,
+                          onChanged: (bool value) {
+                            setState(() {
+                              print(value);
+                              _agree = value;
+                            });
+                          },
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            _launchURL();
+                          },
+                          child:  TextButton(
                             onPressed: () {
                               Navigator.push(
                                   context,
@@ -212,61 +262,28 @@ class _SignUpState extends State<Signup> {
                                 style: TextStyle(
                                   color: Styles.log_sign_text,
                                 )),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(
-                          "Already have an account?",
-                          textAlign: TextAlign.right,
-                          style: TextStyle(color: Styles.log_sign_text),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Test.fragNavigate.putPosit(key: 'Login');
-                        },
-                        child: Text(
-                          "Login",
-                          style: TextStyle(
-                              color: Styles.hyperlink,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom: 10),
-                    child: GenderField(
-                        genderList: ['Male', 'Female'],
-                        callback: (value) {
-                          _gender = value;
-                        }),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
+                    padding:EdgeInsets.only(left: 25,right: 25,top: 15),
                     child: FlatButton(
                       splashColor: Colors.white,
                       shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(10.0)),
                       padding: EdgeInsets.all(8),
                       height: 50,
-                      color: Styles.button_color,
+                      color: Styles.price_color,
                       onPressed: () async {
                         initLoader();
-
                         if (name != null &&
                             password != null &&
                             email != null &&
                             cnfpass != null) {
                           if (password == cnfpass) {
                             if (_agree == true) {
-                              if (_gender != null) {
                                 if (EmailValidator.validate(email)) {
                                   await pr.show();
                                   signUp(name, password, email);
@@ -274,10 +291,7 @@ class _SignUpState extends State<Signup> {
                                   Styles.showWarningToast(Colors.red,
                                       "Enter a valid Email", Colors.white, 15);
                                 }
-                              } else {
-                                Styles.showWarningToast(Colors.red,
-                                    "Select a gender", Colors.white, 15);
-                              }
+
                             } else {
                               Styles.showWarningToast(
                                   Colors.red,
@@ -304,6 +318,7 @@ class _SignUpState extends State<Signup> {
                         "Sign up",
                         style: TextStyle(
                           fontSize: 20,
+                          fontFamily: 'Halyard',
                           color: Styles.button_text_color,
                           fontWeight: FontWeight.bold,
                         ),
@@ -312,7 +327,32 @@ class _SignUpState extends State<Signup> {
                   ),
                   SizedBox(
                     height: 20,
-                  )
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          "Already have an account?",
+                          textAlign: TextAlign.right,
+                          style: TextStyle(color: Styles.log_sign_text),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Test.fragNavigate.putPosit(key: 'Login');
+                        },
+                        child: Text(
+                          "Login",
+                          style: TextStyle(
+                              color: Styles.price_color,
+
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -412,11 +452,17 @@ class _SignUpState extends State<Signup> {
       await launch(url, forceSafariVC: false, forceWebView: false);
     }
   }
+
+  void _requestFoucs(FocusNode focusNode) {
+   setState(() {
+     FocusScope.of(context).requestFocus(focusNode);
+   });
+  }
 }
 
 class MyColor extends MaterialStateColor {
-  static const _defaultColor = Colors.black;
-  static const _pressedColor = Colors.black;
+  static const _defaultColor = Styles.price_color;
+  static const _pressedColor = Styles.price_color;
 
   const MyColor() : super(0);
 

@@ -1,3 +1,4 @@
+import 'package:craftyfashions_webapp/Helper/CashOrder.dart';
 import 'package:craftyfashions_webapp/Models/LoginData.dart';
 import 'package:craftyfashions_webapp/Models/Order.dart';
 import 'package:craftyfashions_webapp/Models/Products.dart';
@@ -78,7 +79,11 @@ class UsersModel {
     List<Products> Data = await networkHelper.getAll();
     return Data;
   }
-
+  Future<dynamic> savePayment(CashOrder cashOrder) async{
+    NetworkHelper networkHelper = NetworkHelper(url);
+    var data = await networkHelper.payOrder(cashOrder);
+    return data;
+  }
   Future<dynamic> getOrder(double price) async {
     NetworkHelper networkHelper = NetworkHelper(url);
     ServerOrder serverOrder =

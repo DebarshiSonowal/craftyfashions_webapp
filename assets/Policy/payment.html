@@ -30,9 +30,6 @@
             },
             "*"
           );
-          <!--             alert(response.razorpay_payment_id);-->
-          <!--             alert(response.razorpay_order_id);-->
-          <!--             alert(response.razorpay_signature)-->
         },
         prefill: {
           name: window.frameElement.getAttribute("data-name"),
@@ -47,10 +44,16 @@
         },
         modal: {
           ondismiss: function () {
-            window.parent.postMessage("MODAL_CLOSED", "*"); //3
+            window.parent.postMessage("MODAL_CLOSED", "*");
           },
         },
       };
+      var userSet = this.getAttribute("data-userset");
+      if (window.frames["myframe"] && !userSet) {
+        this.setAttribute("data-userset", "true");
+        frames["myframe"].location.href =
+          "http://test.com/hello?uname=" + getUserName();
+      }
       var rzp1 = new Razorpay(options);
       window.onload = function (e) {
         rzp1.open();

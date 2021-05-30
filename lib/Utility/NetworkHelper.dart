@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:connectivity/connectivity.dart';
+import 'package:craftyfashions_webapp/Helper/CashOrder.dart';
 import 'package:craftyfashions_webapp/Helper/Test.dart';
 import 'package:craftyfashions_webapp/Models/LoginData.dart';
 import 'package:craftyfashions_webapp/Models/Order.dart';
@@ -255,7 +256,64 @@ class NetworkHelper {
       return "Products not found";
     }
   }
+  Future payOrder(CashOrder cashOrder) async {
+    Map data = {
+      'orderID': cashOrder.orderId
+          .toString()
+          .substring(1, cashOrder.orderId.toString().length - 1),
+      'amount': cashOrder.orderAmount,
+      'orderCurrency': 'INR',
+      'orderNote': cashOrder.orderNote,
+      'customerName': cashOrder.customerName,
+      'email': cashOrder.customerEmail,
+      'phone': cashOrder.customerPhone,
+    };
+    var body = json.encode(data);
+    print("GIve $body");
+    BaseOptions options =
+    new BaseOptions(connectTimeout: 10000, receiveTimeout: 5000, headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
 
+    });
+    dio = Dio();
+    dio.interceptors.add(
+      RetryOnAccessTokenInterceptor(
+        requestRetrier: DioConnectivityRequestRetrier(
+          dio: dio,
+          connectivity: Connectivity(),
+        ),
+      ),
+    );
+    Response response;
+    try {
+      response = await dio.post(url + "orderCASH", data: body,options: Options(
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${Test.accessToken}',
+        },
+        contentType: 'application/json',receiveTimeout: 5000
+      ));
+    } on DioError catch (e) {
+      print("${e.error} ${e.type.index}");
+      if (e.error == DioErrorType.CONNECT_TIMEOUT) {
+        print("DA");
+        response = Response(statusCode: 500);
+        response.statusCode = 500;
+        print("response1 ${response.statusCode}");
+      }
+    }
+    print("response ${response}");
+    if (response.statusCode == 200) {
+      var data = response.data;
+      print("The data isw ${data['body']}");
+      print(data['body']['cftoken']);
+      return data;
+    } else if (response.statusCode == 500) {
+      return "Server Error";
+    } else {
+      return "Unable to generate";
+    }
+  }
   Future getRequired() async {
     BaseOptions option =
         new BaseOptions(connectTimeout: 7000, receiveTimeout: 6000, headers: {
