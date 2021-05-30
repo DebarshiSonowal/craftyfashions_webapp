@@ -139,7 +139,7 @@ class _ResultState extends State<Result> {
                                                 style: TextStyle(
                                                     fontFamily: "Halyard",
                                                     fontSize: 14,
-                                                    fontWeight: FontWeight.w600,
+                                                    fontWeight: FontWeight.w500,
                                                     color: Colors.white)),
                                           ),
                                         ),
@@ -371,7 +371,7 @@ class _ResultState extends State<Result> {
               child: Text("View Order history",
                   style: TextStyle(
                       fontFamily: "Halyard",
-                      fontSize: 10,
+                      fontSize: 14,
                       fontWeight: FontWeight.w500,
                       color: Colors.black)),
             ),

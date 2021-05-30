@@ -114,6 +114,10 @@ class _NewAddressPageState extends State<NewAddressPage> {
                         borderSide:
                         const BorderSide(color: Styles.price_color, width: 1.0),
                       ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                   ),
                   ),
                   SizedBox(
@@ -150,6 +154,10 @@ class _NewAddressPageState extends State<NewAddressPage> {
                       focusedBorder: OutlineInputBorder(
                         borderSide:
                         const BorderSide(color: Styles.price_color, width: 1.0),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                   ),
@@ -219,6 +227,10 @@ class _NewAddressPageState extends State<NewAddressPage> {
                         borderSide:
                         const BorderSide(color: Styles.price_color, width: 1.0),
                       ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -252,6 +264,10 @@ class _NewAddressPageState extends State<NewAddressPage> {
                         borderSide:
                         const BorderSide(color: Styles.price_color, width: 1.0),
                       ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -284,6 +300,10 @@ class _NewAddressPageState extends State<NewAddressPage> {
                       focusedBorder: OutlineInputBorder(
                         borderSide:
                         const BorderSide(color: Styles.price_color, width: 1.0),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                   ),
@@ -324,6 +344,10 @@ class _NewAddressPageState extends State<NewAddressPage> {
                                 borderSide:
                                 const BorderSide(color: Styles.price_color, width: 1.0),
                               ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                             ),
                           ),
                         ),
@@ -361,6 +385,10 @@ class _NewAddressPageState extends State<NewAddressPage> {
                                   borderSide:
                                   const BorderSide(color: Styles.price_color, width: 1.0),
                                 ),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                               ),
                             ),
                           ),
@@ -376,54 +404,57 @@ class _NewAddressPageState extends State<NewAddressPage> {
             height: 5,
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width / 2,
+            width: MediaQuery.of(context).size.width,
             height: 50,
-            child: ElevatedButton(
-              onPressed: () {
-                if (nT.text.isNotEmpty &&
-                    addT1.text.isNotEmpty &&
-                    addTdis.text.isNotEmpty &&
-                    addTstate.text.isNotEmpty &&
-                    addTtown.text.isNotEmpty &&
-                    phT.text.isNotEmpty &&
-                    pinT.text.isNotEmpty) {
-                  NewAddress(context);
-                } else {
-                  Styles.showWarningToast(Colors.red,
-                      "Please Enter all the details", Colors.white, 17);
-                }
-              },
-              style: ButtonStyle(
-                enableFeedback: true,
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero,
-                )),
-                backgroundColor: MaterialStateProperty.all(Styles.price_color),
-                shadowColor: MaterialStateProperty.all(Color(0xffE3E3E3)),
-                elevation: MaterialStateProperty.all(4),
-                overlayColor: MaterialStateProperty.resolveWith(
-                  (states) {
-                    return states.contains(MaterialState.pressed)
-                        ? Color(0xffE3E3E3)
-                        : null;
-                  },
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: ElevatedButton(
+                onPressed: () {
+                  if (nT.text.isNotEmpty &&
+                      addT1.text.isNotEmpty &&
+                      addTdis.text.isNotEmpty &&
+                      addTstate.text.isNotEmpty &&
+                      addTtown.text.isNotEmpty &&
+                      phT.text.isNotEmpty &&
+                      pinT.text.isNotEmpty) {
+                    NewAddress(context);
+                  } else {
+                    Styles.showWarningToast(Colors.red,
+                        "Please Enter all the details", Colors.white, 17);
+                  }
+                },
+                style: ButtonStyle(
+                  enableFeedback: true,
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                    borderRadius: BorderRadius.zero,
+                  )),
+                  backgroundColor: MaterialStateProperty.all(Styles.price_color),
+                  shadowColor: MaterialStateProperty.all(Color(0xffE3E3E3)),
+                  elevation: MaterialStateProperty.all(4),
+                  overlayColor: MaterialStateProperty.resolveWith(
+                    (states) {
+                      return states.contains(MaterialState.pressed)
+                          ? Color(0xffE3E3E3)
+                          : null;
+                    },
+                  ),
                 ),
-              ),
-              child: Container(
-                child: Center(
-                  child: Text("Proceed",
-                      style: TextStyle(
-                          fontFamily: "Halyard",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white)),
+                child: Container(
+                  child: Center(
+                    child: Text("Proceed",
+                        style: TextStyle(
+                            fontFamily: "Halyard",
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white)),
+                  ),
                 ),
               ),
             ),
           ),
           SizedBox(
-            height: 20,
+            height: 5,
           ),
         ],
       ),

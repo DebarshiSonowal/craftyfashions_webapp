@@ -231,6 +231,7 @@ class _PaymentOptionsMethodState extends State<PaymentOptionsMethod> {
                     MaterialButton(
                       onPressed: () {
                         Navigator.pop(context);
+
                       },
                       child: Icon(
                         MaterialCommunityIcons.close,

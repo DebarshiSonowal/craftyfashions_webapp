@@ -38,7 +38,12 @@ class _ProductViewState extends State<ProductView>
   int currentPhoto = 0;
   List<int> lst = [1, 22, 3];
   int Index;
-
+  final TextStyle lowstyle = TextStyle(
+  fontFamily: "Halyard",
+  color: Colors.black54,
+  fontWeight: FontWeight.w400,
+  fontSize: 18,
+  );
   @override
   void initState() {
     selectedColor = widget.product.Color.toString().split(",")[0];
@@ -106,8 +111,9 @@ class _ProductViewState extends State<ProductView>
                                       child: Text(
                                         "${widget.product.Short}",
                                         style: TextStyle(
-                                          fontWeight: FontWeight.w300,
-                                          fontFamily: Styles.font,
+                                          fontFamily: "Halyard",
+                                          color: Colors.black54,
+                                          fontWeight: FontWeight.w400,
                                           fontSize: 14,
                                         ),
                                       ),
@@ -222,7 +228,9 @@ class _ProductViewState extends State<ProductView>
                                       child: Text(
                                         "Choose to return or exchange for a  different size (if available) within 15 days of delivery",
                                         style: TextStyle(
-                                          fontFamily: Styles.font,
+                                          fontFamily: "Halyard",
+                                          color: Colors.black54,
+                                          fontWeight: FontWeight.w400,
                                           fontSize: 14,
                                         ),
                                       ),
@@ -354,7 +362,7 @@ class _ProductViewState extends State<ProductView>
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 50,
+                                          width: 30,
                                         ),
                                         Container(
                                           child:
@@ -416,7 +424,7 @@ class _ProductViewState extends State<ProductView>
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 20,
+                                          width: 15,
                                         ),
                                         Row(
                                           mainAxisAlignment:
@@ -485,7 +493,7 @@ class _ProductViewState extends State<ProductView>
                                           ],
                                         ),
                                         SizedBox(
-                                          width: 30,
+                                          width: 10,
                                         ),
                                       ],
                                     ),
@@ -573,7 +581,9 @@ class _ProductViewState extends State<ProductView>
                                           fontSize: 16,
                                         ),),
                                         TextSpan(text: 'Regular Fit\n',  style: TextStyle(
-                                          fontFamily: Styles.font,
+                                          fontFamily: "Halyard",
+                                          color: Colors.black54,
+                                          fontWeight: FontWeight.w400,
                                           fontSize: 14,
                                         ),),
                                         TextSpan(text: 'Material : ',  style: TextStyle(
@@ -583,7 +593,9 @@ class _ProductViewState extends State<ProductView>
                                           fontSize: 16,
                                         ),),
                                         TextSpan(text: '100% Cotton, Bio-Washed & Pre-Shrunk\n',  style: TextStyle(
-                                          fontFamily: Styles.font,
+                                          fontFamily: "Halyard",
+                                          color: Colors.black54,
+                                          fontWeight: FontWeight.w400,
                                           fontSize: 14,
                                         ),),
                                         TextSpan(text: 'Wash Care : ', style: TextStyle(
@@ -593,7 +605,9 @@ class _ProductViewState extends State<ProductView>
                                           fontSize: 16,
                                         ),),
                                         TextSpan(text: 'Machine wash. Wash in cold water, use mild detergent, dry in shade , do not iron directly on print, do not bleach, do not tumble dry. Dry on flat surface as hanging may cause measurement variations.\n',  style: TextStyle(
-                                          fontFamily: Styles.font,
+                                          fontFamily: "Halyard",
+                                          color: Colors.black54,
+                                          fontWeight: FontWeight.w400,
                                           fontSize: 14,
                                         ),),
                                         TextSpan(text: 'Sizing : ',  style: TextStyle(
@@ -602,8 +616,10 @@ class _ProductViewState extends State<ProductView>
                                           fontFamily: Styles.font,
                                           fontSize: 16,
                                         ),),
-                                        TextSpan(text: 'Please refer to the size chart to see which size fits you the best.\n',  style: TextStyle(
-                                          fontFamily: Styles.font,
+                                        TextSpan(text: 'Please refer to the size chart to see which size fits you the best.\n', style:TextStyle(
+                                          fontFamily: "Halyard",
+                                          color: Colors.black54,
+                                          fontWeight: FontWeight.w400,
                                           fontSize: 14,
                                         ),),
                                         TextSpan(text: 'Please Note : ',  style: TextStyle(
@@ -612,8 +628,10 @@ class _ProductViewState extends State<ProductView>
                                           fontFamily: Styles.font,
                                           fontSize: 16,
                                         ),),
-                                        TextSpan(text: 'Colors may slightly vary depending upon your screen brightness.\n',  style: TextStyle(
-                                          fontFamily: Styles.font,
+                                        TextSpan(text: 'Colors may slightly vary depending upon your screen brightness.',  style: TextStyle(
+                                          fontFamily: "Halyard",
+                                          color: Colors.black54,
+                                          fontWeight: FontWeight.w400,
                                           fontSize: 14,
                                         ),),
 
@@ -979,6 +997,7 @@ class _ProductViewState extends State<ProductView>
                                               width: MediaQuery.of(context)
                                                   .size
                                                   .width,
+                                              height: 50,
                                               child: Row(
                                                 mainAxisAlignment:
                                                 MainAxisAlignment
@@ -991,7 +1010,7 @@ class _ProductViewState extends State<ProductView>
                                                             context)
                                                             .size
                                                             .width /
-                                                            (2),
+                                                            (2.2),
                                                         height: 50),
                                                     child: ElevatedButton(
                                                       onPressed: () {
@@ -1041,6 +1060,7 @@ class _ProductViewState extends State<ProductView>
                                                       ),
                                                     ),
                                                   ),
+                                                  SizedBox(width: 5,),
                                                   ConstrainedBox(
                                                     constraints:
                                                     BoxConstraints.tightFor(
@@ -1048,7 +1068,7 @@ class _ProductViewState extends State<ProductView>
                                                             context)
                                                             .size
                                                             .width /
-                                                            (2),
+                                                            (2.2),
                                                         height: 50),
                                                     child: ElevatedButton(
                                                       onPressed: () {

@@ -10,90 +10,6 @@ class AllProductsFragmentProductItemView extends StatelessWidget {
   final int Index;
 
   List<Products> list1 = [
-    Products(
-        "1",
-        "Dilbar main hu",
-        "_Description",
-        "Life is full of trouble",
-        "_Categories",
-        "_Color",
-        "https://firebasestorage.googleapis.com/v0/b/crafty-fashions-assam.appspot.com/o/testinng%2FFOBP01_adobespark.png?alt=media&token=d5e84bfc-75e8-440e-9542-fcc6cee91c28",
-        499,
-        "_Size",
-        "_Tags",
-        "_Gender"),
-    Products(
-        "1",
-        "Dilbar main hu",
-        "_Description",
-        "Life is full of trouble",
-        "_Categories",
-        "_Color",
-        "https://firebasestorage.googleapis.com/v0/b/crafty-fashions-assam.appspot.com/o/testinng%2F2_adobespark.png?alt=media&token=29ac40a3-5557-4e89-ac0a-d87158f67f49",
-        499,
-        "_Size",
-        "_Tags",
-        "_Gender"),
-    Products(
-        "1",
-        "Dilbar main hu",
-        "_Description",
-        "Life is full of trouble",
-        "_Categories",
-        "_Color",
-        "https://firebasestorage.googleapis.com/v0/b/crafty-fashions-assam.appspot.com/o/testinng%2FFOBP01_adobespark.png?alt=media&token=d5e84bfc-75e8-440e-9542-fcc6cee91c28",
-        499,
-        "_Size",
-        "_Tags",
-        "_Gender"),
-    Products(
-        "1",
-        "Dilbar main hu",
-        "_Description",
-        "Life is full of trouble",
-        "_Categories",
-        "_Color",
-        "https://firebasestorage.googleapis.com/v0/b/crafty-fashions-assam.appspot.com/o/testinng%2F2%20(2)_adobespark.png?alt=media&token=eccd9f38-da48-4d17-90d0-52f7413b0800",
-        499,
-        "_Size",
-        "_Tags",
-        "_Gender"),
-    Products(
-        "1",
-        "Dilbar main hu",
-        "_Description",
-        "Life is full of trouble",
-        "_Categories",
-        "_Color",
-        "https://firebasestorage.googleapis.com/v0/b/crafty-fashions-assam.appspot.com/o/MONSTER%20SLAM%2F53.webp?alt=media&token=4449ac7e-1ea1-4bcc-b378-a845a57d122f",
-        499,
-        "_Size",
-        "_Tags",
-        "_Gender"),
-    Products(
-        "1",
-        "Dilbar main hu",
-        "_Description",
-        "Life is full of trouble",
-        "_Categories",
-        "_Color",
-        "https://firebasestorage.googleapis.com/v0/b/crafty-fashions-assam.appspot.com/o/MONSTER%20SLAM%2F53.webp?alt=media&token=4449ac7e-1ea1-4bcc-b378-a845a57d122f",
-        499,
-        "_Size",
-        "_Tags",
-        "_Gender"),
-    Products(
-        "1",
-        "Dilbar main hu",
-        "_Description",
-        "Life is full of trouble",
-        "_Categories",
-        "_Color",
-        "https://firebasestorage.googleapis.com/v0/b/crafty-fashions-assam.appspot.com/o/MONSTER%20SLAM%2F53.webp?alt=media&token=4449ac7e-1ea1-4bcc-b378-a845a57d122f",
-        499,
-        "_Size",
-        "_Tags",
-        "_Gender"),
   ];
 
   AllProductsFragmentProductItemView(
@@ -178,13 +94,35 @@ class AllProductsFragmentProductItemView extends StatelessWidget {
               fit: FlexFit.tight,
               child: Padding(
                 padding: const EdgeInsets.only(left: 10.0, top: 1.0,bottom: 1.0),
-                child: Text(
-                  "₹ ${list[Index].Price}",
-                  style: TextStyle(
-                      fontSize: Styles.getPriceSize(context),
-                      color: Styles.price_color,
-                    fontWeight: FontWeight.w400,),
+                child:Row(
+                  children: [
+                    Text(
+                      "₹ ${list[Index].Price}",
+                      style: TextStyle(
+                          fontFamily: "Halyard",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w200,
+                          color: Styles.price_color),
+                    ),
+                    SizedBox(width: 5,),
+                    Text(
+                      "₹ 699",
+                      style: TextStyle(
+                          decoration: TextDecoration.lineThrough,
+                          fontFamily: "Halyard",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w200,
+                          color: Colors.black),
+                    ),
+                  ],
                 ),
+                // child: Text(
+                //   "₹ ${list[Index].Price}",
+                //   style: TextStyle(
+                //       fontSize: Styles.getPriceSize(context),
+                //       color: Styles.price_color,
+                //     fontWeight: FontWeight.w400,),
+                // ),
               ),
             ),
           ],

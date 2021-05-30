@@ -7,6 +7,7 @@ import 'package:craftyfashions_webapp/Helper/DioError.dart';
 import 'package:craftyfashions_webapp/Helper/Test.dart';
 import 'package:craftyfashions_webapp/Models/Address.dart';
 import 'package:craftyfashions_webapp/Models/Order.dart';
+import 'package:craftyfashions_webapp/Models/Products.dart';
 import 'package:craftyfashions_webapp/Models/ServerOrder.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/AllProductsFragmentProductItemview.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/EmptyView.dart';
@@ -102,210 +103,227 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
                                       children: [
                                         Expanded(
                                             flex: 12,
-                                            child: Container(
-                                              child: Row(
-                                                children: [
-                                                  Expanded(
-                                                      flex: 3,
-                                                      child: Container(
-                                                        padding:
-                                                        EdgeInsets.only(
-                                                            top: 8,
-                                                            right: 14,
-                                                            left: 14,
-                                                            bottom: 8),
-                                                        child:
-                                                        CachedNetworkImage(
-                                                          fit: BoxFit.fill,
-                                                          imageUrl: Provider.of<
-                                                              CartData>(
-                                                              context)
-                                                              .list[index]
-                                                              .picture,
-                                                          progressIndicatorBuilder:
-                                                              (context, url,
-                                                              downloadProgress) =>
-                                                              SizedBox(
-                                                                width: 50.0,
-                                                                height: 50.0,
-                                                                child:
-                                                                SpinKitCubeGrid(
-                                                                  color: Styles
-                                                                      .price_color,
-                                                                  size: 50.0,
-                                                                  controller: AnimationController(
-                                                                      vsync: this,
-                                                                      duration: const Duration(
-                                                                          milliseconds:
-                                                                          1200)),
-                                                                ),
-                                                              ),
-                                                          errorWidget: (context,
-                                                              url, error) =>
-                                                              Icon(Icons.error),
-                                                        ),
-                                                      )),
-                                                  Expanded(
-                                                      flex: 5,
-                                                      child: Container(
-                                                        color: Colors.white,
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                          children: [
-                                                            Expanded(
-                                                                flex: 3,
-                                                                child:
-                                                                Container(
-                                                                  width: 300,
-                                                                  padding:
-                                                                  EdgeInsets
-                                                                      .only(
-                                                                      top: 8,left:20,bottom: 10),
-                                                                  child: Text(
-                                                                    "${Provider.of<CartData>(context).list[index].name}",
-                                                                    textAlign: TextAlign.start,
-                                                                    style: TextStyle(
-                                                                        fontFamily:
-                                                                        "Halyard",
-                                                                        fontSize:
-                                                                        18,
-                                                                        fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                        color: Colors
-                                                                            .black),
+                                            child: GestureDetector(
+                                              onTap: ()=>onCartItemTap(index),
+                                              child: Container(
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                        flex: 3,
+                                                        child: Container(
+                                                          padding:
+                                                          EdgeInsets.only(
+                                                              top: 8,
+                                                              right: 14,
+                                                              left: 14,
+                                                              bottom: 8),
+                                                          child:
+                                                          CachedNetworkImage(
+                                                            fit: BoxFit.fill,
+                                                            imageUrl: Provider.of<
+                                                                CartData>(
+                                                                context)
+                                                                .list[index]
+                                                                .picture,
+                                                            progressIndicatorBuilder:
+                                                                (context, url,
+                                                                downloadProgress) =>
+                                                                SizedBox(
+                                                                  width: 50.0,
+                                                                  height: 50.0,
+                                                                  child:
+                                                                  SpinKitCubeGrid(
+                                                                    color: Styles
+                                                                        .price_color,
+                                                                    size: 50.0,
+                                                                    controller: AnimationController(
+                                                                        vsync: this,
+                                                                        duration: const Duration(
+                                                                            milliseconds:
+                                                                            1200)),
                                                                   ),
-                                                                )),
-                                                            Expanded(
-                                                              flex: 8,
-                                                              child: Container(
-                                                                child: Row(
-                                                                  mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceEvenly,
-                                                                  children: [
-                                                                    Column(
-                                                                      crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                      children: [
-                                                                        Text(
-                                                                          "Color:",
-                                                                          textAlign:
-                                                                          TextAlign.start,
-                                                                          style: TextStyle(
-                                                                              fontFamily: "Halyard",
-                                                                              fontSize: 14,
-                                                                              fontWeight: FontWeight.w200,
-                                                                              color: Colors.black45),
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: EdgeInsets.only(
-                                                                              top: 16,
-                                                                              bottom: 12),
-                                                                          child:
+                                                                ),
+                                                            errorWidget: (context,
+                                                                url, error) =>
+                                                                Icon(Icons.error),
+                                                          ),
+                                                        )),
+                                                    Expanded(
+                                                        flex: 5,
+                                                        child: Container(
+                                                          color: Colors.white,
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                            children: [
+                                                              Expanded(
+                                                                  flex: 3,
+                                                                  child:
+                                                                  Container(
+                                                                    width: 300,
+                                                                    padding:
+                                                                    EdgeInsets
+                                                                        .only(
+                                                                        top: 8,left:20,bottom: 10),
+                                                                    child: Text(
+                                                                      "${Provider.of<CartData>(context).list[index].name}",
+                                                                      textAlign: TextAlign.start,
+                                                                      style: TextStyle(
+                                                                          fontFamily:
+                                                                          "Halyard",
+                                                                          fontSize:
+                                                                          18,
+                                                                          fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                          color: Colors
+                                                                              .black),
+                                                                    ),
+                                                                  )),
+                                                              Expanded(
+                                                                flex: 8,
+                                                                child: Container(
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceEvenly,
+                                                                    children: [
+                                                                      Column(
+                                                                        crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                        children: [
+                                                                          Text(
+                                                                            "Color:",
+                                                                            textAlign:
+                                                                            TextAlign.start,
+                                                                            style: TextStyle(
+                                                                                fontFamily: "Halyard",
+                                                                                fontSize: 14,
+                                                                                fontWeight: FontWeight.w200,
+                                                                                color: Colors.black45),
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: EdgeInsets.only(
+                                                                                top: 16,
+                                                                                bottom: 12),
+                                                                            child:
+                                                                            Row(
+                                                                              children: [
+                                                                                Text(
+                                                                                  "Size:  ",
+                                                                                  textAlign: TextAlign.start,
+                                                                                  style: TextStyle(fontFamily: "Halyard", fontSize: 14, fontWeight: FontWeight.w200, color: Colors.black45),
+                                                                                ),
+                                                                                SizedBox(width: 20,),
+                                                                                Text(
+                                                                                  "${Provider.of<CartData>(context).list[index].size}",
+                                                                                  textAlign: TextAlign.start,
+                                                                                  style: TextStyle(fontFamily: "Halyard", fontSize: 14, fontWeight: FontWeight.w200, color: Colors.black),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                          Text(
+                                                                            "Price: ",
+                                                                            textAlign:
+                                                                            TextAlign.start,
+                                                                            style: TextStyle(
+                                                                                fontFamily: "Halyard",
+                                                                                fontSize: 14,
+                                                                                fontWeight: FontWeight.w200,
+                                                                                color: Colors.black45),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                      SizedBox(
+                                                                        width: 7,
+                                                                      ),
+                                                                      Column(
+                                                                        crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .end,
+                                                                        children: [
+                                                                          Text(
+                                                                            "${Provider.of<CartData>(context).list[index].color}",
+                                                                            style: TextStyle(
+                                                                                fontFamily: "Halyard",
+                                                                                fontSize: 14,
+                                                                                fontWeight: FontWeight.w200,
+                                                                                color: Colors.black),
+                                                                          ),
                                                                           Row(
+                                                                            mainAxisAlignment:
+                                                                            MainAxisAlignment.center,
                                                                             children: [
                                                                               Text(
-                                                                                "Size:  ",
-                                                                                textAlign: TextAlign.start,
+                                                                                "Qty:  ",
                                                                                 style: TextStyle(fontFamily: "Halyard", fontSize: 14, fontWeight: FontWeight.w200, color: Colors.black45),
                                                                               ),
-                                                                              SizedBox(width: 20,),
-                                                                              Text(
-                                                                                "${Provider.of<CartData>(context).list[index].size}",
-                                                                                textAlign: TextAlign.start,
+                                                                              SizedBox(
+                                                                                width: 25,
+                                                                              ),
+                                                                              DropdownButton<String>(
+                                                                                focusColor: Colors.white,
+                                                                                value: Provider.of<CartData>(context).list[index].quantity.toString(),
+                                                                                //elevation: 5,
                                                                                 style: TextStyle(fontFamily: "Halyard", fontSize: 14, fontWeight: FontWeight.w200, color: Colors.black),
+                                                                                iconEnabledColor: Colors.black,
+                                                                                items: getLabels().map<DropdownMenuItem<String>>((String value) {
+                                                                                  return DropdownMenuItem<String>(
+                                                                                    value: value,
+                                                                                    child: Text(
+                                                                                      "${value}",
+                                                                                      style: TextStyle(color: Colors.black),
+                                                                                    ),
+                                                                                  );
+                                                                                }).toList(),
+                                                                                hint: Text(
+                                                                                  "",
+                                                                                  style: TextStyle(fontFamily: "Halyard", fontSize: 14, fontWeight: FontWeight.w200, color: Colors.black),
+                                                                                ),
+                                                                                onChanged: (String value) {
+                                                                                  setState(() {
+                                                                                    Provider.of<CartData>(context, listen: false).list[index].setQuantity = int.parse(value.toString());
+                                                                                  });
+                                                                                },
                                                                               ),
                                                                             ],
                                                                           ),
-                                                                        ),
-                                                                        Text(
-                                                                          "Price: ",
-                                                                          textAlign:
-                                                                          TextAlign.start,
-                                                                          style: TextStyle(
-                                                                              fontFamily: "Halyard",
-                                                                              fontSize: 14,
-                                                                              fontWeight: FontWeight.w200,
-                                                                              color: Colors.black45),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                    SizedBox(
-                                                                      width: 7,
-                                                                    ),
-                                                                    Column(
-                                                                      crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .end,
-                                                                      children: [
-                                                                        Text(
-                                                                          "${Provider.of<CartData>(context).list[index].color}",
-                                                                          style: TextStyle(
-                                                                              fontFamily: "Halyard",
-                                                                              fontSize: 14,
-                                                                              fontWeight: FontWeight.w200,
-                                                                              color: Colors.black),
-                                                                        ),
-                                                                        Row(
-                                                                          mainAxisAlignment:
-                                                                          MainAxisAlignment.center,
-                                                                          children: [
-                                                                            Text(
-                                                                              "Qty:  ",
-                                                                              style: TextStyle(fontFamily: "Halyard", fontSize: 14, fontWeight: FontWeight.w200, color: Colors.black45),
-                                                                            ),
-                                                                            SizedBox(
-                                                                              width: 25,
-                                                                            ),
-                                                                            DropdownButton<String>(
-                                                                              focusColor: Colors.white,
-                                                                              value: Provider.of<CartData>(context).list[index].quantity.toString(),
-                                                                              //elevation: 5,
-                                                                              style: TextStyle(fontFamily: "Halyard", fontSize: 14, fontWeight: FontWeight.w200, color: Colors.black),
-                                                                              iconEnabledColor: Colors.black,
-                                                                              items: getLabels().map<DropdownMenuItem<String>>((String value) {
-                                                                                return DropdownMenuItem<String>(
-                                                                                  value: value,
-                                                                                  child: Text(
-                                                                                    "${value}",
-                                                                                    style: TextStyle(color: Colors.black),
-                                                                                  ),
-                                                                                );
-                                                                              }).toList(),
-                                                                              hint: Text(
-                                                                                "",
-                                                                                style: TextStyle(fontFamily: "Halyard", fontSize: 14, fontWeight: FontWeight.w200, color: Colors.black),
+                                                                          Row(
+                                                                            children: [
+                                                                              Text(
+                                                                                "₹ ${int.parse((Provider.of<CartData>(context).list[index].payment).toString())*int.parse((Provider.of<CartData>(context, listen: false).list[index].quantity).toString())}",
+                                                                                style: TextStyle(
+                                                                                    fontFamily: "Halyard",
+                                                                                    fontSize: 14,
+                                                                                    fontWeight: FontWeight.w200,
+                                                                                    color: Styles.price_color),
                                                                               ),
-                                                                              onChanged: (String value) {
-                                                                                setState(() {
-                                                                                  Provider.of<CartData>(context, listen: false).list[index].setQuantity = int.parse(value.toString());
-                                                                                });
-                                                                              },
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                        Text(
-                                                                          "${Provider.of<CartData>(context).list[index].payment}",
-                                                                          style: TextStyle(
-                                                                              fontFamily: "Halyard",
-                                                                              fontSize: 14,
-                                                                              fontWeight: FontWeight.w200,
-                                                                              color: Styles.price_color),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ],
+                                                                              SizedBox(width: 5,),
+                                                                              Text(
+                                                                                "₹ ${699*int.parse((Provider.of<CartData>(context, listen: false).list[index].quantity).toString())}",
+                                                                                style: TextStyle(
+                                                                                    decoration: TextDecoration.lineThrough,
+                                                                                    fontFamily: "Halyard",
+                                                                                    fontSize: 12,
+                                                                                    fontWeight: FontWeight.w200,
+                                                                                    color: Colors.black),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ],
+                                                                  ),
                                                                 ),
                                                               ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ))
-                                                ],
+                                                            ],
+                                                          ),
+                                                        ))
+                                                  ],
+                                                ),
                                               ),
                                             )),
                                         Expanded(
@@ -1021,9 +1039,9 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
                         child: Text("Show all",
                             style: TextStyle(
                                 fontFamily: "Halyard",
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black)))
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Styles.price_color)))
                   ],
                 ),
               )),
@@ -1134,7 +1152,7 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
     String getRandomString(int length) =>
         String.fromCharCodes(Iterable.generate(
             length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
-    Styles.showWarningToast(Colors.green, "Successful", Colors.white, 15);
+    // Styles.showWarningToast(Colors.green, "Successful", Colors.white, 15);
 
     var id = "order_cod_" + getRandomString(5);
     try {
@@ -1358,34 +1376,37 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
                                   left: 14,
                               bottom: 8),
                               child:
-                              CachedNetworkImage(
-                                fit: BoxFit.fill,
-                                imageUrl: Provider.of<
-                                    CartData>(
-                                    context)
-                                    .list[index]
-                                    .picture,
-                                progressIndicatorBuilder:
-                                    (context, url,
-                                    downloadProgress) =>
-                                    SizedBox(
-                                      width: 50.0,
-                                      height: 50.0,
-                                      child:
-                                      SpinKitCubeGrid(
-                                        color: Styles
-                                            .price_color,
-                                        size: 50.0,
-                                        controller: AnimationController(
-                                            vsync: this,
-                                            duration: const Duration(
-                                                milliseconds:
-                                                1200)),
+                              GestureDetector(
+                                onTap: ()=>onCartItemTap(index),
+                                child: CachedNetworkImage(
+                                  fit: BoxFit.fill,
+                                  imageUrl: Provider.of<
+                                      CartData>(
+                                      context)
+                                      .list[index]
+                                      .picture,
+                                  progressIndicatorBuilder:
+                                      (context, url,
+                                      downloadProgress) =>
+                                      SizedBox(
+                                        width: 50.0,
+                                        height: 50.0,
+                                        child:
+                                        SpinKitCubeGrid(
+                                          color: Styles
+                                              .price_color,
+                                          size: 50.0,
+                                          controller: AnimationController(
+                                              vsync: this,
+                                              duration: const Duration(
+                                                  milliseconds:
+                                                  1200)),
+                                        ),
                                       ),
-                                    ),
-                                errorWidget: (context,
-                                    url, error) =>
-                                    Icon(Icons.error),
+                                  errorWidget: (context,
+                                      url, error) =>
+                                      Icon(Icons.error),
+                                ),
                               ),
                             )),
                         Expanded(
@@ -1526,13 +1547,27 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
                                                   ),
                                                 ],
                                               ),
-                                              Text(
-                                                "${Provider.of<CartData>(context).list[index].payment}",
-                                                style: TextStyle(
-                                                    fontFamily: "Halyard",
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w200,
-                                                    color: Styles.price_color),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    "₹ ${int.parse((Provider.of<CartData>(context).list[index].payment).toString())*int.parse((Provider.of<CartData>(context, listen: false).list[index].quantity).toString())}",
+                                                    style: TextStyle(
+                                                        fontFamily: "Halyard",
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.w200,
+                                                        color: Styles.price_color),
+                                                  ),
+                                                  SizedBox(width: 5,),
+                                                  Text(
+                                                    "₹ ${699*int.parse((Provider.of<CartData>(context, listen: false).list[index].quantity).toString())}",
+                                                    style: TextStyle(
+                                                        decoration: TextDecoration.lineThrough,
+                                                        fontFamily: "Halyard",
+                                                        fontSize: 12,
+                                                        fontWeight: FontWeight.w200,
+                                                        color: Colors.black),
+                                                  ),
+                                                ],
                                               ),
                                             ],
                                           ),
@@ -1633,6 +1668,28 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
     order.orderAmount = amount;
     order.stage = "PROD";
     return order;
+  }
+
+  onCartItemTap(int index) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ProductView(
+                product: getIndex(Provider.of<CartData>(context,
+                    listen: false)
+                    .list[index].name),
+                fragNav: Test.fragNavigate)));
+  }
+
+  getIndex(var item) {
+    print("Hell ${item}");
+    var list = Provider.of<CartData>(context, listen: false).allproducts;
+    for(var i in list){
+      if(i.Name.toString().trim() == item.toString().trim()){
+        print("Hel2l");
+        return Provider.of<CartData>(context, listen: false).allproducts[Provider.of<CartData>(context, listen: false).allproducts.indexOf(i)];
+      }
+    }
   }
 }
 
