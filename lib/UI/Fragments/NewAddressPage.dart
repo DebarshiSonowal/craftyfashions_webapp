@@ -45,6 +45,10 @@ class _NewAddressPageState extends State<NewAddressPage> {
 
   var addTstate = TextEditingController();
 
+  FocusNode focusNodeFullname= FocusNode();FocusNode focusNodePhone= FocusNode();
+  FocusNode focusNodePin= FocusNode();FocusNode focusNodeAdd1= FocusNode();
+  FocusNode focusNodeTown= FocusNode();FocusNode focusNodeDis= FocusNode();
+  FocusNode focusNodeState= FocusNode();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -68,7 +72,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
             elevation: 1,
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color:Color(0xffF9F9F9),
                 // color: Color(0xffE3E3E3),
                 boxShadow: [
                   new BoxShadow(
@@ -84,62 +88,68 @@ class _NewAddressPageState extends State<NewAddressPage> {
                   SizedBox(
                     height: 10,
                   ),
-                  TextField(
+                  TextFormField(
+                    focusNode: focusNodeFullname,
+                    onTap: (){
+                      _requestFoucs(focusNodeFullname);
+                    },
                     controller: nT,
                     onChanged: (text) {},
                     keyboardType: TextInputType.text,
                     style: TextStyle(
                         fontFamily: "Halyard",
                         fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black),
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black
+                    ),
                     decoration: InputDecoration(
-                      labelStyle: TextStyle(
-                          color: Styles.log_sign_text, fontFamily: Styles.font),
                       labelText: "Full Name",
+                      labelStyle: TextStyle(
+                          fontFamily: "Halyard",
+                          fontSize: 14,
+                          color: focusNodeFullname.hasFocus?Styles.price_color:Colors.black45),
                       filled: true,
-                      fillColor: Color(0xffd4d4d4),
+                      fillColor: Colors.white,
                       focusedBorder: OutlineInputBorder(
                         borderSide:
-                            const BorderSide(color: Colors.black, width: 2.0),
+                        const BorderSide(color: Styles.price_color, width: 1.0),
                       ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
+                  ),
                   ),
                   SizedBox(
                     height: 5,
                   ),
-                  TextField(
+                  TextFormField(
+                    focusNode: focusNodePhone,
+                    onTap: (){
+                      _requestFoucs(focusNodePhone);
+                    },
                     maxLength: 10,
                     controller: phT,
                     keyboardType: TextInputType.phone,
-                    style:
-                        TextStyle(color: Colors.black, fontFamily: Styles.font),
                     onChanged: (txt) {
                       // enabled = checknull(
                       //     Provider.of<CartData>(context, listen: false)
                       //         .profile);
                       phone = txt;
                     },
+                    style: TextStyle(
+                        fontFamily: "Halyard",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black
+                    ),
                     decoration: InputDecoration(
+                      labelText: "Phone",
                       labelStyle: TextStyle(
                           fontFamily: "Halyard",
                           fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black),
-                      labelText: "Phone",
+                          color: focusNodePhone.hasFocus?Styles.price_color:Colors.black45),
                       filled: true,
-                      fillColor: Color(0xffd4d4d4),
+                      fillColor: Colors.white,
                       focusedBorder: OutlineInputBorder(
                         borderSide:
-                            const BorderSide(color: Colors.black, width: 2.0),
-                      ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(10),
+                        const BorderSide(color: Styles.price_color, width: 1.0),
                       ),
                     ),
                   ),
@@ -165,7 +175,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
             elevation: 1,
             child: Container(
               decoration: BoxDecoration(
-                color: Color(0xfffafafa),
+                color:Color(0xffF9F9F9),
                 // color: Color(0xffE3E3E3),
                 boxShadow: [
                   new BoxShadow(
@@ -181,93 +191,99 @@ class _NewAddressPageState extends State<NewAddressPage> {
                   SizedBox(
                     height: 10,
                   ),
-                  TextField(
+                  TextFormField(
+                    focusNode: focusNodeAdd1,
+                    onTap: (){
+                      _requestFoucs(focusNodeAdd1);
+                    },
                     controller: addT1,
                     keyboardType: TextInputType.text,
-                    style:
-                        TextStyle(color: Colors.black, fontFamily: Styles.font),
                     onChanged: (txt) {
                       addressline1 = txt;
                     },
+                    style: TextStyle(
+                        fontFamily: "Halyard",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black
+                    ),
                     decoration: InputDecoration(
+                      labelText: "Address (House no,Building,Street,Area)",
                       labelStyle: TextStyle(
                           fontFamily: "Halyard",
                           fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black),
-                      labelText: "Address (House no, Building, Street, Area)",
+                          color: focusNodeAdd1.hasFocus?Styles.price_color:Colors.black45),
                       filled: true,
-                      fillColor: Color(0xffd4d4d4),
+                      fillColor: Colors.white,
                       focusedBorder: OutlineInputBorder(
                         borderSide:
-                            const BorderSide(color: Colors.black, width: 2.0),
-                      ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(10),
+                        const BorderSide(color: Styles.price_color, width: 1.0),
                       ),
                     ),
                   ),
                   SizedBox(
                     height: 5,
                   ),
-                  TextField(
+                  TextFormField(
+                    focusNode: focusNodeTown,
+                    onTap: (){
+                      _requestFoucs(focusNodeTown);
+                    },
                     controller: addTtown,
                     keyboardType: TextInputType.text,
-                    style: TextStyle(
-                        fontFamily: "Halyard",
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black),
                     onChanged: (txt) {
                       town_village = txt;
                     },
+                    style: TextStyle(
+                        fontFamily: "Halyard",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black
+                    ),
                     decoration: InputDecoration(
-                      labelStyle: TextStyle(
-                          color: Styles.log_sign_text, fontFamily: Styles.font),
                       labelText: "Town/Village",
+                      labelStyle: TextStyle(
+                          fontFamily: "Halyard",
+                          fontSize: 14,
+                          color: focusNodeTown.hasFocus?Styles.price_color:Colors.black45),
                       filled: true,
-                      fillColor: Color(0xffd4d4d4),
+                      fillColor: Colors.white,
                       focusedBorder: OutlineInputBorder(
                         borderSide:
-                            const BorderSide(color: Colors.black, width: 2.0),
-                      ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(10),
+                        const BorderSide(color: Styles.price_color, width: 1.0),
                       ),
                     ),
                   ),
                   SizedBox(
                     height: 5,
                   ),
-                  TextField(
+                  TextFormField(
+                    focusNode: focusNodeDis,
+                    onTap: (){
+                      _requestFoucs(focusNodeDis);
+                    },
                     controller: addTdis,
                     keyboardType: TextInputType.text,
-                    style: TextStyle(
-                        fontFamily: "Halyard",
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black),
                     onChanged: (txt) {
                       district = txt;
                     },
+                    style: TextStyle(
+                        fontFamily: "Halyard",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black
+                    ),
                     decoration: InputDecoration(
+                      labelText: "District",
                       labelStyle: TextStyle(
                           fontFamily: "Halyard",
                           fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black),
-                      labelText: "District",
+                          color: focusNodeDis.hasFocus?Styles.price_color:Colors.black45),
                       filled: true,
-                      fillColor: Color(0xffd4d4d4),
+                      fillColor: Colors.white,
                       focusedBorder: OutlineInputBorder(
                         borderSide:
-                            const BorderSide(color: Colors.black, width: 2.0),
-                      ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(10),
+                        const BorderSide(color: Styles.price_color, width: 1.0),
                       ),
                     ),
                   ),
@@ -279,34 +295,34 @@ class _NewAddressPageState extends State<NewAddressPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
-                          child: TextField(
+                          child: TextFormField(
+                            focusNode: focusNodePin,
+                            onTap: (){
+                              _requestFoucs(focusNodePin);
+                            },
                             controller: pinT,
                             keyboardType: TextInputType.number,
                             maxLength: 6,
-                            style: TextStyle(
-                                fontFamily: "Halyard",
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black),
                             onChanged: (txt) {
                               pin = txt;
                             },
+                            style: TextStyle(
+                                fontFamily: "Halyard",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black
+                            ),
                             decoration: InputDecoration(
+                              labelText: "Pin code",
                               labelStyle: TextStyle(
                                   fontFamily: "Halyard",
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black),
-                              labelText: "Pincode",
+                                  color: focusNodePin.hasFocus?Styles.price_color:Colors.black45),
                               filled: true,
-                              fillColor: Color(0xffd4d4d4),
+                              fillColor: Colors.white,
                               focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Colors.black, width: 2.0),
-                              ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                                borderRadius: BorderRadius.circular(10),
+                                borderSide:
+                                const BorderSide(color: Styles.price_color, width: 1.0),
                               ),
                             ),
                           ),
@@ -317,33 +333,33 @@ class _NewAddressPageState extends State<NewAddressPage> {
                         Expanded(
                           child: Padding(
                             padding: EdgeInsets.only(bottom: 22),
-                            child: TextField(
+                            child: TextFormField(
+                              focusNode: focusNodeState,
+                              onTap: (){
+                                _requestFoucs(focusNodeState);
+                              },
                               controller: addTstate,
                               keyboardType: TextInputType.text,
-                              style: TextStyle(
-                                  fontFamily: "Halyard",
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black),
                               onChanged: (txt) {
                                 state = txt;
                               },
+                              style: TextStyle(
+                                  fontFamily: "Halyard",
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black
+                              ),
                               decoration: InputDecoration(
+                                labelText: "State",
                                 labelStyle: TextStyle(
                                     fontFamily: "Halyard",
                                     fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black),
-                                labelText: "State",
+                                    color: focusNodeState.hasFocus?Styles.price_color:Colors.black45),
                                 filled: true,
-                                fillColor: Color(0xffd4d4d4),
+                                fillColor: Colors.white,
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: Colors.black, width: 2.0),
-                                ),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide:
+                                  const BorderSide(color: Styles.price_color, width: 1.0),
                                 ),
                               ),
                             ),
@@ -433,5 +449,10 @@ class _NewAddressPageState extends State<NewAddressPage> {
         addTdis.text.trim() +
         "," +
         addTstate.text.trim();
+  }
+  void _requestFoucs(FocusNode focusNode) {
+    setState(() {
+      FocusScope.of(context).requestFocus(focusNode);
+    });
   }
 }

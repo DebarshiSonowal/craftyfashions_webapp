@@ -39,7 +39,7 @@ class _ResultState extends State<Result> {
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    color: const Color(0xff7c94b6),
+                    color: const Color(0xffFAFAFA),
                     image: new DecorationImage(
                       fit: BoxFit.cover,
                       colorFilter: ColorFilter.mode(
