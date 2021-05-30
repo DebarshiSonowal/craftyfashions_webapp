@@ -12,20 +12,24 @@ class Photoview extends StatelessWidget {
     return Material(
       child: SafeArea(
         child: Container(
-          color: Colors.white,
-            child: Column(
-                mainAxisSize: MainAxisSize.min,
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          color: Colors.white54,
+            child: Stack(
+              alignment: AlignmentDirectional.topStart,
               children: [
-                IconButton(icon: Icon(
-                    FontAwesomeIcons.backspace
-                ), onPressed: (){
-                  Navigator.pop(context);
-                }),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: PhotoView(
-                    imageProvider:url == null?AssetImage("assets/images/404.png",): NetworkImage(url),
+                PhotoView(
+                  imageProvider:url == null?AssetImage("assets/images/404.png",): NetworkImage(url),
+                ),
+                IconButton(
+                  splashColor: Colors.white,
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
                   ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
                 ),
               ],
             )
