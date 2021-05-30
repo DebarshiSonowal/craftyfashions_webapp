@@ -1004,12 +1004,30 @@ class _ProductViewState extends State<ProductView>
                                                             height: 50),
                                                     child: ElevatedButton(
                                                       onPressed: () {
+                                                        Provider.of<CartData>(
+                                                            context,
+                                                            listen: false)
+                                                            .addProduct(CartProduct(
+                                                            selectedColor,
+                                                            widget.product
+                                                                .Price,
+                                                            widget.product
+                                                                .Image
+                                                                .toString()
+                                                                .split(",")[
+                                                            getIndex()]
+                                                                .trim(),
+                                                            quantity,
+                                                            selectedSize,
+                                                            widget.product
+                                                                .Name,
+                                                            widget.product
+                                                                .Id));
                                                         Navigator.pop(context);
                                                         Navigator.pop(context);
                                                         Test.fragNavigate
                                                             .putPosit(
-                                                                key: 'Cart',
-                                                                force: true);
+                                                                key: 'Cart',);
                                                       },
                                                       style: ButtonStyle(
                                                           backgroundColor:

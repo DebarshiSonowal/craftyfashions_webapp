@@ -47,14 +47,20 @@
             }
           }
        };
-        var windowResizeTo = window.resizeTo; // In case we want to put it back later
-        window.resizeTo = function() {
-        console.log("Error")};
+<!-- var windowResizeTo = window.resizeTo; // In case we want to put it back later-->
+<!--        window.resizeTo = function() {-->
+<!--       var rzp1 = new Razorpay(options);-->
+<!--       window.onload = function(e){  //1-->
+<!--          rzp1.open();-->
+<!--          e.preventDefault();-->
+<!--       }-->
+<!--        var windowResizeTo = window.resizeTo; // In case we want to put it back later-->
+<!--        window.resizeTo = function() {-->
        var rzp1 = new Razorpay(options);
        window.onload = function(e){  //1
           rzp1.open();
           e.preventDefault();
-       }
+        }
 
 
 

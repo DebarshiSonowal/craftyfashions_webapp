@@ -78,10 +78,12 @@ class HostState extends State<Host> {
     }
     return WillPopScope(
       onWillPop: () {
-        if (_fragNav.stack.length > 1) {
+        if (_fragNav.stack.length >= 1) {
+          print("Backed");
           _fragNav.jumpBack();
           return Future.value(false);
         }else{
+          print("Backed2");
           return Future.value(false);
         }
       },

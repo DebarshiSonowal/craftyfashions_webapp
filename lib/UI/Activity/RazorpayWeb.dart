@@ -14,14 +14,7 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'UiFake.dart' if (dart.library.html) 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
-class RazorPayWeb extends StatefulWidget {
-  RazorPayWeb();
-
-  @override
-  _RazorPayWebState createState() => _RazorPayWebState();
-}
-
-class _RazorPayWebState extends State<RazorPayWeb> {
+class RazorPayWeb extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Map<String, String> options = {
@@ -80,7 +73,7 @@ class _RazorPayWebState extends State<RazorPayWeb> {
       });
       window.onBlur.listen((e) {
         print(e.type);
-      FocusManager.instance.primaryFocus.unfocus();
+        FocusManager.instance.primaryFocus.unfocus();
       });
       window.onFocus.listen((event) {
         print("Focus event ${event.type}");
@@ -91,18 +84,9 @@ class _RazorPayWebState extends State<RazorPayWeb> {
       });
 
       element.requestFullscreen();
-      element.height = '500';
-      element.width = '500';
       element.src = 'assets/assets/Policy/payment.html';
       element.style.border = 'none';
-      element.allowFullscreen=false;
-      element.allowPaymentRequest=true;
-      // element.onFocus=
       element.dataset = options;
-      // element.onClick;
-      element.id=UniqueKey().toString();
-      Function onTouch( e ){};
-      document.addEventListener( 'touchstart', onTouch, false );
       return element;
     });
      return Material(
