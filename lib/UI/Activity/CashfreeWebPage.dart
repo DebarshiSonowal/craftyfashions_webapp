@@ -32,7 +32,7 @@ class CashfreeWebPage extends StatelessWidget {
       });
 
       element.requestFullscreen();
-      element.src='assets/Policy/RETURN AND REFUND POLICY_files/cashfree.html';
+      // element.src='assets/Policy/RETURN AND REFUND POLICY_files/cashfree.html';
       element.style.border = 'none';
       element.dataset = Provider.of<CartData>(context, listen: false).paymentdata;
       return element;

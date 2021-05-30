@@ -100,7 +100,7 @@ flutter:
     - assets/Policy/RETURN AND REFUND POLICY_files/colorschememapping.xml
     - assets/Policy/RETURN AND REFUND POLICY_files/filelist.xml
     - assets/Policy/RETURN AND REFUND POLICY_files/themedata.thmx
-    - assets/Policy/RETURN AND REFUND POLICY_files/cashfree.html
+#    - assets/Policy/RETURN AND REFUND POLICY_files/cashfree.html
     - assets/Policy/index.html
     - assets/Policy/style.css
 
