@@ -29,7 +29,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> with 
   Widget build(BuildContext context) {
     return Container(
       color: widget.colors,
-      height: MediaQuery.of(context).size.height-173,
+      height: MediaQuery.of(context).size.height/(1.266),
       child: Center(
         child: Column(
             children: [
