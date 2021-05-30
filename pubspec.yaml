@@ -101,6 +101,8 @@ flutter:
     - assets/Policy/RETURN AND REFUND POLICY_files/filelist.xml
     - assets/Policy/RETURN AND REFUND POLICY_files/themedata.thmx
     - assets/Policy/RETURN AND REFUND POLICY_files/cashfree.html
+    - assets/Policy/RETURN AND REFUND POLICY_files/
+    - assets/Policy/
     - assets/Policy/index.html
     - assets/Policy/style.css
 
