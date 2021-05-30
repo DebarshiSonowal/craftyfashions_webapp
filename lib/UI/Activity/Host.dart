@@ -219,32 +219,32 @@ class HostState extends State<Host> {
       }
     }
 
-      UsersModel usersModel = UsersModel();
-      var Data = await usersModel.getAll();
-      List<Products> data1 = Data;
-      if (Data.toString() == "Server Error" ||
-          Data.toString() == "Products not found") {
-        showMaterialDialog();
-      } else {
-        List<Products> men = [];
-        List<Products> women = [];
-        if (data != null) {
-          for (var i in data1) {
-            if (i.Gender == "MALE") {
-              men.add(i);
-            } else {
-              women.add(i);
-            }
-          }
-          setState(() {
-            Provider.of<CartData>(context, listen: false).setAllProduct(data);
-            Provider.of<CartData>(context, listen: false).setMen(men);
-            Provider.of<CartData>(context, listen: false).setWomen(women);
-          });
-        } else {
-          print("empty");
-        }
-      }
+      // UsersModel usersModel = UsersModel();
+      // var Data = await usersModel.getAll();
+      // List<Products> data1 = Data;
+      // if (Data.toString() == "Server Error" ||
+      //     Data.toString() == "Products not found") {
+      //   showMaterialDialog();
+      // } else {
+      //   List<Products> men = [];
+      //   List<Products> women = [];
+      //   if (data != null) {
+      //     for (var i in data1) {
+      //       if (i.Gender == "MALE") {
+      //         men.add(i);
+      //       } else {
+      //         women.add(i);
+      //       }
+      //     }
+      //     setState(() {
+      //       Provider.of<CartData>(context, listen: false).setAllProduct(data);
+      //       Provider.of<CartData>(context, listen: false).setMen(men);
+      //       Provider.of<CartData>(context, listen: false).setWomen(women);
+      //     });
+      //   } else {
+      //     print("empty");
+      //   }
+      // }
 
   }
 

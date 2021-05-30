@@ -18,7 +18,7 @@ import 'package:flutter/material.dart';
 class CashfreeWebPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print("HErte  ${Provider.of<CartData>(context, listen: false).paymentdata}");
+    print("HErte   ${Provider.of<CartData>(context, listen: false).paymentdata}");
     ui.platformViewRegistry.registerViewFactory("rzp-html",(int viewId) {
       IFrameElement element=IFrameElement();
 
