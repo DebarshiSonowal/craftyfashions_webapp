@@ -227,7 +227,7 @@ class _RazorPayWebState extends State<RazorPayWeb> {
         });
 
         element.requestFullscreen();
-        element.src = 'assets/Policy/payment.html';
+        element.src = 'assets/assets/Policy/payment.html';
         element.style.border = 'none';
         element.dataset = options;
         element.sandbox;
