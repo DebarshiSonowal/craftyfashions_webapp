@@ -347,7 +347,8 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
                                               onPressed: () {
                                                 Provider.of<CartData>(context,
                                                     listen: false)
-                                                    .removeProduct(index);
+                                                    .removeProduct(index, Provider.of<CartData>(context,
+                                                    listen: false).list[index].Id);
                                                 Styles.showWarningToast(
                                                     Styles.Log_sign,
                                                     "Item removed",
@@ -1602,7 +1603,8 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
                     onPressed: () {
                       Provider.of<CartData>(context,
                           listen: false)
-                          .removeProduct(index);
+                          .removeProduct(index,Provider.of<CartData>(context,
+                          listen: false).list[index].Id);
                       Styles.showWarningToast(
                           Styles.Log_sign,
                           "Item removed",

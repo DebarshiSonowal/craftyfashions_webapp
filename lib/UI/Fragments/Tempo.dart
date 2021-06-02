@@ -1008,7 +1008,7 @@ class _TempoState extends State<Tempo> with TickerProviderStateMixin{
                                                             widget.product
                                                                 .Name,
                                                             widget.product
-                                                                .Id));
+                                                                .Id,UniqueKey()));
                                                         Navigator.pop(context);
                                                       },
                                                       style: ButtonStyle(
@@ -1065,7 +1065,7 @@ class _TempoState extends State<Tempo> with TickerProviderStateMixin{
                                                             widget.product
                                                                 .Name,
                                                             widget.product
-                                                                .Id));
+                                                                .Id,UniqueKey()));
                                                         Navigator.pop(context);
                                                         Navigator.pop(context);
                                                         Test.fragNavigate

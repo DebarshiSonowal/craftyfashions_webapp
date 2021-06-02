@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:craftyfashions_webapp/Helper/Test.dart';
 import 'package:craftyfashions_webapp/Models/SignUpData.dart';
-import 'package:craftyfashions_webapp/UI/CustomWidgets/Gender.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
 import 'package:craftyfashions_webapp/Utility/Users.dart';
 import 'package:fragment_navigate/navigate-bloc.dart';

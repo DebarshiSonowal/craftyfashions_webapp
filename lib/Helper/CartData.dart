@@ -133,7 +133,7 @@ class CartData extends ChangeNotifier {
 
   void addProduct(CartProduct cartProduct) {
     _list.add(cartProduct);
-    print(cartProduct.quantity);
+    // print("Unique Id is ${cartProduct.Id.toString()}");
     Styles.showWarningToast(Colors.green, "Item added", Colors.white, 15);
     saveInfo();
     notifyListeners();
@@ -147,6 +147,7 @@ class CartData extends ChangeNotifier {
   static void saveInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString("data", listString);
+
   }
 
 //Get
@@ -311,7 +312,7 @@ int get noOfTotalItems{
     notifyListeners();
   }
 
-  void removeProduct(int index) {
+  void removeProduct(int index,var Id) {
     _list.removeAt(index);
     notifyListeners();
   }

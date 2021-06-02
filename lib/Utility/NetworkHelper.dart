@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:connectivity/connectivity.dart';
 import 'package:craftyfashions_webapp/Helper/CashOrder.dart';
 import 'package:craftyfashions_webapp/Helper/Test.dart';
+import 'package:craftyfashions_webapp/Models/CartProduct.dart';
 import 'package:craftyfashions_webapp/Models/LoginData.dart';
 import 'package:craftyfashions_webapp/Models/Order.dart';
 import 'package:craftyfashions_webapp/Models/Products.dart';
@@ -255,6 +256,102 @@ class NetworkHelper {
     } else {
       return "Products not found";
     }
+  }
+
+  Future getCart(var id) async{
+    if (Test.accessToken != null && Test.refreshToken !=null) {
+      dio = Dio();
+      dio.interceptors.add(
+            RetryOnAccessTokenInterceptor(
+              requestRetrier: DioConnectivityRequestRetrier(
+                dio: dio,
+                connectivity: Connectivity(),
+              ),
+            ),
+          );
+
+      Response response;
+      try {
+            response = await dio.get(url + "getCart",options: Options(
+                headers: {
+                  'Accept': 'application/json',
+                  'Authorization': 'Bearer ${Test.accessToken}',
+                  'uid':id,
+                },
+                contentType: 'application/json',receiveTimeout: 5000
+            ));
+          } on DioError catch (e) {
+            print("${e.error} ${e.type.index}");
+            if (e.error == DioErrorType.CONNECT_TIMEOUT) {
+              print("DA");
+              response = Response(statusCode: 500);
+              response.statusCode = 500;
+              print("response1 ${response.statusCode}");
+            }
+          }
+      if (response.statusCode == 200) {
+            var data = response.data;
+            print("Data is ${data}");
+            return data;
+          } else if (response.statusCode == 500) {
+            return "Server Error";
+          } else {
+            return "Unable to generate";
+          }
+    } else {
+
+    }
+  }
+
+  Future addtoCart(CartProduct cartProduct)async{
+    Map data ={
+      'color':cartProduct.color,
+      'name' : cartProduct.name,
+      'price':cartProduct.payment,
+      'quantity':cartProduct.quantity,
+      'UID':cartProduct.UID,
+      'picture':cartProduct.picture,
+      'size':cartProduct.size,
+      'Id':cartProduct.Id
+    };
+    var body = json.encode(data);
+    dio = Dio();
+    dio.interceptors.add(
+      RetryOnAccessTokenInterceptor(
+        requestRetrier: DioConnectivityRequestRetrier(
+          dio: dio,
+          connectivity: Connectivity(),
+        ),
+      ),
+    );
+
+    Response response;
+    try {
+      response = await dio.post(url + "addtocart", data: body,options: Options(
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ${Test.accessToken}',
+          },
+          contentType: 'application/json',receiveTimeout: 5000
+      ));
+    } on DioError catch (e) {
+      print("${e.error} ${e.type.index}");
+      if (e.error == DioErrorType.CONNECT_TIMEOUT) {
+        print("DA");
+        response = Response(statusCode: 500);
+        response.statusCode = 500;
+        print("response1 ${response.statusCode}");
+      }
+    }
+    if (response.statusCode == 200) {
+      var data = response.data;
+      return data;
+    } else if (response.statusCode == 500) {
+      return "Server Error";
+    } else {
+      return "Unable to generate";
+    }
+
   }
   Future payOrder(CashOrder cashOrder) async {
     Map data = {
