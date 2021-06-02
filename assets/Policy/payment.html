@@ -9,12 +9,12 @@
     <script>
       console.log(window.frameElement.getAttribute("data-key"));
       var options = {
-        key: window.frameElement.getAttribute("data-key"),
-        amount: window.frameElement.getAttribute("data-amount"),
+        "key": "rzp_test_okd1rZ1JAvLnHs",
+        amount: "50000",
         currency: "INR",
         name: window.frameElement.getAttribute("data-name"),
         description: window.frameElement.getAttribute("data-description"),
-        order_id: window.frameElement.getAttribute("data-order_id"),
+<!--        order_id: window.frameElement.getAttribute("data-order_id"),-->
         image:
           "https://firebasestorage.googleapis.com/v0/b/crafty-fashions-assam.appspot.com/o/Icon%2Fplaystore%20logo.png?alt=media&token=320e3643-3e87-4f52-8d76-f691afa7075b",
         handler: function (response) {
@@ -48,12 +48,7 @@
           },
         },
       };
-      var userSet = this.getAttribute("data-userset");
-      if (window.frames["myframe"] && !userSet) {
-        this.setAttribute("data-userset", "true");
-        frames["myframe"].location.href =
-          "http://test.com/hello?uname=" + getUserName();
-      }
+
       var rzp1 = new Razorpay(options);
       window.onload = function (e) {
         rzp1.open();

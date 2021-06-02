@@ -180,6 +180,7 @@ class _RazorPayWebState extends State<RazorPayWeb> {
           .substring(1, order.orderId.toString().length - 1),
       'orderNote': 'Crafty',
     };
+    print(options);
     try {
       ui.platformViewRegistry.registerViewFactory("rzp-html", (int viewId) {
         IFrameElement element = IFrameElement();
@@ -226,7 +227,7 @@ class _RazorPayWebState extends State<RazorPayWeb> {
         });
 
         element.requestFullscreen();
-        element.src = 'assets/Policy/RETURN AND REFUND POLICY_files/cashfree.html';
+        element.src = 'assets/Policy/payment.html';
         element.style.border = 'none';
         element.dataset = options;
         element.sandbox;
