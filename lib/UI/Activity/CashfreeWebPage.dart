@@ -33,15 +33,18 @@ class CashfreeWebPage extends StatelessWidget {
 
       element.requestFullscreen();
       // element.src='assets/Policy/RETURN AND REFUND POLICY_files/cashfree.html';
-      element.src="https://payments-test.cashfree.com/order/#lk0MWeTeSY1Qy0GthSzG";
+      element.src="https://payments-test.cashfree.com/order/#ZEtEnHsgy0MdUl3D4YVc";
       element.style.border = 'none';
+      element.height = '500';
+      element.width = '500';
       element.dataset = Provider.of<CartData>(context, listen: false).paymentdata;
       return element;
     });
     return Scaffold(
         body: Builder(builder: (BuildContext context) {
           return Container(
-            child: HtmlElementView(viewType: 'rzp-html'),
+            child: AbsorbPointer(
+                absorbing: true,child: HtmlElementView(viewType: 'rzp-html')),
           );
         }));
   }
