@@ -28,30 +28,23 @@ class _RazorPayWebState extends State<RazorPayWeb> {
 
     //register view factory
     print("SG235");
-     return Scaffold(
-         resizeToAvoidBottomInset : false,
-         body: Builder(builder: (BuildContext context) {
-      return SingleChildScrollView(
-        physics: NeverScrollableScrollPhysics(),
-        child: Column(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.only(bottom:50,),
-              child: Provider.of<CartData>(context, listen: true).orderId != null
-                  ? HtmlElementView(viewType:'rzp-html',key: UniqueKey())
-                  : Center(
-                      child: Text(
-                        "Please try again",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ),
-            ),
-          ],
-        ),
-      );
-    }));
+     return Material(
+       child: Scaffold(
+           resizeToAvoidBottomInset : false,
+           body: Builder(builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.only(bottom:50,),
+          child: Provider.of<CartData>(context, listen: true).orderId != null
+              ? HtmlElementView(viewType:'rzp-html',key: UniqueKey())
+              : Center(
+                  child: Text(
+                    "Please try again",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+        );
+    })),
+     );
   }
 
   _handlePaymentSuccess(
@@ -180,7 +173,6 @@ class _RazorPayWebState extends State<RazorPayWeb> {
           .substring(1, order.orderId.toString().length - 1),
       'orderNote': 'Crafty',
     };
-    print(options);
     try {
       ui.platformViewRegistry.registerViewFactory("rzp-html", (int viewId) {
         IFrameElement element = IFrameElement();
@@ -227,7 +219,7 @@ class _RazorPayWebState extends State<RazorPayWeb> {
         });
 
         element.requestFullscreen();
-        element.src = 'assets/assets/Policy/payment.html';
+        element.src = 'assets/Policy/RETURN AND REFUND POLICY_files/cashfree.html';
         element.style.border = 'none';
         element.dataset = options;
         element.sandbox;

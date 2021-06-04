@@ -116,7 +116,7 @@ class Test {
           title:
           "Payment",
           icon: Icons.code,
-          fragment: RazorPayWeb()),
+          fragment: CashfreeWebPage()),
       Posit(
           key: 'Couple', title: 'Couple', icon: Icons.code, fragment: Couple()
       )
