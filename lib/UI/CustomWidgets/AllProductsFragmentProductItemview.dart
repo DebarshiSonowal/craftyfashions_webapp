@@ -47,7 +47,7 @@ class AllProductsFragmentProductItemView extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8.0),
                   child: FadeInImage.assetNetwork(
                     placeholder: "assets/images/404.png",
-                    image: list[Index].Image.toString().split(",")[0],
+                    image: list[Index].Image.toString().split(",")[0].trim(),
                     fit: BoxFit.fill,
                   ),
                 ),
