@@ -2,6 +2,7 @@
 import 'package:craftyfashions_webapp/Models/CartProduct.dart';
 import 'package:craftyfashions_webapp/Models/Products.dart';
 import 'package:craftyfashions_webapp/UI/Activity/RazorpayWeb.dart';
+import 'package:craftyfashions_webapp/UI/Activity/TestingWeb.dart';
 import 'package:craftyfashions_webapp/UI/CustomWidgets/Photoview.dart';
 import 'package:craftyfashions_webapp/UI/Fragments/AllProducts.dart';
 import 'package:craftyfashions_webapp/UI/Activity/CashfreeWebPage.dart';
@@ -116,7 +117,7 @@ class Test {
           title:
           "Payment",
           icon: Icons.code,
-          fragment: CashfreeWebPage()),
+          fragment: TestingWeb()),
       Posit(
           key: 'Couple', title: 'Couple', icon: Icons.code, fragment: Couple()
       )
