@@ -11,7 +11,8 @@ class CashOrder {
       _appId,
       _customerPhone,
       _customerEmail,
-  _notifyUrl;
+  _notifyUrl,
+  _returnUrl;
 
   CashOrder(){
     _orderId = getRandomNo();
@@ -22,7 +23,7 @@ class CashOrder {
     var rng = new Random();
     s = 'order_'+rng.nextInt(1000000).toString();
     print("VBWE $s");
-    return s;
+    return s.toString();
   }
 
   Map<String, dynamic> toMap() {
@@ -36,7 +37,8 @@ class CashOrder {
       "customerEmail": _customerEmail,
       "stage": _stage,
       "tokenData": _tokenData,
-      "notifyUrl":_notifyUrl
+      "notifyUrl":_notifyUrl,
+      "returnUrl":_returnUrl
     };
   }
 
@@ -58,7 +60,9 @@ class CashOrder {
         " \nstage " +
         _stage+
         " \nnotifyurl " +
-        _notifyUrl;
+        _notifyUrl +
+        " \nreturnurl "
+        + _returnUrl;
   }
 
 
@@ -89,6 +93,12 @@ class CashOrder {
 
   set notifyUrl(value) {
     _notifyUrl = value;
+  }
+
+  get returnUrl => _returnUrl;
+
+  set returnUrl(value) {
+    _returnUrl = value;
   }
 
   set stage(value) {

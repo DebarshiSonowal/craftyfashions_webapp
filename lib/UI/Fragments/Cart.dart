@@ -1279,12 +1279,22 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
           Provider.of<CartData>(context, listen: false).list;
       try {
         pr.hide().then((isHidden) async{
-          CashOrder order = getOrder(Provider.of<CartData>(context, listen: false).getPrice(),context);
+          var or = getOrder(Provider.of<CartData>(context, listen: false).getPrice(),context);
+          CashOrder order =  CashOrder(
+          );
+          order.customerName = or.customerName;
+          order.customerEmail = or.customerEmail;
+          order.customerPhone = or.customerPhone;
+          order.orderAmount = or.orderAmount;
+          order.stage = "TEST";
+          order.returnUrl = "https://officialcraftybackend.herokuapp.com/users/getData";
+          order.notifyUrl = "https://officialcraftybackend.herokuapp.com/users/successfulWebhook";
+          print("QDC ");
+          print("Order ${order.toMap()}");
           var data = await getTokenData(order);
           Map<String, String> options = {
-            'Token':
-            data['body']['cftoken'].toString(),
-            'Id':data['id'],
+            'url':
+            data['url'],
             'stage':'TEST',
             'price': (Provider.of<CartData>(context, listen: false).getPrice())
                 .toString(),
@@ -1304,6 +1314,7 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
                 .substring(1, order.orderId.toString().length - 1),
             'orderNote': 'Crafty',
           };
+          print("EW got ${options}");
           Provider.of<CartData>(context, listen: false).paymentdata = options;
           Test.fragNavigate.putPosit(key: 'Payment', force: true,);
         });
@@ -1656,9 +1667,10 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
           ),
         ));
   }
-  getTokenData(CashOrder cashOrder) async {
+  getTokenData(var cashOrder) async {
     UsersModel usersModel = new UsersModel();
-    return await usersModel.savePayment(cashOrder);
+    print("We are her ${cashOrder.toMap()}");
+    return await usersModel.getSignature(cashOrder.toMap());
   }
   getOrder(amount,context) {
     print("SGVAS");
@@ -1668,7 +1680,7 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
     order.customerEmail =  Provider.of<CartData>(context, listen: false).profile.email;
     order.customerPhone = Provider.of<CartData>(context, listen: false).profile.phone;
     order.orderAmount = amount;
-    order.stage = "PROD";
+    order.stage = "TEST";
     return order;
   }
 

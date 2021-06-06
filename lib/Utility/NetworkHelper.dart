@@ -26,13 +26,6 @@ class NetworkHelper {
 
   Future getProf(String id) async {
     if (Test.accessToken != null) {
-      // BaseOptions option =
-      // new BaseOptions(connectTimeout: 7000, receiveTimeout: 3000, headers: {
-      //   'Content-Type': 'application/json',
-      //   'Accept': 'application/json',
-      //   'Authorization': 'Bearer ${Test.accessToken}',
-      //   'id': id
-      // });
       dio = Dio();
       dio.interceptors.add(
         RetryOnAccessTokenInterceptor(
@@ -255,6 +248,64 @@ class NetworkHelper {
       return "Server Error";
     } else {
       return "Products not found";
+    }
+  }
+
+  Future getSignature(var cashOrder) async{
+    print("ADbv1 ${cashOrder}");
+    if(Test.accessToken !=null&&Test.refreshToken!=null ){
+      dio = Dio();
+      dio.interceptors.add(
+        RetryOnAccessTokenInterceptor(
+          requestRetrier: DioConnectivityRequestRetrier(
+            dio: dio,
+            connectivity: Connectivity(),
+          ),
+        ),
+      );
+      Map data ={
+        'orderId':cashOrder['orderId'],
+        'orderAmount' : cashOrder['orderAmount'].toString(),
+        'orderCurrency':"INR",
+        'customerName':cashOrder['customerName'].toString(),
+        'customerPhone':cashOrder['customerPhone'].toString(),
+        'customerEmail':cashOrder['customerEmail'].toString(),
+        'returnUrl':'https://officialcraftybackend.herokuapp.com/users/getData',
+        'notifyUrl':'https://officialcraftybackend.herokuapp.com/users/successfulWebhook'
+      };
+      var body;
+      try {
+        body = json.encode(data);
+      } catch (e) {
+        print(e);
+      }
+      print("Data 1q ${body}");
+      Response response;
+      try {
+        response = await dio.post(url + "verify",
+            data: body,
+            options: Options(
+                contentType: 'application/json',
+                receiveTimeout: 10000,
+                headers: {
+                  'Accept': 'application/json',
+                }));
+      } on DioError catch (e) {
+        if (e.type == DioErrorType.CONNECT_TIMEOUT) {
+          response = Response(statusCode: 500);
+        }
+      }
+      if (response.statusCode == 200) {
+        print(response.data);
+        var data = response.data;
+        return data;
+      } else if (response.statusCode == 500) {
+        return "Server Error";
+      } else {
+        return "Products not found";
+      }
+    }else{
+      print("ADbv");
     }
   }
 
