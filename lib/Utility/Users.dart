@@ -84,6 +84,7 @@ class UsersModel {
   Future<dynamic> getCart(var uid) async {
     NetworkHelper networkHelper = NetworkHelper(url);
     List<CartProduct> Data = await networkHelper.getCart(uid);
+    print("Geop");
     return Data;
   }
 
@@ -135,4 +136,10 @@ class UsersModel {
     var v = await networkHelper.getRequired();
     return v;
   }
+  Future<dynamic> syncCart(List<CartProduct> cart,var id)async{
+    NetworkHelper networkHelper = NetworkHelper(url);
+    var v = await networkHelper.syncCart(cart,id);
+    return v;
+  }
+  
 }

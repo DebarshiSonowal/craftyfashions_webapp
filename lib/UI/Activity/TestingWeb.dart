@@ -1,11 +1,16 @@
 // import 'package:easy_web_view/easy_web_view.dart';
+import 'dart:js';
+
 import 'package:craftyfashions_webapp/Helper/CartData.dart';
+import 'package:craftyfashions_webapp/Helper/Test.dart';
+import 'package:craftyfashions_webapp/Utility/Users.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webviewx/webviewx.dart';
 import 'dart:html' as html;
-
+import 'dart:js' as js;
+import 'package:js/js_util.dart' as js_util;
 class TestingWeb extends StatefulWidget {
 
 
@@ -15,6 +20,13 @@ class TestingWeb extends StatefulWidget {
 
 class _TestingWebState extends State<TestingWeb> {
  WebViewXController webviewController;
+
+ @override
+  void initState() {
+   super.initState();
+//
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,8 +34,10 @@ class _TestingWebState extends State<TestingWeb> {
         height: double.infinity,
         width: double.infinity,
         child: FlatButton(
-          child: Text("AD"),
-          onPressed: (){
+          child: Text("Confirm"),
+          onPressed: () async{
+            // UsersModel usersModel = UsersModel();
+            // await usersModel.syncCart(Provider.of<CartData>(context, listen: false).list,Provider.of<CartData>(context, listen: false).user.id);
             _launchPrivacy(context);
           },
         ),
@@ -59,7 +73,28 @@ class _TestingWebState extends State<TestingWeb> {
    try {
      if (await canLaunch(url)) {
        print(Provider.of<CartData>(context, listen: false).paymentdata);
-       await launch(url, forceSafariVC: false, forceWebView: false,enableJavaScript: true,headers: Provider.of<CartData>(context, listen: false).paymentdata);
+
+       // html.window.open(url, 'deb').addEventListener("message", (event) {
+       //   html.MessageEvent event2 = event;
+       //   print("WEven ${event2.data}");
+       // });
+       // js.context.callMethod('open', [url],);
+       Test.fragNavigate.putPosit('Home');
+       var popupLogin = js_util.callMethod(html.window, "open", [
+         url,
+       ]);
+
+       js_util.callMethod(popupLogin, "addEventListener", [
+         "click",
+         allowInterop((event) {
+           print("addEventListener click");
+         })
+       ]);
+       // await launch(url, forceSafariVC: false, forceWebView: false,enableJavaScript: true,headers: Provider.of<CartData>(context, listen: false).paymentdata,enableDomStorage: true).whenComplete(() => {
+       //   print("Done"),
+       //   Provider.of<CartData>(context).removeAll(0, Provider.of<CartData>(context).list.length),
+       //   Test.fragNavigate.putPosit('Home')
+       // });
        // html.window.open(url, 'new tab',);
      } else {
        throw 'Could not launch $url';

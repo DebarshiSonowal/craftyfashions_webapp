@@ -192,6 +192,7 @@ class HostState extends State<Host> {
     UsersModel usersModel1 = UsersModel();
     UsersModel usersModel3 = UsersModel();
     UsersModel usersModel4 = UsersModel();
+    UsersModel usersModel2 = UsersModel();
     var data = await usersModel1.getRequired();
     if (data != "Server Error") {
       var data3 = data['razorpay'];
@@ -218,7 +219,14 @@ class HostState extends State<Host> {
         Provider.of<CartData>(context, listen: false).updateProfile(profile);
       }
     }
-
+    if( Provider.of<CartData>(context, listen: false).user!=null){
+      print("Cart products");
+      var user = await usersModel2.getCart(Provider.of<CartData>(context, listen: false).user.id);
+      if(user!=null){
+        Provider.of<CartData>(context, listen: false).list = user;
+        print(Provider.of<CartData>(context, listen: false).list);
+      }
+    }
       // UsersModel usersModel = UsersModel();
       // var Data = await usersModel.getAll();
       // List<Products> data1 = Data;
@@ -300,7 +308,23 @@ class HostState extends State<Host> {
   }
 
   changeFragment(int index) {
-    setState(() {
+    if (mounted) {
+      setState(() {
+            bottom = index;
+            var b = _fragNav.screenList.keys.toList();
+            var c = _fragNav.actionsList;
+            if (c != null) {
+              _fragNav.putPosit(key: b[index]);
+            } else {
+              initialize();
+              try {
+                _fragNav.putPosit(key: b[index]);
+              } catch (e) {
+                print("GGOt $e");
+              }
+            }
+          });
+    } else {
       bottom = index;
       var b = _fragNav.screenList.keys.toList();
       var c = _fragNav.actionsList;
@@ -314,6 +338,6 @@ class HostState extends State<Host> {
           print("GGOt $e");
         }
       }
-    });
+    }
   }
 }

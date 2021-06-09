@@ -699,6 +699,7 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
                                     .profile !=
                                 null) {
                               showSelectAddress();
+                              syncTheCart();
                             } else {
                               Styles.showSnackBar(
                                   context,
@@ -789,7 +790,7 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
           SizedBox(
             height: 10,
           ),
-          Provider.of<CartData>(context, listen: true).profile != null
+          Provider.of<CartData>(context, listen: true).profile != null && Provider.of<CartData>(context, listen: true).profile.address != null
               ? Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -1287,15 +1288,16 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
           order.customerPhone = or.customerPhone;
           order.orderAmount = or.orderAmount;
           order.stage = "TEST";
+          order.orderNote = Provider.of<CartData>(context, listen: false).user.id;
           order.returnUrl = "https://officialcraftybackend.herokuapp.com/users/getData";
-          order.notifyUrl = "https://officialcraftybackend.herokuapp.com/users/successfulWebhook";
+          order.notifyUrl = "https://officialcraftybackend.herokuapp.com/users/web";
           print("QDC ");
           print("Order ${order.toMap()}");
           var data = await getTokenData(order);
           Map<String, String> options = {
             'url':
             data['url'],
-            'stage':'TEST',
+            'stage':'PROD',
             'price': (Provider.of<CartData>(context, listen: false).getPrice())
                 .toString(),
             'address': Provider.of<CartData>(context, listen: false).profile.address,
@@ -1312,7 +1314,7 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
             'order_id':
             order.orderId.toString()
                 .substring(1, order.orderId.toString().length - 1),
-            'orderNote': 'Crafty',
+            'orderNote': Provider.of<CartData>(context, listen: false).user.id,
           };
           print("EW got ${options}");
           Provider.of<CartData>(context, listen: false).paymentdata = options;
@@ -1680,7 +1682,7 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
     order.customerEmail =  Provider.of<CartData>(context, listen: false).profile.email;
     order.customerPhone = Provider.of<CartData>(context, listen: false).profile.phone;
     order.orderAmount = amount;
-    order.stage = "TEST";
+    order.stage = "PROD";
     return order;
   }
 
@@ -1704,6 +1706,18 @@ class _CartState extends State<Cart> with TickerProviderStateMixin{
         return Provider.of<CartData>(context, listen: false).allproducts[Provider.of<CartData>(context, listen: false).allproducts.indexOf(i)];
       }
     }
+  }
+  getUID(){
+    return Provider.of<CartData>(context, listen: false).user.id;
+  }
+
+  void syncTheCart() async{
+    // for(var i in Provider.of<CartData>(context, listen: false).list){
+    //   i.setOwner = getUID();
+    // }
+    Provider.of<CartData>(context, listen: false).list.forEach((element)=>element.setOwner(getUID()));
+    UsersModel usersModel = UsersModel();
+    await usersModel.syncCart(Provider.of<CartData>(context, listen: false).list,getUID());
   }
 }
 

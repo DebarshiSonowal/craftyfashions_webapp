@@ -2,6 +2,7 @@ import 'package:craftyfashions_webapp/Helper/CartData.dart';
 import 'package:craftyfashions_webapp/Models/Address.dart';
 import 'package:craftyfashions_webapp/Models/Profile.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
+import 'package:craftyfashions_webapp/Utility/Users.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -417,7 +418,24 @@ class _NewAddressPageState extends State<NewAddressPage> {
                       addTtown.text.isNotEmpty &&
                       phT.text.isNotEmpty &&
                       pinT.text.isNotEmpty) {
-                    NewAddress(context);
+                    if (phT.text.toString().length==10) {
+                      if (pinT.text.toString().length==6) {
+                        if(Provider.of<CartData>(context, listen: false)
+                            .profile==null||Provider.of<CartData>(context, listen: false)
+                            .profile.address==null){
+                          saveProfile(context);
+                        }else{
+                          print("Here");
+                          NewAddress(context);
+                        }
+                      } else {
+                        Styles.showWarningToast(Colors.red,
+                            "Please Enter a valid pincode", Colors.white, 17);
+                      }
+                    } else {
+                      Styles.showWarningToast(Colors.red,
+                          "Please Enter a valid phone no", Colors.white, 17);
+                    }
                   } else {
                     Styles.showWarningToast(Colors.red,
                         "Please Enter all the details", Colors.white, 17);
@@ -471,7 +489,26 @@ class _NewAddressPageState extends State<NewAddressPage> {
     print("giot a");
     SetSelectedAddress(getAddress(), phT.text, pinT.text, context);
   }
-
+  void saveProfile(BuildContext context) async {
+    UsersModel usersModel = new UsersModel();
+    var data = await usersModel.saveProf(Profile(ids, nT.text, Provider.of<CartData>(context, listen: false)
+        .user.email,
+        getAddress(), int.parse(phT.text), int.parse(pinT.text), null));
+    if (data != null) {
+      Provider.of<CartData>(context, listen: false).updateProfile(Profile(
+          ids,
+          nT.text,
+          Provider.of<CartData>(context, listen: false)
+              .user.email,
+          getAddress(),
+          int.parse(phT.text),
+          int.parse(pinT.text),
+          null));
+      NewAddress(context);
+    } else {
+      NewAddress(context);
+    }
+  }
   String getAddress() {
     return addT1.text.trim() +
         "," +

@@ -1,5 +1,6 @@
 import 'package:craftyfashions_webapp/Helper/CartData.dart';
 import 'package:craftyfashions_webapp/Helper/Test.dart';
+import 'package:craftyfashions_webapp/Models/CartProduct.dart';
 import 'package:craftyfashions_webapp/Models/LoginData.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Breakpoints.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
@@ -290,10 +291,10 @@ class _LoginState extends State<Login> {
 
   void LogIn(String email, String password) async {
     UsersModel usersModel = UsersModel();
+    UsersModel usersModel2 = UsersModel();
     var b = LoginData(password, email, null);
     print("${b.email},${b.password}");
     var data = await usersModel.login(b);
-
     if (data != null && data != "User not found" && data != "Server Error") {
       Test.accessToken = data["accessToken"];
       Test.refreshToken = data["refreshToken"];
@@ -314,7 +315,14 @@ class _LoginState extends State<Login> {
       if (order != "Server Error" && order != "Orders  not found") {
         Provider.of<CartData>(context, listen: false).orders(order);
       }
-
+      List<CartProduct> user = await usersModel2.getCart(Provider.of<CartData>(context, listen: false).user.id);
+      if(user!=null){
+        if(Provider.of<CartData>(context, listen: false).list.length==0){
+          Provider.of<CartData>(context, listen: false).list = user;
+        }else{
+          print(user);
+        }
+      }
       Styles.showWarningToast(Colors.green, "Successful", Colors.white, 15);
       pr.hide().then((isHidden) {
         Test.fragNavigate.putAndClean(key:'Home');

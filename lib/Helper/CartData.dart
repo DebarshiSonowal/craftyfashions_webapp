@@ -123,6 +123,7 @@ class CartData extends ChangeNotifier {
 
   set list(List<CartProduct> value) {
     _list = value;
+    print("Recevived ${_list.length}");
     notifyListeners();
   }
 
@@ -133,6 +134,7 @@ class CartData extends ChangeNotifier {
 
   void addProduct(CartProduct cartProduct) {
     _list.add(cartProduct);
+    print('The pari ${cartProduct.payment}');
     // print("Unique Id is ${cartProduct.Id.toString()}");
     Styles.showWarningToast(Colors.green, "Item added", Colors.white, 15);
     saveInfo();
@@ -234,8 +236,13 @@ class CartData extends ChangeNotifier {
   double getPrice() {
     double price = 0;
     for (int i = 0; i < _list.length; i++) {
-      price += double.parse(_list[i].payment.toString()) * _list[i].quantity;
-      print(double.parse(_list[i].payment.toString()) * _list[i].quantity);
+      print("pay ${_list[i].payment}  item ${_list[i].quantity}");
+      price += double.parse(_list[i].payment.toString()) * double.parse(_list[i].quantity.toString());
+      try {
+        print("Pcirs ${double.parse(_list[i].payment.toString()) * double.parse(_list[i].quantity.toString())}");
+      } catch (e) {
+        print(e);
+      }
     }
     return price;
   }
@@ -283,7 +290,7 @@ class CartData extends ChangeNotifier {
 int get noOfTotalItems{
     int a = 0;
     for(var i in _list){
-      a += i.quantity;
+      a += int.parse(i.quantity.toString());
     }
     return a;
 }

@@ -9,9 +9,11 @@ import 'package:craftyfashions_webapp/Models/Order.dart';
 import 'package:craftyfashions_webapp/Models/Products.dart';
 import 'package:craftyfashions_webapp/Models/Profile.dart';
 import 'package:craftyfashions_webapp/Models/SignUpData.dart';
+import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
 import 'package:craftyfashions_webapp/Utility/retry_interceptor.dart';
 import 'package:craftyfashions_webapp/Utility/retry_refresh_token.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'dio_connectivity_request_retrier.dart';
@@ -138,7 +140,7 @@ class NetworkHelper {
     );
     Response response;
     try {
-      response = await dio.post(url + "login",
+      response = await dio.post(url + "loginNew",
           data: body,
           options: Options(
               contentType: 'application/json',
@@ -156,11 +158,16 @@ class NetworkHelper {
         }
       }
     }
-    if (response.statusCode == 200) {
-      print("Response : ${response.data}");
-      return response.data;
-    } else if (response.statusCode == 500) {
-      return "Server Error";
+    if (response!=null) {
+      print("Response ${response}");
+      if (response.statusCode == 200) {
+        print("Response : ${response.data}");
+        return response.data;
+      } else if (response.statusCode == 500) {
+        return "Server Error";
+      } else {
+        return "User not found";
+      }
     } else {
       return "User not found";
     }
@@ -206,12 +213,16 @@ class NetworkHelper {
         response = Response(statusCode: 500);
       }
     }
-    if (response.statusCode == 200) {
-      return response.data;
-    } else if (response.statusCode == 500) {
-      return "Server Error";
+    if (response!=null) {
+      if (response.statusCode == 200) {
+        return response.data;
+      } else if (response.statusCode == 500) {
+        return "Server Error";
+      } else {
+        return "409";
+      }
     } else {
-      return "User not found";
+      return "409";
     }
   }
 
@@ -239,15 +250,20 @@ class NetworkHelper {
         response = Response(statusCode: 500);
       }
     }
-    if (response.statusCode == 200) {
-      var data = response.data["products"] as List;
-      print("Data loadaed");
-      List<Products> Data = data.map((e) => Products.fromJson(e)).toList();
-      return Data;
-    } else if (response.statusCode == 500) {
-      return "Server Error";
+    if (response != null) {
+      if (response.statusCode == 200) {
+        var data = response.data["products"] as List;
+        List<Products> Data = data.map((e) => Products.fromJson(e)).toList();
+        return Data;
+      } else if (response.statusCode == 500) {
+        return "Server Error";
+      } else {
+        return "Products not found";
+      }
     } else {
-      return "Products not found";
+      print("No productr");
+      Styles.showWarningToast(
+          Colors.red, "Swipe down and try again", Colors.white, 20);
     }
   }
 
@@ -267,15 +283,17 @@ class NetworkHelper {
         'orderId':cashOrder['orderId'],
         'orderAmount' : cashOrder['orderAmount'].toString(),
         'orderCurrency':"INR",
+        'orderNote':cashOrder['orderNote'].toString(),
         'customerName':cashOrder['customerName'].toString(),
         'customerPhone':cashOrder['customerPhone'].toString(),
         'customerEmail':cashOrder['customerEmail'].toString(),
         'returnUrl':'https://officialcraftybackend.herokuapp.com/users/getData',
-        'notifyUrl':'https://officialcraftybackend.herokuapp.com/users/successfulWebhook'
+        'notifyUrl':'https://officialcraftybackend.herokuapp.com/users/web'
       };
       var body;
       try {
         body = json.encode(data);
+        print("Data is ${body}");
       } catch (e) {
         print(e);
       }
@@ -341,9 +359,10 @@ class NetworkHelper {
             }
           }
       if (response.statusCode == 200) {
-            var data = response.data;
+            var data = response.data as List;
             print("Data is ${data}");
-            return data;
+            List<CartProduct> Data = data.map((e) => CartProduct.fromJson(e)).toList();
+            return Data;
           } else if (response.statusCode == 500) {
             return "Server Error";
           } else {
@@ -353,6 +372,48 @@ class NetworkHelper {
 
     }
   }
+Future syncCart(List<CartProduct> cart,var id) async {
+  var body = jsonEncode(cart.toList());
+  print(body);
+  dio = Dio();
+  dio.interceptors.add(
+    RetryOnAccessTokenInterceptor(
+      requestRetrier: DioConnectivityRequestRetrier(
+        dio: dio,
+        connectivity: Connectivity(),
+      ),
+    ),
+  );
+
+  Response response;
+  try {
+    response = await dio.post(url + "multiple", data: body, options: Options(
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${Test.accessToken}',
+          'uid':id,
+        },
+        contentType: 'application/json', receiveTimeout: 5000
+    ));
+  } on DioError catch (e) {
+    print("${e.error} ${e.type.index}");
+    if (e.error == DioErrorType.CONNECT_TIMEOUT) {
+      print("DA");
+      response = Response(statusCode: 500);
+      response.statusCode = 500;
+      print("response1 ${response.statusCode}");
+    }
+  }
+  if (response.statusCode == 200) {
+    var data = response.data;
+    return data;
+  } else if (response.statusCode == 500) {
+    return "Server Error";
+  } else {
+    return "Unabale";
+  }
+}
+
 
   Future addtoCart(CartProduct cartProduct)async{
     Map data ={
@@ -719,7 +780,7 @@ class NetworkHelper {
       Response response;
       try {
         response = await dio.get(
-          url + "user",
+          url + "userNew",
           options: Options(contentType: 'application/json', headers: {
             'Accept': 'application/json',
             'Authorization': 'Bearer ${Test.accessToken}',

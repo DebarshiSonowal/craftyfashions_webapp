@@ -1109,7 +1109,7 @@ class _ProductViewState extends State<ProductView>
                                                                     .Name,
                                                                 widget
                                                                     .product.Id,
-                                                                UniqueKey()));
+                                                                UniqueKey().toString(),getUID()));
                                                         Navigator.pop(context);
                                                         Navigator.pop(context);
                                                         Test.fragNavigate
@@ -1195,7 +1195,7 @@ class _ProductViewState extends State<ProductView>
                                                                     .Name,
                                                                 widget
                                                                     .product.Id,
-                                                                UniqueKey().toString()));
+                                                                UniqueKey().toString(),getUID()));
                                                         Navigator.pop(context);
                                                         Navigator.pop(context);
                                                         Test.fragNavigate
@@ -1311,5 +1311,9 @@ class _ProductViewState extends State<ProductView>
     } else {
       return 0;
     }
+  }
+
+  getUID() {
+   return Provider.of<CartData>(context, listen: false).user!=null?Provider.of<CartData>(context, listen: false).user.id:null;
   }
 }

@@ -274,13 +274,21 @@ class _HomeWidgetState extends State<HomeWidget> {
     }
 
     if (list.isNotEmpty) {
-      setState(() {
+      if (mounted) {
+        setState(() {
+                Provider.of<CartData>(context, listen: false).setSpecial(list);
+              });
+      }else{
         Provider.of<CartData>(context, listen: false).setSpecial(list);
-      });
+      }
     } else {
-      setState(() {
+      if (mounted) {
+        setState(() {
+                Provider.of<CartData>(context, listen: false).setSpecial([]);
+              });
+      } else {
         Provider.of<CartData>(context, listen: false).setSpecial([]);
-      });
+      }
     }
     Test.fragNavigate.putPosit(key: 'Special', force: true);
   }
@@ -298,11 +306,17 @@ class _HomeWidgetState extends State<HomeWidget> {
           print("WOMEN $i");
         }
       }
-      setState(() {
+      if (mounted) {
+        setState(() {
+                Provider.of<CartData>(context, listen: false).setAllProduct(data);
+                Provider.of<CartData>(context, listen: false).setMen(men);
+                Provider.of<CartData>(context, listen: false).setWomen(women);
+              });
+      } else {
         Provider.of<CartData>(context, listen: false).setAllProduct(data);
         Provider.of<CartData>(context, listen: false).setMen(men);
         Provider.of<CartData>(context, listen: false).setWomen(women);
-      });
+      }
     } else {
       print("empty");
     }

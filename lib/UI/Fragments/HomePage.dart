@@ -46,18 +46,27 @@ class _HomePageState extends State<HomePage> {
 
   void _onRefresh() async {
     UsersModel usersModel1 = UsersModel();
+    UsersModel usersModel2=UsersModel();
       var Data = await usersModel1.getAll();
       if (Data.toString() != "Server Error" ||
           Data.toString() != "Products not found") {
         List<Products> data = Data;
         if (data != null) {
-          setState(() {
+          if (mounted) {
+            setState(() {
+                        Provider.of<CartData>(customcontext, listen: false)
+                            .setAllProduct(data);
+                        addData(data);
+                        Test.bihu = data;
+                        _refreshController.refreshCompleted();
+                      });
+          } else {
             Provider.of<CartData>(customcontext, listen: false)
                 .setAllProduct(data);
             addData(data);
             Test.bihu = data;
             _refreshController.refreshCompleted();
-          });
+          }
         } else {
           _refreshController.refreshFailed();
         }
@@ -65,14 +74,20 @@ class _HomePageState extends State<HomePage> {
         _refreshController.refreshFailed();
       }
       var data = await usersModel1.getRequired();
-
       var data1 = data['require'] as List;
       List<Categories> categories =
       data1.map((e) => Categories.fromJson(e)).toList();
-
       var data2 = data['ads'] as List;
       List<Ads> ads = data2.map((e) => Ads.fromJson(e)).toList();
       var data3 = data['razorpay'];
+      if( Provider.of<CartData>(context, listen: false).user!=null){
+      print("Cart products");
+      var user = await usersModel2.getCart(Provider.of<CartData>(context, listen: false).user.id);
+      if(user!=null){
+        Provider.of<CartData>(context, listen: false).list = user;
+        print(Provider.of<CartData>(context, listen: false).list);
+      }
+      }
       Provider.of<CartData>(customcontext, listen: false)
           .setCategory(categories);
       Provider.of<CartData>(customcontext, listen: false).setAds(ads);
@@ -131,11 +146,17 @@ class _HomePageState extends State<HomePage> {
           women.add(i);
         }
       }
-      setState(() {
+      if (mounted) {
+        setState(() {
+                Provider.of<CartData>(context, listen: false).setAllProduct(data);
+                Provider.of<CartData>(context, listen: false).setMen(men);
+                Provider.of<CartData>(context, listen: false).setWomen(women);
+              });
+      } else {
         Provider.of<CartData>(context, listen: false).setAllProduct(data);
         Provider.of<CartData>(context, listen: false).setMen(men);
         Provider.of<CartData>(context, listen: false).setWomen(women);
-      });
+      }
     } else {
     }
   }
