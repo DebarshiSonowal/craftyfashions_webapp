@@ -35,6 +35,8 @@ class CartProduct {
 
   get color => _color;
 
+  get getowner => _owner;
+
   set owner(value) {
     _owner = value;
   }

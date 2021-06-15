@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
-
+import 'package:sizer/sizer.dart';
 
 import 'CategoryItemView.dart';
 
@@ -128,7 +128,7 @@ class _CategoryDataState extends State<CategoryData> with TickerProviderStateMix
                   ),
                 ],
               ),
-              height: 270,
+              height: 40.h,
               width: MediaQuery.of(context).size.width,
               child: ListView.builder(
                 shrinkWrap: true,

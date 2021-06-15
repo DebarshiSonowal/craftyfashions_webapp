@@ -10,10 +10,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'dart:js' as JS;
+import 'package:js/js_util.dart' as js_util;
+import 'dart:html' as html;
 
 class Login extends StatefulWidget {
-
-
   Login();
 
   @override
@@ -29,7 +31,8 @@ class _LoginState extends State<Login> {
 
   TextEditingController em, pass;
 
-  FocusNode focusNodePass= FocusNode();FocusNode focusNodeEmail= FocusNode();
+  FocusNode focusNodePass = FocusNode();
+  FocusNode focusNodeEmail = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +49,6 @@ class _LoginState extends State<Login> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-
                   Center(
                     child: Column(
                       children: [
@@ -60,7 +62,8 @@ class _LoginState extends State<Login> {
                         ),
                         SizedBox(
                           height: 10,
-                        ),Text(
+                        ),
+                        Text(
                           "Log-in to your existing account of Crafty",
                           style: TextStyle(
                               color: Colors.black45,
@@ -75,13 +78,14 @@ class _LoginState extends State<Login> {
                     height: 40,
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom: 7.0,right: 25,left: 25,top: 5),
+                    padding: EdgeInsets.only(
+                        bottom: 7.0, right: 25, left: 25, top: 5),
                     child: TextFormField(
                       focusNode: focusNodeEmail,
                       onChanged: (txt) {
                         email = txt;
                       },
-                      onTap: (){
+                      onTap: () {
                         _requestFoucs(focusNodeEmail);
                       },
                       keyboardType: TextInputType.emailAddress,
@@ -95,12 +99,14 @@ class _LoginState extends State<Login> {
                         labelStyle: TextStyle(
                             fontFamily: "Halyard",
                             fontSize: 14,
-                            color: focusNodeEmail.hasFocus?Styles.price_color:Colors.black45),
+                            color: focusNodeEmail.hasFocus
+                                ? Styles.price_color
+                                : Colors.black45),
                         filled: true,
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
-                          borderSide:
-                          const BorderSide(color: Styles.price_color, width: 1.0),
+                          borderSide: const BorderSide(
+                              color: Styles.price_color, width: 1.0),
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
@@ -110,11 +116,12 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom: 7.0,right: 25,left: 25,top: 5),
+                    padding: EdgeInsets.only(
+                        bottom: 7.0, right: 25, left: 25, top: 5),
                     child: TextFormField(
                       focusNode: focusNodePass,
                       keyboardType: TextInputType.text,
-                      onTap: (){
+                      onTap: () {
                         _requestFoucs(focusNodePass);
                       },
                       onChanged: (txt) {
@@ -126,12 +133,13 @@ class _LoginState extends State<Login> {
                           fontWeight: FontWeight.w400,
                           color: Colors.black),
                       obscureText: _isHidden,
-
                       decoration: InputDecoration(
                         labelStyle: TextStyle(
                             fontFamily: "Halyard",
                             fontSize: 14,
-                            color: focusNodePass.hasFocus?Styles.price_color:Colors.black45),
+                            color: focusNodePass.hasFocus
+                                ? Styles.price_color
+                                : Colors.black45),
                         labelText: "Password",
                         filled: true,
                         suffix: InkWell(
@@ -142,8 +150,8 @@ class _LoginState extends State<Login> {
                         ),
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
-                          borderSide:
-                          const BorderSide(color: Styles.price_color, width: 1.0),
+                          borderSide: const BorderSide(
+                              color: Styles.price_color, width: 1.0),
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
@@ -152,16 +160,40 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                   ),
-                  // TextButton(
-                  //   onPressed: () {},
-                  //   child: Text(
-                  //     "Forgot Password",
-                  //     style: TextStyle(
-                  //         color: Colors.black, fontWeight: FontWeight.bold),
-                  //   ),
-                  // ),
+                  TextButton(
+                    onPressed: () async {
+                      var ul = "https://officialcraftybackend.herokuapp.com/users/forgotpassword";
+                      var urls = ul.toString();
+                      var url = Uri.encodeFull(urls);
+                      try {
+                        if (await canLaunch(url)) {
+                          var popupLogin =
+                              js_util.callMethod(html.window, "open", [
+                            url,
+                          ]);
+                          js_util.callMethod(popupLogin, "addEventListener", [
+                            "click",
+                            JS.allowInterop((event) {
+                              print("addEventListener click");
+                            })
+                          ]);
+                        } else {
+                          throw 'Could not launch $url';
+                        }
+                      } catch (e) {
+                        await launch(url,
+                            forceSafariVC: false, forceWebView: false);
+                      }
+                    },
+                    child: Text(
+                      "Forgot Password",
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                  ),
                   Padding(
-                    padding:EdgeInsets.only(left: 25,right: 25,top: 20,bottom: 20),
+                    padding: EdgeInsets.only(
+                        left: 25, right: 25, top: 20, bottom: 20),
                     child: FlatButton(
                       splashColor: Colors.white,
                       shape: new RoundedRectangleBorder(
@@ -191,7 +223,8 @@ class _LoginState extends State<Login> {
                                 fontSize: 19.0,
                                 fontWeight: FontWeight.w600));
                         if (email == null && password == null) {
-                          Styles.showWarningToast(Colors.red, "Please enter required fields", Colors.white, 15);
+                          Styles.showWarningToast(Colors.red,
+                              "Please enter required fields", Colors.white, 15);
                           // LogIn(email,password);
 
                         } else {
@@ -204,7 +237,7 @@ class _LoginState extends State<Login> {
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: "Halyard",
-                          fontSize: MediaQuery.of(context).size.height/40,
+                          fontSize: MediaQuery.of(context).size.height / 40,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -245,7 +278,8 @@ class _LoginState extends State<Login> {
                       splashColor: Colors.grey,
                       icon: Icon(FontAwesomeIcons.google),
                       onPressed: () {
-                        Styles.showWarningToast(Colors.deepOrange, "Coming Soon", Colors.white, 15);
+                        Styles.showWarningToast(
+                            Colors.deepOrange, "Coming Soon", Colors.white, 15);
                       },
                     ),
                   ),
@@ -269,7 +303,8 @@ class _LoginState extends State<Login> {
                           "Signup",
                           style: TextStyle(
                               fontFamily: "Halyard",
-                              color: Styles.price_color, fontWeight: FontWeight.bold),
+                              color: Styles.price_color,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
@@ -299,15 +334,19 @@ class _LoginState extends State<Login> {
       Test.accessToken = data["accessToken"];
       Test.refreshToken = data["refreshToken"];
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString("access", data["accessToken"]).whenComplete(() => print("The access is ${data["accessToken"]}"));
-      await prefs.setString("refresh", data["refreshToken"]).whenComplete(() => print("The access is ${data["refreshToken"]}"));
+      await prefs
+          .setString("access", data["accessToken"])
+          .whenComplete(() => print("The access is ${data["accessToken"]}"));
+      await prefs
+          .setString("refresh", data["refreshToken"])
+          .whenComplete(() => print("The access is ${data["refreshToken"]}"));
       var UserData = await usersModel.getUser();
       print(UserData);
       if (UserData != "User Not Found") {
         Provider.of<CartData>(context, listen: false).updateUser(UserData);
       }
       var profile = await usersModel.getProf(UserData.id);
-      if(profile!="Server Error"){
+      if (profile != "Server Error") {
         Provider.of<CartData>(context, listen: false).updateProfile(profile);
       }
       var order = await usersModel.getOrdersforUser(
@@ -315,25 +354,28 @@ class _LoginState extends State<Login> {
       if (order != "Server Error" && order != "Orders  not found") {
         Provider.of<CartData>(context, listen: false).orders(order);
       }
-      List<CartProduct> user = await usersModel2.getCart(Provider.of<CartData>(context, listen: false).user.id);
-      if(user!=null){
-        if(Provider.of<CartData>(context, listen: false).list.length==0){
+      List<CartProduct> user = await usersModel2
+          .getCart(Provider.of<CartData>(context, listen: false).user.id);
+      if (user != null) {
+        if (Provider.of<CartData>(context, listen: false).list.length == 0) {
           Provider.of<CartData>(context, listen: false).list = user;
-        }else{
+        } else {
           print(user);
         }
       }
       Styles.showWarningToast(Colors.green, "Successful", Colors.white, 15);
       pr.hide().then((isHidden) {
-        Test.fragNavigate.putAndClean(key:'Home');
+        Test.fragNavigate.putAndClean(key: 'Home');
       });
     } else if (data == "Server Error") {
       pr.hide().then((isHidden) {
-        Styles.showWarningToast(Colors.red, "Something is wrong. Please try again later", Colors.white, 15);
+        Styles.showWarningToast(Colors.red,
+            "Something is wrong. Please try again later", Colors.white, 15);
       });
     } else {
       pr.hide().then((isHidden) {
-        Styles.showWarningToast(Colors.red, "Email or password is wrong", Colors.white, 15);
+        Styles.showWarningToast(
+            Colors.red, "Email or password is wrong", Colors.white, 15);
       });
     }
   }
@@ -341,43 +383,45 @@ class _LoginState extends State<Login> {
   void hidePr() {
     pr.hide().then((isHidden) {
       print(isHidden);
-      Styles.showWarningToast(Styles.bg_color, "Email or password is wrong", Colors.white, 15);
+      Styles.showWarningToast(
+          Styles.bg_color, "Email or password is wrong", Colors.white, 15);
     });
   }
 
   getSizedBox(BuildContext context) {
     var type = getDeviceType(context);
-    if(type == "Desktop"){
-      return MediaQuery.of(context).size.height/4;
-    }else{
-      return MediaQuery.of(context).size.height/(5);
+    if (type == "Desktop") {
+      return MediaQuery.of(context).size.height / 4;
+    } else {
+      return MediaQuery.of(context).size.height / (5);
     }
-
   }
+
   void _requestFoucs(FocusNode focusNode) {
     setState(() {
       FocusScope.of(context).requestFocus(focusNode);
     });
   }
 }
+
 getWidthAccordingToSize(BuildContext context) {
   var type = getDeviceType(context);
-  if(type == "Desktop"){
-    return MediaQuery.of(context).size.width/2;
-  }else if(type == "Tablet"){
-    return MediaQuery.of(context).size.width/(1.2);
-  }else{
-    return MediaQuery.of(context).size.width/(1.2);
+  if (type == "Desktop") {
+    return MediaQuery.of(context).size.width / 2;
+  } else if (type == "Tablet") {
+    return MediaQuery.of(context).size.width / (1.2);
+  } else {
+    return MediaQuery.of(context).size.width / (1.2);
   }
 }
 
 getHeightAccordingToSize(BuildContext context) {
   var type = getDeviceType(context);
-  if(type == "Desktop"){
+  if (type == "Desktop") {
     return MediaQuery.of(context).size.height;
-  }else if(type == "Tablet"){
+  } else if (type == "Tablet") {
     return MediaQuery.of(context).size.height;
-  }else{
+  } else {
     return MediaQuery.of(context).size.height;
   }
 }
@@ -388,10 +432,9 @@ getDeviceType(BuildContext context) {
     return "Desktop";
   } else if (width > kMobileBreakpoint) {
     return "Tablet";
-  }else if(width <= kSmallDesktopBreakpoint && width>kTabletBreakpoint){
+  } else if (width <= kSmallDesktopBreakpoint && width > kTabletBreakpoint) {
     return "Mini";
-  }
-  else {
+  } else {
     return "Mobile";
   }
 }

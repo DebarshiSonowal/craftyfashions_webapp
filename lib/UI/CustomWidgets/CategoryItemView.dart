@@ -3,7 +3,7 @@ import 'package:craftyfashions_webapp/Models/Categories.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-
+import 'package:sizer/sizer.dart';
 class CategoryItemView extends StatefulWidget {
   const CategoryItemView(
       {Key key,
@@ -26,6 +26,8 @@ class _CategoryItemViewState extends State<CategoryItemView>  with TickerProvide
     return GestureDetector(
       onTap: widget.OnTap,
       child: Container(
+        height: 100.h,
+        width: 50.w,
         color: Colors.white,
         child: Stack(
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -33,7 +35,9 @@ class _CategoryItemViewState extends State<CategoryItemView>  with TickerProvide
           alignment:AlignmentDirectional.bottomCenter,
           children: [
             CachedNetworkImage(
-              fit: BoxFit.fill,
+              height:  100.h,
+              width: 49.w,
+              fit: BoxFit.fitHeight,
               imageUrl:  widget.list[widget.index].image,
               progressIndicatorBuilder:
                   (context, url, downloadProgress) => SizedBox(
@@ -58,7 +62,7 @@ class _CategoryItemViewState extends State<CategoryItemView>  with TickerProvide
                     fontFamily: "Halyard",
                     color: Colors.black,
                     fontWeight: FontWeight.w400,
-                    fontSize: 22,
+                    fontSize: 20.sp,
                   )),
             ),
           ],

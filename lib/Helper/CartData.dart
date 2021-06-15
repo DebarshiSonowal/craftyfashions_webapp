@@ -10,6 +10,7 @@ import 'package:craftyfashions_webapp/Models/Profile.dart';
 import 'package:craftyfashions_webapp/Models/Razorpay.dart';
 import 'package:craftyfashions_webapp/Models/User.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
+import 'package:craftyfashions_webapp/Utility/Users.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -133,6 +134,10 @@ class CartData extends ChangeNotifier {
   }
 
   void addProduct(CartProduct cartProduct) {
+    if (_user!=null) {
+      UsersModel usersModel = UsersModel();
+      usersModel.AddToCart(cartProduct);
+    }
     _list.add(cartProduct);
     print('The pari ${cartProduct.payment}');
     // print("Unique Id is ${cartProduct.Id.toString()}");
@@ -235,15 +240,18 @@ class CartData extends ChangeNotifier {
 
   double getPrice() {
     double price = 0;
+    print("qf ${_list.length}");
     for (int i = 0; i < _list.length; i++) {
       print("pay ${_list[i].payment}  item ${_list[i].quantity}");
       price += double.parse(_list[i].payment.toString()) * double.parse(_list[i].quantity.toString());
+      print("Oric22ew ${price}");
       try {
         print("Pcirs ${double.parse(_list[i].payment.toString()) * double.parse(_list[i].quantity.toString())}");
       } catch (e) {
-        print(e);
+        print("ghe ${e}");
       }
     }
+    print("AFA");
     return price;
   }
 

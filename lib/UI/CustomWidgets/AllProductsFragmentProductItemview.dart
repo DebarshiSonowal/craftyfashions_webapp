@@ -2,7 +2,7 @@ import 'package:craftyfashions_webapp/Models/Products.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Breakpoints.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
 import 'package:flutter/material.dart';
-
+import 'package:sizer/sizer.dart';
 class AllProductsFragmentProductItemView extends StatelessWidget {
   final List<Products> list;
   final double buttonSize;
@@ -37,7 +37,7 @@ class AllProductsFragmentProductItemView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Flexible(
-              flex: 30,
+              flex: 28,
               fit: FlexFit.tight,
               child: Card(
                 shape: RoundedRectangleBorder(
@@ -85,12 +85,12 @@ class AllProductsFragmentProductItemView extends StatelessWidget {
                       fontFamily: "Halyard",
                       color: Colors.black54,
                       fontWeight: FontWeight.w400,
-                      fontSize: 10),
+                      fontSize: 8.sp),
                 ),
               ),
             ),
             Flexible(
-              flex: 2,
+              flex: 3,
               fit: FlexFit.tight,
               child: Padding(
                 padding: const EdgeInsets.only(left: 10.0, top: 1.0,bottom: 1.0),
@@ -100,7 +100,7 @@ class AllProductsFragmentProductItemView extends StatelessWidget {
                       "₹ ${list[Index].Price}",
                       style: TextStyle(
                           fontFamily: "Halyard",
-                          fontSize: 14,
+                          fontSize: 10.sp,
                           fontWeight: FontWeight.w200,
                           color: Styles.price_color),
                     ),
@@ -110,7 +110,7 @@ class AllProductsFragmentProductItemView extends StatelessWidget {
                       style: TextStyle(
                           decoration: TextDecoration.lineThrough,
                           fontFamily: "Halyard",
-                          fontSize: 12,
+                          fontSize: 8.sp,
                           fontWeight: FontWeight.w200,
                           color: Colors.black),
                     ),

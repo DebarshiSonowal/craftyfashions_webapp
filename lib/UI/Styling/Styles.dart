@@ -1,7 +1,7 @@
 import 'package:craftyfashions_webapp/UI/CustomWidgets/EmptyView.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
+import 'package:sizer/sizer.dart';
 class Styles {
   //Color(0xffFFD819)
   static const Log_sign = Colors.white;
@@ -14,6 +14,12 @@ class Styles {
   static const hyperlink = Colors.black;
   static const url = "https://officialcraftybackend.herokuapp.com/users/";
   static final font = "Halyard";
+
+  static final title_product_summary=TextStyle(
+      fontFamily: "Halyard",
+      fontWeight:
+      FontWeight.w700,
+      fontSize: 22.sp);
 
   static getPriceSize(BuildContext context) {
     var width = MediaQuery.of(context).size.width;

@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-
+import 'package:sizer/sizer.dart';
 class HomeWidget extends StatefulWidget {
   const HomeWidget({Key key}) : super(key: key);
 
@@ -118,7 +118,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontFamily: "Halyard",
-                                      fontSize: 24,
+                                      fontSize: 20.sp,
                                       color: Colors.black),
                                 ),
                               ))

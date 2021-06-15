@@ -33,13 +33,37 @@ class _TestingWebState extends State<TestingWeb> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        child: FlatButton(
-          child: Text("Confirm"),
-          onPressed: () async{
-            // UsersModel usersModel = UsersModel();
-            // await usersModel.syncCart(Provider.of<CartData>(context, listen: false).list,Provider.of<CartData>(context, listen: false).user.id);
-            _launchPrivacy(context);
-          },
+        decoration: BoxDecoration(
+          color: const Color(0xffFAFAFA),
+          image: new DecorationImage(
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.1), BlendMode.dstATop),
+            image: AssetImage('assets/images/doodleWall.jpg'),
+          ),
+        ),
+        child: Card(
+          elevation: 1,
+          child: Container(
+            height: 5,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                new BoxShadow(
+                  color: Color(0xffE3E3E3),
+                  blurRadius: 5.0,
+                ),
+              ],
+            ),
+            child: FlatButton(
+              child: Text("Confirm"),
+              onPressed: () async{
+                // UsersModel usersModel = UsersModel();
+                // await usersModel.syncCart(Provider.of<CartData>(context, listen: false).list,Provider.of<CartData>(context, listen: false).user.id);
+                _launchPrivacy(context);
+              },
+            ),
+          ),
         ),
         // child: WebViewX(
         //   javascriptMode: JavascriptMode.unrestricted,

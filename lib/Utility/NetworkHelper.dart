@@ -424,7 +424,8 @@ Future syncCart(List<CartProduct> cart,var id) async {
       'UID':cartProduct.UID,
       'picture':cartProduct.picture,
       'size':cartProduct.size,
-      'Id':cartProduct.Id
+      'Id':cartProduct.Id,
+      'owner':cartProduct.getowner
     };
     var body = json.encode(data);
     dio = Dio();

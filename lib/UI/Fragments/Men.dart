@@ -133,7 +133,17 @@ class _MenProductsState extends State<MenProducts> {
         Data.toString() != "Products not found") {
       List<Products> data = Data;
       if (data != null) {
-        setState(() {
+        if (mounted) {
+          setState(() {
+                    new Future.delayed(Duration.zero, () {
+                      Provider.of<CartData>(context, listen: false).setAllProduct(data);
+                      Test.addData(data, context);
+                    });
+                    Test.bihu = data;
+                    showError = false;
+                    _refreshController.refreshCompleted();
+                  });
+        } else {
           new Future.delayed(Duration.zero, () {
             Provider.of<CartData>(context, listen: false).setAllProduct(data);
             Test.addData(data, context);
@@ -141,7 +151,7 @@ class _MenProductsState extends State<MenProducts> {
           Test.bihu = data;
           showError = false;
           _refreshController.refreshCompleted();
-        });
+        }
       } else {
         _refreshController.refreshFailed();
       }
