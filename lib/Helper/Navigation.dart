@@ -1,3 +1,4 @@
+import 'package:clipboard/clipboard.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:fragment_navigate/navigate-bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
-
+import 'package:url_launcher/url_launcher.dart';
+import 'package:sizer/sizer.dart';
 import 'CartData.dart';
 import 'Test.dart';
 
@@ -162,6 +164,27 @@ class NavDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
+            leading: Icon(FontAwesomeIcons.googlePlay),
+            title: Text('Download Our App',style: style,),
+            onTap: () {
+              try {
+                _launchURL(
+                    "https://play.app.goo.gl/?link=https://play.google.com/store/apps/details?id=com.craftyfashion.crafty");
+              } catch (e) {
+                print(e);
+              }
+            },
+          ),
+          ListTile(
+            leading: Icon(FontAwesomeIcons.share),
+            title: Text('Share this website',style: style,),
+            onTap: () {
+              FlutterClipboard.copy('https://www.craftyfashions.com').then(( value ) => {
+                Styles.showWarningToast(Colors.green, "Coiped URL", Colors.white, 12.sp)
+              });
+            },
+          ),
+          ListTile(
             leading: Icon(FontAwesomeIcons.headphones),
             title: Text('Contact Us',style: style,),
             onTap: () {
@@ -205,6 +228,19 @@ class NavDrawer extends StatelessWidget {
   onTap(BuildContext context) {
     if (Provider.of<CartData>(context, listen: false).user == null) {
       _fragNavigate.putAndClean(key: 'Signup', force: true);
+    }
+  }
+  void _launchURL(String txt) async {
+    var url = Uri.encodeFull(txt);
+    // var url = Uri.encodeComponent(urls);
+    try {
+      if (await canLaunch(url)) {
+        await launch(url, forceSafariVC: false, forceWebView: false);
+      } else {
+        throw 'Could not launch $url';
+      }
+    } catch (e) {
+      await launch(url, forceSafariVC: false, forceWebView: false);
     }
   }
 }

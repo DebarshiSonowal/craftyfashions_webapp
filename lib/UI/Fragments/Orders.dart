@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-
+import 'package:sizer/sizer.dart';
 import 'OrderItem.dart';
 
 class Orders extends StatefulWidget {
@@ -18,7 +18,7 @@ class Orders extends StatefulWidget {
 class _OrdersState extends State<Orders> {
   UsersModel usersModel = new UsersModel();
   RefreshController _refreshController =
-  RefreshController(initialRefresh: false);
+  RefreshController(initialRefresh: true);
   var s;
 
   void _onRefresh() async {
@@ -53,7 +53,7 @@ class _OrdersState extends State<Orders> {
     return Scaffold(
       body: SmartRefresher(
         enablePullDown: true,
-        enablePullUp: true,
+        enablePullUp: false,
         header: WaterDropHeader(),
         footer: CustomFooter(
           builder: (BuildContext context, LoadStatus mode) {
@@ -80,7 +80,7 @@ class _OrdersState extends State<Orders> {
         onLoading: _onLoading,
         child: Container(
           child: Provider.of<CartData>(context, listen: false).order.length==0
-              ? EmptyView()
+              ? Styles.EmptyError
               : OrderItem(),
         ),
       ),

@@ -9,10 +9,12 @@ import 'package:fragment_navigate/navigate-bloc.dart';
 class CarouselWithIndicatorDemo<T> extends StatefulWidget {
   Products item;
   FragNavigate _fragNavigate;
+  dynamic controller;
   var colors;
   Function(int) onTap;
+
   final void Function(T) value;
-  CarouselWithIndicatorDemo(this.item, this._fragNavigate,this.onTap,this.value,this.colors);
+  CarouselWithIndicatorDemo(this.item, this._fragNavigate,this.onTap,this.value,this.colors,this.controller);
 
   @override
   State<StatefulWidget> createState() {
@@ -24,7 +26,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> with 
   int _current = 0;
 
   int get current => _current;
-  CarouselController controller=CarouselController();
+  // CarouselController controller=CarouselController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,7 +37,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> with 
           alignment: AlignmentDirectional.bottomCenter,
             children: [
               CarouselSlider(
-                carouselController: controller,
+                carouselController: widget.controller,
                 items: widget.item.Image.toString().split(',').map((i) {
                   return Builder(
                     builder: (BuildContext context) {

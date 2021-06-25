@@ -9,7 +9,7 @@ import 'package:craftyfashions_webapp/Utility/Users.dart';
 import 'package:fragment_navigate/navigate-bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-
+import 'package:sizer/sizer.dart';
 class Signup extends StatefulWidget {
   final FragNavigate fragNavigate;
 
@@ -57,27 +57,31 @@ class _SignUpState extends State<Signup> {
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                               fontFamily: "Halyard",
-                              fontSize: 26),
+                              fontSize: 22.sp),
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 1.h,
                         ),
-                        Text(
-                          "Create an account with Crafty to get all the features",
-                          style: TextStyle(
-                              color: Colors.black45,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: "Halyard",
-                              fontSize: 14),
+                        Padding(
+                          padding:EdgeInsets.only(left: 1.w,right: 1.w),
+                          child: Text(
+                            "Create an account with Crafty to get all the features",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.black45,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: "Halyard",
+                                fontSize: 10.sp),
+                          ),
                         ),
                       ],
                     ),
                   ),
                   SizedBox(
-                    height: 40,
+                    height: 4.h,
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom: 7.0,right: 25,left: 25,top: 5),
+                    padding: EdgeInsets.only(bottom: 0.7.h,right: 2.5.w,left: 2.5.w,top: 1.h),
                     child: TextFormField(
                       focusNode: focusNodeFullname,
                       controller: nm,
@@ -91,14 +95,14 @@ class _SignUpState extends State<Signup> {
                       keyboardType: TextInputType.text,
                       style: TextStyle(
                           fontFamily: "Halyard",
-                          fontSize: 14,
+                          fontSize: 10.sp,
                           fontWeight: FontWeight.w400,
                           color: Colors.black),
                       decoration: InputDecoration(
                         labelText: "Fullname",
                         labelStyle: TextStyle(
                             fontFamily: "Halyard",
-                            fontSize: 14,
+                            fontSize: 10.sp,
                             color: focusNodeFullname.hasFocus?Styles.price_color:Colors.black45),
                         filled: true,
                         fillColor: Colors.white,
@@ -114,7 +118,7 @@ class _SignUpState extends State<Signup> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom: 7.0,right: 25,left: 25,top: 5),
+                    padding: EdgeInsets.only(bottom: 0.7.h,right: 2.5.w,left: 2.5.w,top: 1.h),
                     child: TextFormField(
                       focusNode: focusNodeEmail,
                       controller: em,
@@ -127,7 +131,7 @@ class _SignUpState extends State<Signup> {
                       },
                       style: TextStyle(
                           fontFamily: "Halyard",
-                          fontSize: 14,
+                          fontSize: 10.sp,
                           fontWeight: FontWeight.w400,
                           color: Colors.black
                       ),
@@ -135,7 +139,7 @@ class _SignUpState extends State<Signup> {
                         labelText: "E-mail",
                         labelStyle: TextStyle(
                             fontFamily: "Halyard",
-                            fontSize: 14,
+                            fontSize: 10.sp,
                             color: focusNodeEmail.hasFocus?Styles.price_color:Colors.black45),
                         filled: true,
                         fillColor: Colors.white,
@@ -151,7 +155,7 @@ class _SignUpState extends State<Signup> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom: 7.0,right: 25,left: 25,top: 5),
+                    padding: EdgeInsets.only(bottom: 0.7.h,right: 2.5.w,left: 2.5.w,top: 1.h),
                     child: TextFormField(
                       focusNode: focusNodePass,
                       controller: pass,
@@ -175,7 +179,7 @@ class _SignUpState extends State<Signup> {
                         ),
                         labelStyle: TextStyle(
                             fontFamily: "Halyard",
-                            fontSize: 14,
+                            fontSize: 10.sp,
                             color: focusNodePass.hasFocus?Styles.price_color:Colors.black45),
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
@@ -190,7 +194,7 @@ class _SignUpState extends State<Signup> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom: 7.0,right: 25,left: 25,top: 5),
+                    padding: EdgeInsets.only(bottom: 0.7.h,right: 2.5.w,left: 2.5.w,top: 1.h),
                     child: TextField(
                       focusNode: focusNodeConf,
                       controller: cnf,
@@ -214,7 +218,7 @@ class _SignUpState extends State<Signup> {
                         ),
                         labelStyle: TextStyle(
                             fontFamily: "Halyard",
-                            fontSize: 14,
+                            fontSize: 10.sp,
                             color: focusNodeConf.hasFocus?Styles.price_color:Colors.black45),
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
@@ -229,7 +233,7 @@ class _SignUpState extends State<Signup> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 10,bottom: 10,left: 25),
+                    padding: EdgeInsets.only(top: 0.2.h,bottom:  0.2.h,left: 25),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -260,6 +264,7 @@ class _SignUpState extends State<Signup> {
                                 "Agree to our terms and conditions",
                                 style: TextStyle(
                                   color: Styles.log_sign_text,
+                                  fontSize: 10.sp,
                                 )),
                           ),
                         ),
@@ -267,13 +272,13 @@ class _SignUpState extends State<Signup> {
                     ),
                   ),
                   Padding(
-                    padding:EdgeInsets.only(left: 25,right: 25,top: 15),
+                    padding:EdgeInsets.only(left: 2.w,right: 2.w,top: 0.5.h),
                     child: FlatButton(
                       splashColor: Colors.white,
                       shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(10.0)),
-                      padding: EdgeInsets.all(8),
-                      height: 50,
+                      padding: EdgeInsets.all(1.5.h),
+                      height: 5.h,
                       color: Styles.price_color,
                       onPressed: () async {
                         initLoader();
@@ -283,13 +288,13 @@ class _SignUpState extends State<Signup> {
                             cnfpass != null) {
                           if (password == cnfpass) {
                             if (_agree == true) {
-                                if (EmailValidator.validate(email)) {
-                                  await pr.show();
-                                  signUp(name, password, email);
-                                }else {
-                                  Styles.showWarningToast(Colors.red,
-                                      "Enter a valid Email", Colors.white, 15);
-                                }
+                              if (EmailValidator.validate(email)) {
+                                await pr.show();
+                                signUp(name, password, email);
+                              }else {
+                                Styles.showWarningToast(Colors.red,
+                                    "Enter a valid Email", Colors.white, 15);
+                              }
 
                             } else {
                               Styles.showWarningToast(
@@ -325,7 +330,7 @@ class _SignUpState extends State<Signup> {
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 1.h,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -453,9 +458,9 @@ class _SignUpState extends State<Signup> {
   }
 
   void _requestFoucs(FocusNode focusNode) {
-   setState(() {
-     FocusScope.of(context).requestFocus(focusNode);
-   });
+    setState(() {
+      FocusScope.of(context).requestFocus(focusNode);
+    });
   }
 }
 

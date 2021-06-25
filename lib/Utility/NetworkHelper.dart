@@ -151,17 +151,20 @@ class NetworkHelper {
     } on DioError catch (e) {
       if (e.type == DioErrorType.CONNECT_TIMEOUT ||
           e.type == DioErrorType.RESPONSE) {
-        if (e.response == null || e.response.statusCode != 400) {
-          response = Response(statusCode: 500);
-        } else {
-          response = Response(statusCode: 400);
+        // print("ADA23 ${e.response.statusCode}");
+
+        if (e.response!=null) {
+          if (e.response.statusCode == 400||e.response.statusCode == 500) {
+            print("ADA");
+            response = Response(statusCode: 500);
+          }
         }
+        response = Response(statusCode: 500);
       }
     }
-    if (response!=null) {
-      print("Response ${response}");
+    print("Response ${response.data}");
+    if (response!=null && response.data !=null) {
       if (response.statusCode == 200) {
-        print("Response : ${response.data}");
         return response.data;
       } else if (response.statusCode == 500) {
         return "Server Error";

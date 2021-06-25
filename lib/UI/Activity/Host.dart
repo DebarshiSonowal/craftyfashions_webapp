@@ -127,7 +127,7 @@ class HostState extends State<Host> {
                                     ? false
                                     : true,
                             badgeContent: Text(
-                                "${Provider.of<CartData>(context).listLength}"),
+                                "${Provider.of<CartData>(context).listLength}",style: TextStyle(color:Colors.white)),
                             animationType: BadgeAnimationType.scale,
                             child: Icon(Icons.add_shopping_cart)),
                         onPressed: () {

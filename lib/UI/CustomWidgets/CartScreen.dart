@@ -47,12 +47,19 @@ class _CartScreennState extends State<CartScreenn> {
                       iconSize: 30,
                       splashRadius: 30,
                       onPressed: () {
-                        setState(() {
+                        if (mounted) {
+                          setState(() {
+                            Provider.of<CartData>(context, listen: false)
+                                .removeAll(0, widget.item);
+                            Styles.showWarningToast(Styles.Log_sign,
+                                "All items removed", Colors.black, 15);
+                          });
+                        } else {
                           Provider.of<CartData>(context, listen: false)
                               .removeAll(0, widget.item);
                           Styles.showWarningToast(Styles.Log_sign,
                               "All items removed", Colors.black, 15);
-                        });
+                        }
                       },
                       enableFeedback: true,
                       splashColor: Colors.redAccent,
@@ -108,8 +115,11 @@ class _CartScreennState extends State<CartScreenn> {
                           Styles.Log_sign, "Item removed", Colors.black, 15);
                       setState(() {
                         Provider.of<CartData>(context, listen: false)
-                            .removeProduct(index,Provider.of<CartData>(context,
-                            listen: false).list[index].Id);
+                            .removeProduct(
+                                index,
+                                Provider.of<CartData>(context, listen: false)
+                                    .list[index]
+                                    .Id);
                         var json = jsonEncode(
                             Provider.of<CartData>(context, listen: false)
                                 .list
@@ -127,8 +137,11 @@ class _CartScreennState extends State<CartScreenn> {
                             Styles.Log_sign, "Item removed", Colors.black, 15);
                         setState(() {
                           Provider.of<CartData>(context, listen: false)
-                              .removeProduct(index,Provider.of<CartData>(context,
-                              listen: false).list[index].Id);
+                              .removeProduct(
+                                  index,
+                                  Provider.of<CartData>(context, listen: false)
+                                      .list[index]
+                                      .Id);
                           var json = jsonEncode(
                               Provider.of<CartData>(context, listen: false)
                                   .list

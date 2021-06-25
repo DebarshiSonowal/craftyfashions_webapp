@@ -1043,7 +1043,8 @@ class _CartState extends State<Cart> with TickerProviderStateMixin {
         Provider.of<CartData>(context, listen: false).getAddress.address,
         Provider.of<CartData>(context, listen: false).getAddress.phone,
         Provider.of<CartData>(context, listen: false).getAddress.pin,
-        "NOT AVAILABLE");
+        "NOT AVAILABLE", Provider.of<CartData>(context, listen: false)
+        .getIndivisualPrice());
   }
 
   void addNewAddress() {

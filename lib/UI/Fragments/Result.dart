@@ -271,9 +271,13 @@ class _ResultState extends State<Result> {
     var order = await usersModel.getOrdersforUser(
         Provider.of<CartData>(context, listen: false).user.id);
     if (order != null) {
-      setState(() {
+      if (mounted) {
+        setState(() {
+                Provider.of<CartData>(context, listen: false).orders(order);
+              });
+      } else {
         Provider.of<CartData>(context, listen: false).orders(order);
-      });
+      }
     }
   }
 

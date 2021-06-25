@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:craftyfashions_webapp/Helper/CartData.dart';
 import 'package:craftyfashions_webapp/Helper/Test.dart';
 import 'package:craftyfashions_webapp/Models/Products.dart';
@@ -27,6 +28,7 @@ class ProductView extends StatefulWidget {
 
 class _ProductViewState extends State<ProductView>
     with TickerProviderStateMixin {
+  CarouselController controller=CarouselController();
   get buttonSize => 30.0;
   var selectedColor;
   var selectedSize;
@@ -72,7 +74,7 @@ class _ProductViewState extends State<ProductView>
                             setState(() {
                               currentIndex = t;
                             });
-                          }, Color(0xffececec)),
+                          }, Color(0xffececec),controller),
                         ),
                         Card(
                           elevation: 1,
@@ -279,6 +281,7 @@ class _ProductViewState extends State<ProductView>
                                         setState(() {
                                           selectedColor = value;
                                           // selectedSize = null;
+                                          controller.jumpToPage(getIndex());
                                         });
                                         if (!getLabels()
                                             .contains(selectedSize)) {
@@ -610,6 +613,22 @@ class _ProductViewState extends State<ProductView>
                                 ),
                               )),
                         ),
+                        Card(
+                          elevation: 1,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                new BoxShadow(
+                                  color: Color(0xffE3E3E3),
+                                  blurRadius: 5.0,
+                                ),
+                              ],
+                            ),
+                            padding: EdgeInsets.all(2),
+                            child: Image.asset("assets/images/payment.jpg"),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -661,9 +680,11 @@ class _ProductViewState extends State<ProductView>
                             },
                           ),
                         ),
+
                       ],
                     ),
                   ),
+
                 ],
               )),
               Card(

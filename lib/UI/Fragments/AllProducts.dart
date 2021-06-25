@@ -12,7 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-
+import 'package:sizer/sizer.dart';
 import 'ProductView.dart';
 
 class AllProductsFragment extends StatefulWidget {
@@ -25,8 +25,9 @@ class _AllProductsState extends State<AllProductsFragment> {
   bool showError = false;
   Widget emptyListWidget;
   RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  RefreshController(initialRefresh: false);
   BuildContext sysContext;
+  var _selected;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class _AllProductsState extends State<AllProductsFragment> {
     return Scaffold(
       body: SmartRefresher(
         enablePullDown: true,
-        enablePullUp: true,
+        enablePullUp: false,
         header: WaterDropHeader(),
         footer: CustomFooter(
           builder: (BuildContext context, LoadStatus mode) {
@@ -59,12 +60,11 @@ class _AllProductsState extends State<AllProductsFragment> {
         controller: _refreshController,
         onRefresh: _onRefresh,
         onLoading: _onLoading,
-        child:
-            Provider.of<CartData>(context, listen: true).allproducts.length ==
-                        0 &&
-                    showError
+        child: Consumer<CartData>(
+            builder: (context, data, child) =>
+            data.allproducts.length == 0 && showError
                 ? emptyListWidget
-                : getUI(),
+                : getUI(data)),
       ),
     );
   }
@@ -78,67 +78,124 @@ class _AllProductsState extends State<AllProductsFragment> {
     });
   }
 
-  getUI() {
-    return Provider.of<CartData>(context, listen: true).allproducts.length == 0
-        ? LoadingAnimation(
-            Provider.of<CartData>(context, listen: true).allproducts.length,
-            10,
-            null)
-        : Container(
-            height: MediaQuery.of(context).size.height,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Container(
-                          height: MediaQuery.of(context).size.height,
-                          child: GridView.count(
-                              scrollDirection: Axis.vertical,
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 0,
-                               childAspectRatio: (MediaQuery.of(context).size.width)/(MediaQuery.of(context).size.height+30),
-                              mainAxisSpacing: 5,
-                              shrinkWrap: true,
-                              semanticChildCount: 2,
-                              children: List.generate(
-                                  Provider.of<CartData>(context,
-                                          listen: false)
-                                      .allproducts
-                                      .length, (index) {
-                                return AllProductsFragmentProductItemView(
-                                    buttonSize: buttonSize,
-                                    list: Provider.of<CartData>(context,
-                                            listen: false)
-                                        .allproducts,
-                                    OnTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ProductView(
-                                                    product: Provider.of<
-                                                                CartData>(
-                                                            context,
-                                                            listen: false)
-                                                        .allproducts[index],
-                                                    fragNav:
-                                                        Test.fragNavigate,
-                                                  )));
-                                    },
-                                    Index: index);
-                              })),
-                        ),
-                      ],
+  getUI(data) {
+    return data.allproducts.length == 0
+        ? LoadingAnimation(data.allproducts.length, 10, null)
+        : Padding(
+      padding: EdgeInsets.only(top: 2, bottom: 10),
+      child: Container(
+        color: Colors.transparent,
+        height: MediaQuery.of(context).size.height,
+        child: Column(
+          children: [
+            Card(
+              elevation: 1,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    new BoxShadow(
+                      color: Color(0xffE3E3E3),
+                      blurRadius: 5.0,
                     ),
+                  ],
+                ),
+                height: 5.h,
+                child: DropdownButtonHideUnderline(
+                  child: ButtonTheme(
+                    alignedDropdown: true,
+                    child: DropdownButton<String>(
+                        value: _selected,
+                        isExpanded: true,
+                        style:
+                        TextStyle(color: Colors.black, fontSize: 18),
+                        items: <String>[
+                          'Price Low to High',
+                          'Price High to Low'
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        hint: Text(
+                          "Filter",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        onChanged: (String value) {
+                          setState(() {
+                            _selected = value;
+                            if (_selected == 'Price Low to High') {
+                              Provider.of<CartData>(context,
+                                  listen: false)
+                                  .setSortedList(Provider.of<CartData>(
+                                  context,
+                                  listen: false)
+                                  .allproducts);
+                              Provider.of<CartData>(context,
+                                  listen: false)
+                                  .sorted
+                                  .sort((a, b) => double.parse(a.Price)
+                                  .compareTo(double.parse(b.Price)));
+                            } else {
+                              Provider.of<CartData>(context,
+                                  listen: false)
+                                  .setSortedList(Provider.of<CartData>(
+                                  context,
+                                  listen: false)
+                                  .allproducts);
+                              Provider.of<CartData>(context,
+                                  listen: false)
+                                  .sorted
+                                  .sort((a, b) => double.parse(b.Price)
+                                  .compareTo(double.parse(a.Price)));
+                            }
+                          });
+                        }),
                   ),
                 ),
-              ],
+              ),
             ),
-          );
+            SizedBox(
+              height: 0.5.h,
+            ),
+            Expanded(
+              child: Container(
+                child: GridView.builder(
+                    gridDelegate:
+                    SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: (MediaQuery.of(context)
+                            .size
+                            .width) /
+                            (MediaQuery.of(context).size.height + 30),
+                        crossAxisSpacing: 0,
+                        mainAxisSpacing: 5,
+                        crossAxisCount: 2),
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) =>
+                        AllProductsFragmentProductItemView(
+                            buttonSize: buttonSize,
+                            list: data.allproducts,
+                            OnTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ProductView(
+                                        product:
+                                        data.allproducts[index],
+                                        fragNav: Test.fragNavigate,
+                                      )));
+                            },
+                            Index: index)),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   void _onRefresh() async {
@@ -175,30 +232,6 @@ class _AllProductsState extends State<AllProductsFragment> {
       setState(() {
         showError = true;
       });
-    }
-  }
-
-  getCountAccordingToSize() {
-    var type = getDeviceType();
-    if (type == "Desktop") {
-      return 4;
-    } else if (type == "Tablet") {
-      return 3;
-    } else {
-      return 2;
-    }
-  }
-
-  getDeviceType() {
-    var width = MediaQuery.of(context).size.width;
-    if (width > 1026) {
-      return "Desktop";
-    } else if (width > kMobileBreakpoint) {
-      return "Tablet";
-    } else if (width <= kSmallDesktopBreakpoint && width > kTabletBreakpoint) {
-      return "Mini";
-    } else {
-      return "Mobile";
     }
   }
 }

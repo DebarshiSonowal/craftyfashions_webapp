@@ -1,11 +1,12 @@
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:craftyfashions_webapp/Helper/CartData.dart';
 import 'package:craftyfashions_webapp/Helper/Test.dart';
-import 'package:craftyfashions_webapp/UI/CustomWidgets/CartItems.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
 import 'package:craftyfashions_webapp/Utility/Users.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class OrderDetails extends StatefulWidget {
   OrderDetails({Key key});
@@ -14,214 +15,641 @@ class OrderDetails extends StatefulWidget {
   _OrderDetailsState createState() => _OrderDetailsState();
 }
 
-class _OrderDetailsState extends State<OrderDetails> {
+class _OrderDetailsState extends State<OrderDetails>
+    with TickerProviderStateMixin {
   int amount = 0, items = 0;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Styles.bg_color,
-      height: MediaQuery.of(context).size.height,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.width / 5,
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Order No: ${Provider.of<CartData>(context, listen: false).orderSelected.orderId}",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+      child: Consumer<CartData>(
+        builder: (context, data, child) => Container(
+          color: Color(0xffe3e3e6),
+          height: MediaQuery.of(context).size.height,
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(
+                flex: 4,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 3, left: 2, right: 2),
+                  child: Card(
+                    elevation: 1,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          new BoxShadow(
+                            color: Color(0xffE3E3E3),
+                            blurRadius: 5.0,
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        height: 10,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Order No:",
+                                  style: TextStyle(
+                                    fontSize: 8.sp,
+                                    color: Colors.black,
+                                    fontFamily: 'Halyard',
+                                  ),
+                                ),
+                                Text(
+                                  "Tracking ID:",
+                                  style: TextStyle(
+                                    fontSize: 8.sp,
+                                    color: Colors.black,
+                                    fontFamily: 'Halyard',
+                                  ),
+                                ),
+                                Text(
+                                  "Date:",
+                                  style: TextStyle(
+                                    fontSize: 8.sp,
+                                    color: Colors.black,
+                                    fontFamily: 'Halyard',
+                                  ),
+                                ),
+                                Text(
+                                  "Status:",
+                                  style: TextStyle(
+                                    fontSize: 8.sp,
+                                    color: Colors.black,
+                                    fontFamily: 'Halyard',
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "${data.orderSelected.orderId}",
+                                  style: TextStyle(
+                                    fontSize: 8.sp,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Halyard',
+                                  ),
+                                ),
+                                Text(
+                                  "${data.orderSelected.trackingId}",
+                                  style: TextStyle(
+                                    fontSize: 8.sp,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Halyard',
+                                  ),
+                                ),
+                                Text(
+                                  "${data.orderSelected.date.toString().substring(3, 5)}/${data.orderSelected.date.toString().substring(0, 2)}/${data.orderSelected.date.toString().substring(6)}",
+                                  style: TextStyle(
+                                    fontSize: 8.sp,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Halyard',
+                                  ),
+                                ),
+                                Text(
+                                  "${data.orderSelected.status}",
+                                  style: TextStyle(
+                                    fontSize: 8.sp,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Halyard',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                      Text(
-                        "Tracking number: ${Provider.of<CartData>(context, listen: false).orderSelected.trackingId}",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "${Provider.of<CartData>(context, listen: false).orderSelected.date}",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "${Provider.of<CartData>(context, listen: false).orderSelected.status}",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Provider.of<CartData>(context, listen: false)
-                                        .orderSelected
-                                        .status
-                                        .toString()
-                                        .trim() ==
-                                    "Cancelled"
-                                ? Colors.red
-                                : Colors.green),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            height: MediaQuery.of(context).size.width / 1.2,
-            color: Colors.white70,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: Text(
-                      "Order Items",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                      textAlign: TextAlign.center,
                     ),
                   ),
-                  Flexible(
-                    flex: 10,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Flexible(
-                          child: Text(
-                            "${Provider.of<CartData>(context).orderSelected.color.toString().split(",").length} items",
-                            textAlign: TextAlign.start,
+                ),
+              ),
+              SizedBox(
+                height: 0.3.h,
+              ),
+              Expanded(
+                flex: 10,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 3, right: 3),
+                  child: Card(
+                    elevation: 1,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          new BoxShadow(
+                            color: Color(0xffE3E3E3),
+                            blurRadius: 5.0,
                           ),
+                        ],
+                      ),
+                      height: MediaQuery.of(context).size.width / 1.2,
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.only(bottom: 1.h),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text(
+                                    "Order Items",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 10.sp,
+                                      fontFamily: 'Halyard',
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "${data.orderSelected.color.toString().split(",").length} items",
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                        fontFamily: 'Halyard', fontSize: 10.sp),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                itemCount: data.orderSelected.products
+                                    .toString()
+                                    .split(",")
+                                    .length,
+                                itemBuilder: (BuildContext ctxt, int index) {
+                                  return Card(
+                                    elevation: 1,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          new BoxShadow(
+                                            color: Color(0xffE3E3E3),
+                                            blurRadius: 5.0,
+                                          ),
+                                        ],
+                                      ),
+                                      height: 18.h,
+                                      child: Row(
+                                        children: [
+                                          CachedNetworkImage(
+                                            fit: BoxFit.fill,
+                                            imageUrl: data.orderSelected.picture
+                                                .trim()
+                                                .split(",")[index],
+                                            progressIndicatorBuilder: (context,
+                                                    url, downloadProgress) =>
+                                                SizedBox(
+                                              width: 50.0,
+                                              height: 50.0,
+                                              child: SpinKitCubeGrid(
+                                                color: Styles.price_color,
+                                                size: 50.0,
+                                                controller: AnimationController(
+                                                    vsync: this,
+                                                    duration: const Duration(
+                                                        milliseconds: 1200)),
+                                              ),
+                                            ),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    Icon(Icons.error),
+                                          ),
+                                          Expanded(
+                                              child: Container(
+                                            width: double.infinity,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.stretch,
+                                              children: [
+                                                Expanded(
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Expanded(
+                                                          child: Container(
+                                                              child: Center(
+                                                                  child: Text(
+                                                        "orderId: ",
+                                                        style: TextStyle(
+                                                            fontFamily:
+                                                                'Halyard',
+                                                            fontSize: 9.sp),
+                                                      )))),
+                                                      Expanded(
+                                                          child: Container(
+                                                              child: Center(
+                                                                  child: Text(
+                                                                      "${data.orderSelected.products.toString().split(",")[index]}",
+                                                                      style: TextStyle(
+                                                                          fontWeight: FontWeight
+                                                                              .w600,
+                                                                          fontFamily:
+                                                                              'Halyard',
+                                                                          fontSize:
+                                                                              9.sp)))))
+                                                    ],
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Expanded(
+                                                          child: Container(
+                                                              child: Center(
+                                                                  child: Text(
+                                                                      "Color: ",
+                                                                      style: TextStyle(
+                                                                          fontFamily:
+                                                                              'Halyard',
+                                                                          fontSize:
+                                                                              9.sp))))),
+                                                      Expanded(
+                                                          child: Container(
+                                                              child: Center(
+                                                                  child: Text(
+                                                                      "${data.orderSelected.color.toString().split(",")[index]}",
+                                                                      style: TextStyle(
+                                                                          fontWeight: FontWeight
+                                                                              .w600,
+                                                                          fontFamily:
+                                                                              'Halyard',
+                                                                          fontSize:
+                                                                              9.sp)))))
+                                                    ],
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Expanded(
+                                                          child: Container(
+                                                              child: Center(
+                                                                  child: Text(
+                                                                      "Size: ",
+                                                                      style: TextStyle(
+                                                                          fontFamily:
+                                                                              'Halyard',
+                                                                          fontSize:
+                                                                              9.sp))))),
+                                                      Expanded(
+                                                          child: Container(
+                                                              child: Center(
+                                                                  child: Text(
+                                                                      "${data.orderSelected.size.toString().split(",")[index]}",
+                                                                      style: TextStyle(
+                                                                          fontWeight: FontWeight
+                                                                              .w600,
+                                                                          fontFamily:
+                                                                              'Halyard',
+                                                                          fontSize:
+                                                                              9.sp)))))
+                                                    ],
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Expanded(
+                                                          child: Container(
+                                                              child: Center(
+                                                                  child: Text(
+                                                                      "Price: ",
+                                                                      style: TextStyle(
+                                                                          fontFamily:
+                                                                              'Halyard',
+                                                                          fontSize:
+                                                                              9.sp))))),
+                                                      Expanded(
+                                                          child: Container(
+                                                              child: Center(
+                                                                  child: Text(
+                                                                      "${data.orderSelected.indvPrice.toString().split(",")[index]}",
+                                                                      style: TextStyle(
+                                                                          fontWeight: FontWeight
+                                                                              .w600,
+                                                                          fontFamily:
+                                                                              'Halyard',
+                                                                          fontSize:
+                                                                              9.sp))))),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ))
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
                         ),
-                        Flexible(
-                            flex: 10,
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              itemCount: Provider.of<CartData>(context)
-                                  .orderSelected
-                                  .products
-                                  .toString()
-                                  .split(",")
-                                  .length,
-                              itemBuilder: (BuildContext ctxt, int index) {
-                                return CartItem(
-                                  index: index,
-                                  list: Provider.of<CartData>(context).orderSelected,
-                                  callback: null,
-                                  th: true,
-                                );
-                              },
-                            )),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 4,
+                child: Card(
+                  elevation: 1,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        new BoxShadow(
+                          color: Color(0xffE3E3E3),
+                          blurRadius: 5.0,
+                        ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            height: MediaQuery.of(context).size.width / 3,
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Order Information",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Flexible(
-                        flex: 1,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Shipping address:"),
-                            SizedBox(
-                              height: 30,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              "Order Information",
+                              style: TextStyle(
+                                  fontSize: 11.sp,
+                                  fontFamily: 'Halyard',
+                                  fontWeight: FontWeight.w600),
                             ),
-                            Text("Total price:"),
-                          ],
+                          ),
+                          SizedBox(
+                            height: 0.5.h,
+                          ),
+                          Expanded(
+                            flex: 5,
+                            // child: Row(
+                            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            //   children: [
+                            //     Expanded(
+                            //       flex: 3,
+                            //       child: Column(
+                            //         crossAxisAlignment:
+                            //             CrossAxisAlignment.start,
+                            //         children: [
+                            //           Text(
+                            //             "Shipping address:",
+                            //             style: TextStyle(
+                            //               fontSize: 9.sp,
+                            //               color: Colors.black,
+                            //               fontWeight: FontWeight.w300,
+                            //               fontFamily: 'Halyard',
+                            //             ),
+                            //           ),
+                            //           SizedBox(
+                            //             height: 3.5.h,
+                            //           ),
+                            //           Text(
+                            //             "Total price:",
+                            //             style: TextStyle(
+                            //               fontSize: 9.sp,
+                            //               color: Colors.black,
+                            //               fontWeight: FontWeight.w300,
+                            //               fontFamily: 'Halyard',
+                            //             ),
+                            //           ),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //     Expanded(
+                            //       flex: 5,
+                            //       child: Column(
+                            //         crossAxisAlignment: CrossAxisAlignment.end,
+                            //         children: [
+                            //           Text(
+                            //             "${Provider.of<CartData>(context, listen: false).orderSelected.address}",
+                            //             softWrap: true,
+                            //             maxLines: 2,
+                            //             style: TextStyle(
+                            //               fontSize: 9.sp,
+                            //               color: Colors.black,
+                            //               fontWeight: FontWeight.w600,
+                            //               fontFamily: 'Halyard',
+                            //             ),
+                            //           ),
+                            //           SizedBox(
+                            //             height: 2.h,
+                            //           ),
+                            //           Text(
+                            //             "₹ ${Provider.of<CartData>(context, listen: false).orderSelected.price}",
+                            //             style: TextStyle(
+                            //               fontSize: 9.sp,
+                            //               color: Styles.price_color,
+                            //               fontWeight: FontWeight.w600,
+                            //               fontFamily: 'Halyard',
+                            //             ),
+                            //           ),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
+                            child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                      child: Row(children: [
+                                    Expanded(
+                                      child: Text(
+                                        "Shipping address:",
+                                        style: TextStyle(
+                                          fontSize: 9.sp,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w300,
+                                          fontFamily: 'Halyard',
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        "${Provider.of<CartData>(context, listen: false).orderSelected.address}",
+                                        softWrap: true,
+                                        textAlign: TextAlign.end,
+                                        maxLines: 2,
+                                        style: TextStyle(
+                                          fontSize: 9.sp,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'Halyard',
+                                        ),
+                                      ),
+                                    ),
+                                  ])),
+                                  Expanded(
+                                      child: Row(children: [
+                                        Expanded(
+                                          child: Text(
+                                            "Total price:",
+                                            style: TextStyle(
+                                              fontSize: 9.sp,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w300,
+                                              fontFamily: 'Halyard',
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            "₹ ${Provider.of<CartData>(context, listen: false).orderSelected.price}",
+                                                        textAlign: TextAlign.end,
+                                                        style: TextStyle(
+                                                          fontSize: 9.sp,
+                                                          color: Styles.price_color,
+                                                          fontWeight: FontWeight.w600,
+                                                          fontFamily: 'Halyard',
+                                                        ),
+                                          ),
+                                        ),
+                                      ])),
+                                ]),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Card(
+                elevation: 1,
+                child: Container(
+                  height: 5.5.h,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      new BoxShadow(
+                        color: Color(0xffE3E3E3),
+                        blurRadius: 5.0,
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () => cancelOrder(
+                              Provider.of<CartData>(context, listen: false)
+                                  .orderSelected
+                                  .orderId,
+                              context),
+                          style: ButtonStyle(
+                            enableFeedback: true,
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.zero,
+                            )),
+                            backgroundColor:
+                                MaterialStateProperty.all(Color(0xffE3E3E3)),
+                            shadowColor:
+                                MaterialStateProperty.all(Color(0xffE3E3E3)),
+                            elevation: MaterialStateProperty.all(4),
+                            overlayColor: MaterialStateProperty.resolveWith(
+                              (states) {
+                                return states.contains(MaterialState.pressed)
+                                    ? Color(0xffE3E3E3)
+                                    : null;
+                              },
+                            ),
+                          ),
+                          child: Container(
+                            child: Center(
+                              child: Text("Cancel",
+                                  style: TextStyle(
+                                      fontFamily: "Halyard",
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black)),
+                            ),
+                          ),
                         ),
                       ),
-                      Flexible(
-                        flex: 2,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "${Provider.of<CartData>(context, listen: false).orderSelected.address}",
-                              softWrap: true,
-                              maxLines: 2,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                      SizedBox(
+                        width: 2,
+                        child: Container(
+                          margin: EdgeInsets.all(2),
+                          color: Colors.black,
+                        ),
+                      ),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Test.fragNavigate.putPosit(key: 'Contact Us');
+                          },
+                          style: ButtonStyle(
+                            enableFeedback: true,
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.zero,
+                            )),
+                            backgroundColor:
+                                MaterialStateProperty.all(Styles.price_color),
+                            shadowColor:
+                                MaterialStateProperty.all(Color(0xffE3E3E3)),
+                            elevation: MaterialStateProperty.all(4),
+                            overlayColor: MaterialStateProperty.resolveWith(
+                              (states) {
+                                return states.contains(MaterialState.pressed)
+                                    ? Color(0xffE3E3E3)
+                                    : null;
+                              },
                             ),
-                            SizedBox(
-                              height: 10,
+                          ),
+                          child: Container(
+                            child: Center(
+                              child: Text("Contact us",
+                                  style: TextStyle(
+                                      fontFamily: "Halyard",
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white)),
                             ),
-                            Text(
-                              "₹ ${Provider.of<CartData>(context, listen: false).orderSelected.price}",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.red),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
-          Provider.of<CartData>(context, listen: false)
-                      .orderSelected
-                      .status
-                      .toString()
-                      .trim() ==
-                  "Cancelled"
-              ? ElevatedButton(
-                  onPressed: () {
-                    Test.fragNavigate.putPosit(key: 'Contact Us');
-                  },
-                  child: Text("Help"))
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ElevatedButton(
-                        onPressed: () => cancelOrder(
-                            Provider.of<CartData>(context, listen: false)
-                                .orderSelected
-                                .orderId,
-                            context),
-                        child: Text("Cancel")),
-                    ElevatedButton(
-                        onPressed: () {
-                          Test.fragNavigate.putPosit(key: 'Contact Us');
-                        },
-                        child: Text("Help"))
-                  ],
-                )
-        ],
+        ),
       ),
     );
   }

@@ -126,7 +126,9 @@ class _RazorPayWebState extends State<RazorPayWeb> {
         Provider.of<CartData>(context, listen: false).getAddress.address,
         Provider.of<CartData>(context, listen: false).getAddress.phone,
         Provider.of<CartData>(context, listen: false).getAddress.pin,
-        "NOT AVAILABLE");
+        "NOT AVAILABLE",
+        Provider.of<CartData>(context, listen: false)
+            .getIndivisualPrice());
   }
 
   getOrder(amount,context) {

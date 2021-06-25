@@ -20,6 +20,7 @@ class CartData extends ChangeNotifier {
   ];
   Map<String, String> paymentdata;
   User _user = null;
+  List<Products> _sortedList=[];
   Profile _profile = null;
   List<Order> _order = [];
   List<Products> _allproducts = [];
@@ -53,7 +54,10 @@ class CartData extends ChangeNotifier {
     _orderSelected = value;
     notifyListeners();
   }
-
+  void setSortedList(List<Products> list ){
+    _sortedList = list;
+    notifyListeners();
+  }
   void setCategory(List<Categories> list) {
     _categ = list;
     notifyListeners();
@@ -167,7 +171,19 @@ class CartData extends ChangeNotifier {
   User get user {
     return _user;
   }
+  String getIndivisualPrice(){
+    String price="";
+    for (int i = 0; i < _list.length; i++) {
+      if(i!=_list.length-1){
+        price += _list[i].payment.toString()+",";
+      }else{
+        price += _list[i].payment.toString();
+      }
+    }
+    return price.trim();
+  }
 
+  List<Products> get sorted=> _sortedList;
 
   String get orderId => _orderId;
 

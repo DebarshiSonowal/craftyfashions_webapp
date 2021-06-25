@@ -69,7 +69,9 @@ class CashfreeWebPage extends StatelessWidget {
         Provider.of<CartData>(context, listen: false).getAddress.address,
         Provider.of<CartData>(context, listen: false).getAddress.phone,
         Provider.of<CartData>(context, listen: false).getAddress.pin,
-        "NOT AVAILABLE");
+        "NOT AVAILABLE",
+        Provider.of<CartData>(context, listen: false)
+            .getIndivisualPrice());
   }
   _handlePaymentSuccess(
       PaymentSuccessResponse response, BuildContext context) async {

@@ -1,6 +1,7 @@
 import 'package:craftyfashions_webapp/UI/CustomWidgets/ProfileWidget.dart';
 import 'package:craftyfashions_webapp/UI/Styling/Styles.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class About extends StatelessWidget {
   @override
@@ -9,7 +10,7 @@ class About extends StatelessWidget {
       color: Styles.bg_color,
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(1.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -19,7 +20,7 @@ class About extends StatelessWidget {
                 child: Center(
                     child: Text(
                       "Our Team",
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.bold),
                     )),
               ),
               Flexible(
@@ -42,7 +43,7 @@ class About extends StatelessWidget {
                 child: Center(
                     child: Text(
                       "Special Thanks to",
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
                     )),
               ),
               Flexible(
@@ -52,37 +53,32 @@ class About extends StatelessWidget {
                     Center(
                         child: Text(
                           "Developers from pub.dev",
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 9.sp, fontWeight: FontWeight.bold),
                         )),
                     Center(
                         child: Text(
                           "Developers from Github",
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 9.sp, fontWeight: FontWeight.bold),
                         )),
                     Center(
                         child: Text(
                           "Carolina Cajazeira at Lottiefiles.com",
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 9.sp, fontWeight: FontWeight.bold),
                         )),
                     Center(
                         child: Text(
                           "Freepik at Flaticon.com",
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 9.sp, fontWeight: FontWeight.bold),
                         )),
                     Center(
                         child: Text(
                           "utsav at Lottiefiles.com",
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 9.sp, fontWeight: FontWeight.bold),
                         )),
                     Center(
                         child: Text(
                           "Abby Ambrogi at Lottiefiles.com",
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-                        )),
-                    Center(
-                        child: Text(
-                          "Smashicons at Flaticon.com",
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 9.sp, fontWeight: FontWeight.bold),
                         )),
                   ],
                 ),
@@ -92,7 +88,7 @@ class About extends StatelessWidget {
                 child: Center(
                     child: Text(
                       "Thank you for checking us out",
-                      style: TextStyle(fontSize:18, fontWeight: FontWeight.bold,color: Colors.red),
+                      style: TextStyle(fontSize:13.sp, fontWeight: FontWeight.bold,color: Colors.red),
                     )),
               ),
             ],
